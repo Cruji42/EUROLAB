@@ -1,0 +1,50 @@
+<section class="ca-blog pt-100 pb-70">
+    <div class="container">
+       <div class="ca-blog-content-3 ca-sec-content-3 text-center mb-60 aos-init aos-animate" data-aos="fade-up" data-aos-duration="800">
+          <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">Our Blog</h5>
+          <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap"> Best Practices and Strategies</h2>
+          <p class="pt-16">Gain insights into effective warehouse management strategies that<br> maximize space, improve accuracy, and boost productivity. </p>
+       </div>
+       <div class="row">
+        @for (blog of blogs; track $index) {
+        <div class="col-xl-4 col-md-6 mb-30" [attr.data-aos]="blog.animation" [attr.data-aos-duration]="blog.duration">
+            <div class="ca-team-box ca-blog-box-3 cream-bg-3 br-7 fix p-relative z-index-1">
+              <div class="ca-team-img">
+                <a [href]="blog.link"><img class="w-100" [src]="blog.image" alt=""></a>
+              </div>
+              <div class="ca-blog-date-3">
+                <a href="javascript:void(0);" class="blg-date-3">{{ blog.date }}</a>
+              </div>
+              <div class="ca-blog-box-content ca-blog-box-content-3">
+                <div class="ca-b-meta">
+                  <a href="javascript:void(0);" class="ca-blog-meta ca-blog-meta-3">
+                    <div class="ca-meta-icon">
+                      <span><img src="assets/img/icon/user-1.1.svg" alt=""></span>
+                    </div>
+                    <div class="ca-meta-title">
+                      <span>{{ blog.author }}</span>
+                    </div>
+                  </a>
+                  <a href="javascript:void(0);" class="ca-blog-meta ca-blog-meta-3">
+                    <div class="ca-meta-icon">
+                      <span><img src="assets/img/icon/tag-1.1.svg" alt=""></span>
+                    </div>
+                    <div class="ca-meta-title">
+                      <span>{{ blog.category }}</span>
+                    </div>
+                  </a>
+                </div>
+                <h4 class="ca-blog-title ca-blog-title-3 fnw-600">
+                  <a [href]="blog.link">{{ blog.title }}</a>
+                </h4>
+                <p class="pt-16 pb-18">{{ blog.description }}</p>
+                <div class="blog-3-rearmore">
+                  <a [href]="blog.link" class="read-more3">Read More <span><i class="fa-solid fa-angle-right"></i></span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+       </div>
+    </div>
+ </section>

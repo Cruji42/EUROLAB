@@ -1,0 +1,40 @@
+<app-breadcrumb [title]="'Testimonials'" />
+
+<div class="ca-testimonial-inner pt-100 pb-100">
+    <div class="container ">
+        <div class="row ">
+            @for (testimonial of testimonial; track $index) {
+            <div class="col-xl-4 col-md-6 mb-30 ">
+                <div class="ca-testimonial-card-3 ca-testimonial-iner br-7">
+                    <div class="ca-test-3-rating">
+                        <div class="ca-ratings-3">
+                            <span class="fa fa-star checked star"></span>
+                            <span class="fa fa-star checked star"></span>
+                            <span class="fa fa-star checked star"></span>
+                            <span class="fa fa-star checked star"></span>
+                            <span class="fa-solid fa-star-half-stroke checked star"></span>
+                        </div>
+                        <div class="ca-rating-num-3">
+                            <h4 class="ca-rating-title-3">({{ testimonial.rating }})</h4>
+                        </div>
+                    </div>
+                    <div class="ca-test-3-content">
+                        <h4 class="ca-test-title-3">{{ testimonial.title }}</h4>
+                        <p>{{ testimonial.content }}</p>
+                    </div>
+                    <div class="ca-test-3-user">
+                        <div class="ca-test-3-user-img">
+                            <img [src]="testimonial.image" alt="{{ testimonial.name }}">
+                        </div>
+                        <div class="ca-test-3-user-name">
+                            <h4 class="test-3-title"><a href="javascript:void(0);">{{ testimonial.name }}</a></h4>
+                            <span>{{ testimonial.designation }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        </div>
+    </div>
+</div>

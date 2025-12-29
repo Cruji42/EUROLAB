@@ -1,0 +1,43 @@
+<section class="ca-testimonial3  pt-100">
+    <div class="container">
+        <div class="ca-testimonial-content-3 ca-sec-content-3 text-center mb-60 aos-init aos-animate"
+            data-aos="zoom-out-down" data-aos-duration="800">
+            <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">Our Testimonial</h5>
+            <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">Trusted by Industry Leaders</h2>
+            <p class="pt-16">Their testimonials highlight our commitment to overcoming logistical <br>challenges and
+                delivering on our promises. Read on to discover.</p>
+        </div>
+        <div class="row ca-testimonials">
+            <ngx-slick-carousel [config]="testimonial" class="ca-testimonial-3">
+                @for (testimonial of testimonials; track $index) {
+                <div ngxSlickItem class="ca-testimonial-card-3 br-7">
+                    <div class="ca-test-3-rating">
+                        <div class="ca-ratings-3">
+                            @for (star of [].constructor(testimonial.rating); track $index) {
+                            <span><i
+                                    class="fa-solid fa-star"></i></span>
+                            }
+                        </div>
+                        <div class="ca-rating-num-3">
+                            <h4 class="ca-rating-title-3">({{testimonial.rating}}) <span>Rating</span></h4>
+                        </div>
+                    </div>
+                    <div class="ca-test-3-content">
+                        <h4 class="ca-test-title-3">{{testimonial.title}}</h4>
+                        <p>{{testimonial.description}}</p>
+                    </div>
+                    <div class="ca-test-3-user">
+                        <div class="ca-test-3-user-img">
+                            <span><img [src]="testimonial.image" alt=""></span>
+                        </div>
+                        <div class="ca-test-3-user-name">
+                            <h4 class="test-3-title"><a href="javascript:void(0);">{{testimonial.name}}</a></h4>
+                            <span>{{testimonial.position}}</span>
+                        </div>
+                    </div>
+                </div>
+                }
+            </ngx-slick-carousel>
+        </div>
+    </div>
+</section>

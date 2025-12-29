@@ -1,0 +1,36 @@
+<app-breadcrumb [title]="'Pricing Plan'"/>
+
+<section class="ca-pricing-plan pt-100 pb-70">
+    <div class="container">
+       <div class="ca-about-content-3 ca-sec-content-3 text-center mb-60">
+          <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">Pricing Plan</h5>
+          <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">Flexible Pricing Options</h2>
+          <p class="pt-16">we offer a diverse array of transport and logistics services tailored <br> to meet the unique needs of businesses across various industries.</p>
+       </div>
+       <div class="row">
+        @for (plan of pricingPlan; track $index) {
+        <div class="col-xl-4 col-md-6 mb-30">
+          <div class="ca-pricing-box ca-pricing-box-2 br-7" [ngClass]="{'active': plan.active} ">
+            <div class="ca-pring-box-content">
+              <h2 class="ca-pricing-box-title fnw-600">{{ plan.title }}</h2>
+              <p class="pt-16 pb-32">{{ plan.description }}</p>
+              <h3 class="ca-price"><span>$</span>{{ plan.price }} <cite>/{{ plan.duration }}</cite></h3>
+            </div>
+            <div class="ca-price-list ca-price-list-2 p-relative">
+              <div class="ca-price-btn p-absolute">
+                <a href="javascript:void(0);" class="ca-price-btn-4 text-white br-50">Get Started Now<span><i class="fa-solid fa-angle-right"></i></span></a>
+              </div>
+              <ul>
+                @for (feature of plan.features; track $index) {
+                <li>
+                  <span><i class="fa-solid fa-check"></i></span> {{ feature }}
+                </li>
+            }
+              </ul>
+            </div>
+          </div>
+        </div>
+    }
+      </div>
+    </div>
+ </section>

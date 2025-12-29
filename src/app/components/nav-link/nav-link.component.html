@@ -1,0 +1,21 @@
+<ul>
+    @for (item of menu; track $index) {
+    <li>
+      <a [href]="item.link">{{ item.title }}
+        @if(item.icon){
+        <span><i [class]="item.icon"></i></span>
+        }
+      </a>
+      @if(item.subMenu){
+      <ul class="sub-menu">
+        @for (subItem of item.subMenu; track $index) {
+        <li>
+          <a [routerLink]="subItem.link">{{ subItem.title }}</a>
+        </li>
+    }
+      </ul>
+    }
+    </li>
+}
+  </ul>
+  

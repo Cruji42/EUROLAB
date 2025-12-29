@@ -1,0 +1,149 @@
+<header [class]="headerClass">
+   @if(alert){
+   <app-alert />
+   }
+   <div [class]="'container '+  containerClass">
+      <div class="row align-items-center">
+         <div class="col-xl-3 col-lg col-md-6 col-6">
+            <!-- ca-logo -->
+            <div class="ca-logo">
+               <a routerLink="/index-03"><img [src]="logo" alt=""></a>
+            </div>
+         </div>
+         <div class="col-xl-6 col-lg-7 d-none d-lg-block">
+            <!-- ca-main-menu -->
+            <div [class]="mainNavClass">
+               <nav [class]="navClass">
+                  <app-nav-link />
+               </nav>
+            </div>
+         </div>
+         <div class="col-xl-3 col-lg col-md-6 col-6">
+            <!-- ca-btn -->
+            <div class="ca-btn-header d-none d-lg-block text-end">
+               <a [href]="buttonLink" [ngClass]="buttonClass">
+                  {{ buttonText }} <span>
+                     @if(showMobileMenu){
+                     <i class="fa-solid fa-arrow-right"></i>
+                     }@else {
+                     <i class="fa-solid fa-angle-right"></i>
+                     }</span>
+               </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <!-- @if(showMobileMenu){ -->
+            <div class="ca-header-action-item d-lg-none text-end">
+               <button type="button" class="ca-offcanvas-toogle"  (click)="toggleMenu()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" viewBox="0 0 30 16">
+                     <rect x="10" width="20" height="2" fill="currentColor"></rect>
+                     <rect x="5" y="7" width="25" height="2" fill="currentColor"></rect>
+                     <rect x="10" y="14" width="20" height="2" fill="currentColor"></rect>
+                  </svg>
+               </button>
+            </div>
+            <!-- } -->
+         </div>
+      </div>
+   </div>
+</header>
+
+<div class="ca-offcanvas w-bg " [ngClass]="{ 'ca-offcanvas-open': isMenuOpen }">
+   <div class="ca-offcanvas-wrapper">
+      <div class="ca-offcanvas-header d-flex justify-content-between align-items-center mb-40">
+         <div class="ca-offcanvas-logo">
+            <a href="javascript:void(0);"><img src="assets/img/logo/laboratorio-euronutec-dark.png" alt=""></a>
+         </div>
+         <div class="ca-offcanvas-close" (click)="closeMenu()">
+            <button class="ca-offcanvas-close-toggle"><i class="fal fa-times"></i></button>
+         </div>
+      </div>
+      <div class="ca-offcanvas-menu-3 mb-40">
+         <nav>
+            <ul>
+               @for (item of menuItems; track $index) {
+               <li >
+                 <a href="javascript:void(0);" (click)="toggleSubMenu(item)">
+                   {{ item.title }}
+                   <span *ngIf="item.icon"><i [class]="item.icon"></i></span>
+                 </a>
+             
+                 <!-- Submenu -->
+                  @if (item.subMenu && item.isOpen) {
+                 <ul class="sub-menu"  [ngStyle]="{ 'display': item.isOpen ? 'block' : 'none' }">
+                  @for (subItem of item.subMenu; track $index) {
+                   <li>
+                     <a [href]="subItem.link">{{ subItem.title }}</a>
+                   </li>
+                  }
+                 </ul>
+               }
+             
+                 <!-- Close Button -->
+                  @if(item.subMenu){
+                 <button class="ca-menu-close3" (click)="toggleSubMenu(item)">
+                   <i class="fas fa-chevron-right"></i>
+                 </button>
+               }
+               </li>
+            }
+             </ul></nav>
+      </div>
+      <div class="ca-offcanvas-contact mb-40">
+         <a href="javascript:void(0);" class="ca-btn-primary-3 theme-bg-3 text-white br-50">Get A Quote <span><i class="fa-solid fa-angle-right"></i></span></a>
+      </div>
+      <div class="ca-offcanvas-contact-info mb-40">
+         <h3 class="ca-offcanvas-sm-title">Contact Info</h3>
+          <!-- single item -->
+          <div class="ca-sm-single-item-4 ca-sm-single-item-1 mb-20">
+            <div class="icon">
+               <span>
+                  <i class="fa-solid fa-location-dot"></i>
+               </span>
+            </div>
+            <div class="ca-sm-single-item-4-content">
+               <p><a href="javascript:void(0);">55 Street, 2nd block, 3rd Floor
+                  Melbourne, Australia</a></p>
+            </div>
+         </div>
+
+         <!-- single item -->
+         <div class="ca-sm-single-item-4 ca-sm-single-item-1 mb-20">
+            <div class="icon">
+               <span>
+                  <i class="fa-solid fa-phone"></i>
+               </span>
+            </div>
+            <div class="ca-sm-single-item-4-content">
+               <p><a href="tel:+0221234568806">+022 (123) 456 88 06</a></p>
+            </div>
+         </div>
+
+         <!-- single item -->
+         <div class="ca-sm-single-item-4 ca-sm-single-item-1 mb-20">
+            <div class="icon">
+               <span>
+                  <i class="fa-solid fa-envelope"></i>
+               </span>
+            </div>
+            <div class="ca-sm-single-item-4-content">
+               <p><a href="mailto:infocargon@gmail.com">infocargon&#64;gmail.com</a></p>
+            </div>
+         </div>
+      </div>
+      <div class="ca-offcanvas-social mb-40">
+         <h3 class="ca-offcanvas-sm-title">Follow Us</h3>
+         <div class="ca-footer-social ca-footer-social-3">
+            <ul>
+               <li><a href="javascript:void(0);"><i class="fa-brands fa-instagram"></i></a></li>
+               <li><a href="javascript:void(0);"><i class="fa-brands fa-facebook-f"></i></a></li>
+               <li><a href="javascript:void(0);"><i class="fa-brands fa-linkedin-in"></i></a></li>
+               <li><a href="javascript:void(0);"><i class="fa-brands fa-x-twitter"></i></a></li>
+            </ul>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="ca-offcanvas-overlay"  [ngClass]="{ 'ca-offcanvas-overlay-open': isMenuOpen }"></div>
+<!-- offcanvas end -->
+

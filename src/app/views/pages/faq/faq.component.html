@@ -1,0 +1,131 @@
+<app-breadcrumb [title]="'FAQ’s'" />
+
+
+<div class="ca-faq-inner pt-100 pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-30">
+                <div class="ca-faq-iner-thumb p-relative mr-65">
+                    <img class="w-100" src="assets/img/faq/ca-faq-thumb-1.1.png" alt="">
+                    <div class="ca-fa-sm-thumb">
+                        <img src="assets/img/faq/ca-faq-sm1.2.png" alt="">
+                    </div>
+
+                    <div class="ca-iner-review-text ca-faq-iner-review p-absolute theme-bg-3">
+                        <h3 class="ca-counter-title fnw-700 pb-16"><span class="counter">28</span>+</h3>
+                        <p>Years Of Experience</p>
+                        <div class="ca-test-3-rating ca-faq-rating">
+                            <div class="ca-ratings-3">
+                                <span class="fa fa-star checked star"></span>
+                                <span class="fa fa-star checked star"></span>
+                                <span class="fa fa-star checked star"></span>
+                                <span class="fa fa-star checked star"></span>
+                                <span class="fa fa-star checked star"></span>
+                            </div>
+                            <div class="ca-rating-num-3">
+                                <h4 class="ca-rating-title-3">(5) <span class="rat-title">Rating</span></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-30">
+                <div class="ca-about-content-3 ca-sec-content-3 mb-48">
+                    <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">FAQ'S</h5>
+                    <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">Frequently Asked Questions
+                        and Answers</h2>
+                </div>
+                <div class="ca-faq-accordion-one">
+                    <div class="accordion" id="accordionExample" ngbAccordion [closeOthers]="true">
+                        <!-- single item -->
+                        @for (item of FAQs; track $index) {
+                        <div class="ca-iner-one accordion-item" ngbAccordionItem [collapsed]="false">
+                            <h2 class="accordion-header" id="heading2" ngbAccordionHeader>
+                                <button class="accordion-button collapsed" type="button" ngbAccordionButton
+                                    data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false"
+                                    aria-controls="collapse2">
+                                    <span><i class="fa-solid fa-angle-down"></i></span> {{item.question}}
+                                </button>
+                            </h2>
+                            <div id="collapse2" class="accordion-collapse collapse" ngbAccordionCollapse
+                                aria-labelledby="heading2" data-bs-parent="#accordionExample">
+                                <div class="accordion-body" ngbAccordionBody>
+                                    <p>{{item.answer}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="ca-faq-iner2 pt-100 pb-70">
+    <div class="container">
+        <div class="ca-about-content-3 ca-sec-content-3 text-center mb-60">
+            <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">FAQ'S</h5>
+            <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">Answers to Your Questions</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ca-faq-acc">
+                    <div class="ca-accordion" id="accordionExample1">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="accordion" [closeOthers]="true" ngbAccordion id="accordionExample2">
+                                    @for (item of answerFaqs|slice:0:4; track $index) {
+                                    <!-- single acordion item -->
+                                    <div class="ca-iner-accordion-item border-0" ngbAccordionItem
+                                        [collapsed]="item.show === true">
+                                        <h2 class="accordion-header" ngbAccordionHeader>
+                                            <button class="accordion-button" ngbAccordionButton type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                                aria-expanded="false" aria-controls="collapseTwo">
+                                                {{item.question}}
+                                            </button>
+                                        </h2>
+                                        <div id="collapseTwo" class="accordion-collapse collapse" ngbAccordionCollapse
+                                            data-bs-parent="#accordionExample1">
+                                            <div class="accordion-body" ngbAccordionBody>
+                                                <p>{{item.answer}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="accordion" [closeOthers]="true" ngbAccordion id="accordionExample2">
+                                    @for (item of answerFaqs|slice:5:9; track $index) {
+                                    <!-- single acordion item -->
+                                    <div class="ca-iner-accordion-item border-0" ngbAccordionItem
+                                        >
+                                        <h2 class="accordion-header" ngbAccordionHeader>
+                                            <button class="accordion-button" ngbAccordionButton type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                                aria-expanded="false" aria-controls="collapseTwo">
+                                                {{item.question}}
+                                            </button>
+                                        </h2>
+                                        <div id="collapseTwo" class="accordion-collapse collapse" ngbAccordionCollapse
+                                            data-bs-parent="#accordionExample1">
+                                            <div class="accordion-body" ngbAccordionBody>
+                                                <p>{{item.answer}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

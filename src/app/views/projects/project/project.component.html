@@ -1,0 +1,43 @@
+<app-breadcrumb [title]="'Our Projects'" />
+
+<div class="ca-projects-iner pt-100 pb-100">
+  <div class="container">
+    <div class="row">
+      @for (item of portfolioGroups; track $index) {
+      <div class="col-xl-4 col-md-6">
+        @for (project of item; track $index) {
+        <div class="ca-single-portfolio-item {{project.size}}-img p-relative z-index-1 fix mb-30">
+          <div class="ca-portfolio-img">
+            <img class="w-100 br-7" [src]="project.image" alt="">
+          </div>
+          <div class="ca-portfolio-link">
+            <a [href]="project.link" class="portfolio-link portfolio-link-2">
+              <span><img [src]="project.arrowIcon" alt=""></span>
+            </a>
+          </div>
+          <div class="ca-portfolio-content-meta theme-bg-3 br-7">
+            <p>{{project.category}}</p>
+            <h4 class="ca-por-title"><a [href]="project.link">{{project.title}}</a></h4>
+          </div>
+        </div>
+        }
+      </div>
+      }
+    </div>
+    <div class="row">
+      <div class="col-12 m-auto">
+        <div class="theme-pagination text-center">
+          <ul>
+            <li><a href="javascript:void(0);"><i class="fa-solid fa-angle-left"></i></a></li>
+            <li><a class="active" href="javascript:void(0);">01</a></li>
+            <li><a href="javascript:void(0);">02</a></li>
+            <li>...</li>
+            <li><a href="javascript:void(0);">12</a></li>
+            <li><a href="javascript:void(0);"><i class="fa-solid fa-angle-right"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

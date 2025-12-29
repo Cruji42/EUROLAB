@@ -1,0 +1,28 @@
+<div class="ca-more-section pb-70">
+    <div class="container">
+        <h2 class="ca-more-title theme-black-3 fnw-600 text-center mb-60">More Services</h2>
+        <div class="row">
+            <!-- single service box -->
+            @for (item of services | slice:0:3; track $index) {
+            <div class="col-xl-4 col-md-6 mb-30">
+                <div class="ca-ser-icon-box ca-ser-icon-box-2 fix p-relative cream-bg-3 z-index-1 p-32 br-7">
+                    <div class="ca-about-icon">
+                        <div class="ca-about-ic ca-ser-ic">
+                            <img [src]="item.image" alt="">
+                        </div>
+                        <div class="ca-num">
+                            <h4 class="overly-num overly-num2">0{{item.id}}</h4>
+                        </div>
+                    </div>
+                    <div class="ca-service-content ca-service-content-iner">
+                        <h4 class="ca-title fnw-700 pb-16 pt-32"><a routerLink="/service-single">{{item.title}}</a></h4>
+                        <p class="pb-24">{{item.description}}.</p>
+                        <a routerLink="/service-single" class="read-more">Read More <span><i
+                                    class="fa-solid fa-angle-right"></i></span></a>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<section class="ca-service-3 cream-bg-3 pt-100 pb-70">
+    <div class="container">
+      <div class="ca-portfolio-content-3 ca-sec-content-3 text-center mb-60" data-aos="fade-up" data-aos-duration="800">
+        <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">Nuestros Servicios</h5>
+        <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">Lorem ipsum dolor sit amet</h2>
+        <p class="pt-16">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br> Quisque at ultricies ex. Fusce purus sem, venenatis in mauris at, pulvinar dignissim massa. Duis nec tincidunt eros, at gravida urna.</p>
+      </div>
+    </div>
+    <!-- Expand gallery start -->
+    <div class="expand-container">
+        @for (service of services; track $index) {
+      <div class="slide"
+       [class.active]="activeIndex === $index"
+    (mouseenter)="activeIndex = $index"
+    (mouseleave)="activeIndex = null"
+      >
+        <img class="expand-slide-img" [src]="service.image" alt="">
+        <div class="expand-slide-ic-box">
+          <div class="ca-expand-ic">
+            <span><img [src]="service.icon" alt=""></span>
+          </div>
+          <h2 class="ca-expand-title"><a href="javascript:void(0);">{{ service.title }}</a></h2>
+          <p>{{ service.description }}</p>
+        </div>
+      </div>
+    }
+    </div>
+    <!-- Expand gallery end -->
+</section>

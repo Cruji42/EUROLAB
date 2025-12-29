@@ -1,0 +1,121 @@
+<div class="ca-service-lft-area pt-100 pb-70">
+    <div class="container">
+       <div class="row">
+        <div class="col-lg-8 mb-30">
+            <div class="ca-service-content-area">
+               <div class="ca-servic-thumb br-7 mb-40">
+                  <img class="w-100" src="assets/img/service/ca-servic-larg.png" alt="">
+               </div>
+               <div class="ca-servic-thumb-content">
+                  <h2 class="ca-service-thumb-title theme-black-3 fnw-600 ca-text-cap">Supply Chain Management</h2>
+                  <p class="pt-16">We pride ourselves on offering a comprehensive suite of logistics and transport services tailored to meet <br>the diverse needs of our clients. Our Freight Forwarding Services ensure your goods are transported <br> efficiently and safely across international borders, leveraging our extensive network and expertise.</p>
+                  <p class="pt-16">Our Warehousing Solutions provide secure storage with advanced inventory management systems to keep <br>your products organized and easily accessible. We specialize in Customs Clearance, navigating the<br> complexities of international trade regulations to ensure smooth and timely shipments.</p>
+                  <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 pt-40 ca-text-cap">Comprehensive Service Overview</h3>
+                  <p class="pt-16 pb-40">Our Global Shipping Services connect you to markets worldwide, offering reliable & cost-effective solutions<br> for your business. For domestic needs, our Domestic Transport Solutions guarantee fast and dependable <br>delivery across the country. Our Supply Chain Management services optimize every step of your logistics</p>
+                  <div class="ca-acordion-area">
+                     <div class="accordion" ngbAccordion id="accordionExample" [closeOthers]="true">
+                        <!-- single accordion item -->
+                         @for (item of faqs; track $index) {
+                        <div class="ca-accordion-item ca-accordion-item-2 mb-24" ngbAccordionItem [collapsed]="false">
+                           <h2 class="ca-accordion-header" id="headingTwo" ngbAccordionHeader>
+                              <button class="accordion-button" ngbAccordionButton type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              {{item.question}}
+                              </button>
+                           </h2>
+                           <div id="collapseTwo" class="accordion-collapse collapse" ngbAccordionCollapse aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                              <div class="ca-accordion-body" ngbAccordionBody>
+                                 <p>{{item.answer}}</p>
+                              </div>
+                           </div>
+                        </div>
+                       }
+                     </div>
+                  </div>
+                  <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 pt-16 ca-text-cap">In-Depth Service Information</h3>
+                  <p class="pt-16 pb-40">Our Freight Forwarding Services are designed to handle complex international shipments, ensuring your <br>goods reach their destination safely & on time. Our Warehousing Solutions offer state-of-the-art facilities <br>equipped with advanced security & inventory management systems, allowing for efficient storage.</p>
+                  <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 ca-text-cap">Our Specialized Services</h3>
+                  <p class="pt-16 pb-40">With our Customs Clearance Expertise, we simplify process of navigating international trade regulations, <br>ensuring compliance and minimizing delays. Our Global Shipping Services provide comprehensive solutions <br>for transporting goods worldwide, backed by a network of reliable carriers and partners.</p>
+                  <h4 class="ca-thumb-title-4 theme-black-3 fnw-600 pb-16">Detailed Service Offerings Service Highlights</h4>
+                  <div class="ca-ab-item-check ca-ab-item-check-2">
+                     <!-- single-item -->
+                      @for (item of serviceItems; track $index) {
+                     <div class="ca-ab-sngle-item">
+                        <div class="ca-ab-sngle-item-ic">
+                           <span><i class="fa-solid fa-check"></i></span>
+                        </div>
+                        <div class="ca-ab-sngle-item-content">
+                           <h4 class="ca-item-ch-title">{{ item }}</h4>
+                        </div>
+                     </div>
+                   }
+                  </div>
+                  <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 pt-30">Our Services in Detail</h3>
+                  <p class="pt-16">For businesses requiring domestic transportation, our Domestic Transport Solutions offer fast, flexible, and<br> cost-effective delivery options. Our Supply Chain Management services are tailored to optimize every <br>aspect of your logistics process, from procurement to final delivery.</p>
+               </div>
+            </div>
+         </div>
+          <div class="col-lg-4 mb-30">
+             <!-- sidebar area -->
+             <div class="ca-sidebar-area mr-50">
+                <!-- search -->
+                <div class="ca-search ca-padding cream-bg-3 br-7 mb-30">
+                   <h4 class="ca-title fnw-600 theme-black-3 pb-16">Search</h4>
+                   <div class="ca-search-box p-relative z-index-1">
+                      <input type="text" placeholder="Search..">
+                      <div class="ca-sea-icon">
+                         <span><i class="fa-solid fa-magnifying-glass"></i></span>
+                      </div>
+                   </div>
+                </div>
+                <!-- service list -->
+                <div class="ca-servic-list ca-padding cream-bg-3 br-7 mb-30">
+                   <h4 class="ca-title fnw-600 theme-black-3 pb-24">Our Services</h4>
+                   @for (item of services; track $index) {
+                   <h3 class="ca-ser-list-title"><a href="javascript:void(0);" class="d-flex justify-content-between align-items-center">{{item}} <span><i class="fa-solid fa-angle-down"></i></span></a></h3>
+                   }
+                </div>
+                <!-- phone us -->
+                <div class="ca-servic-list ca-padding cream-bg-3 br-7 mb-30">
+                   <h4 class="ca-title ca-servic-list-title fnw-600 theme-black-3 pb-24">If You Need Any Help <br> Contact With Us</h4>
+                   <div class="ca-ph-content">
+                      <div class="ca-ph-ic">
+                         <span><img src="assets/img/icon/ca-ser-phone.svg" alt=""></span>
+                      </div>
+                      <div class="ca-ph-title">
+                         <h4 class="ph-title"><a href="tel:1234567890">+123 456 7890</a></h4>
+                      </div>
+                   </div>
+                </div>
+                <!-- sidebar contact -->
+                <div class="ca-search ca-padding cream-bg-3 br-7 mb-30">
+                   <h4 class="ca-title fnw-600 theme-black-3 pb-24">Get A Free Quote</h4>
+                   <div class="ca-sidebar-form">
+                      <form action="#">
+                         <input type="text" placeholder="Your Name">
+                         <input type="email" placeholder="Email Address">
+                         <input type="tel" placeholder="Phone Number">
+                         <textarea name="message" id="message" rows="10" cols="4" placeholder="Your Message"></textarea>
+                      </form>
+                      <div class="ca-sidebar-form-btn text-end">
+                         <a href="javascript:void(0);" class="ca-btn-primary-3 theme-bg-3 text-white br-50">Contact Now <span><i class="fa-solid fa-angle-right"></i></span></a>
+                      </div>
+                   </div>
+                </div>
+                <!-- Follow Us -->
+                <div class="ca-search ca-padding cream-bg-3 br-7 mb-30">
+                   <h4 class="ca-title fnw-600 theme-black-3 pb-24">Follow Us</h4>
+                   <div class="ca-footer-social ca-footer-social-3">
+                      <ul>
+                         <li><a href="javascript:void(0);"><i class="fa-brands fa-instagram"></i></a></li>
+                         <li><a href="javascript:void(0);"><i class="fa-brands fa-facebook-f"></i></a></li>
+                         <li><a href="javascript:void(0);"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                         <li><a href="javascript:void(0);"><i class="fa-brands fa-x-twitter"></i></a></li>
+                      </ul>
+                   </div>
+                </div>
+             </div>
+          </div>
+        
+       </div>
+    </div>
+ </div>

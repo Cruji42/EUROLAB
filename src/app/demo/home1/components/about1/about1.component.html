@@ -1,0 +1,102 @@
+<section class="ca-about-3 pt-100 pb-70">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="ca-abo-item-1">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            @for (item of aboutItems | slice:0:2; track item.id) {
+                            <div class="ca-abo-single-item mb-30">
+                                <img class="w-100 {{item.imageClass}}" [src]="item.image" alt="">
+                                <div class="ca-abo-hover-item">
+                                    <div class="ca-abo-content">
+                                        <div class="ca-abo-icon">
+                                            <span><img [src]="item.icon" alt=""></span>
+                                        </div>
+                                        <h3 class="ca-abo-hover-title"><span class="counter">{{item.count}}</span>K+
+                                        </h3>
+                                        <p>{{item.label}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            @for (item of aboutItems|slice:2:4; track item.id) {
+                            <div class="ca-abo-single-item mb-30">
+                                <img class="w-100 {{item.imageClass}}" [src]="item.image" alt="">
+                                <div class="ca-abo-hover-item">
+                                    <div class="ca-abo-content">
+                                        <div class="ca-abo-icon">
+                                            <span><img [src]="item.icon" alt=""></span>
+                                        </div>
+                                        <h3 class="ca-abo-hover-title"><span class="counter">{{item.count}}</span>K+
+                                        </h3>
+                                        <p>{{item.label}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 mb-30">
+                <div class="ca-ab-content3">
+                    <div class="ca-about-content-3 ca-sec-content-3">
+                        <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">Lorem Ipsum</h5>
+                        <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">Lorem ipsum dolor sit amet
+                            <br> consectetur adipiscing elit</h2>
+                        <p class="pt-16 pb-32"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    </div>
+                    <div class="ca-ab-item-check">
+                        <!-- single-item -->
+                        <div class="ca-ab-sngle-item">
+                            <div class="ca-ab-sngle-item-ic">
+                                <span><i class="fa-solid fa-check"></i></span>
+                            </div>
+                            <div class="ca-ab-sngle-item-content">
+                                <h4 class="ca-item-ch-title">Sed do eiusmod tempor incididunt</h4>
+                            </div>
+                        </div>
+                        <!-- single-item -->
+                        <div class="ca-ab-sngle-item">
+                            <div class="ca-ab-sngle-item-ic">
+                                <span><i class="fa-solid fa-check"></i></span>
+                            </div>
+                            <div class="ca-ab-sngle-item-content">
+                                <h4 class="ca-item-ch-title">Consectetur adipiscing elit</h4>
+                            </div>
+                        </div>
+                        <!-- single-item -->
+                        <div class="ca-ab-sngle-item">
+                            <div class="ca-ab-sngle-item-ic">
+                                <span><i class="fa-solid fa-check"></i></span>
+                            </div>
+                            <div class="ca-ab-sngle-item-content">
+                                <h4 class="ca-item-ch-title">Ut labore et dolore magna aliqua</h4>
+                            </div>
+                        </div>
+                        <!-- single-item -->
+                        <div class="ca-ab-sngle-item">
+                            <div class="ca-ab-sngle-item-ic">
+                                <span><i class="fa-solid fa-check"></i></span>
+                            </div>
+                            <div class="ca-ab-sngle-item-content">
+                                <h4 class="ca-item-ch-title">Consectetur adipiscing elit</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ca-about-item3 cream-bg-3 p-relative">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    </div>
+                    <div class="ca-about-3-btn">
+                        <a href="javascript:void(0);" class="ca-btn-primary-3 theme-bg-3 text-white br-50">Transpires<span><i
+                                    class="fa-solid fa-angle-right"></i></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

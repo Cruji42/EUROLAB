@@ -1,0 +1,63 @@
+<app-breadcrumb [title]="'Our Blog'"/>
+
+<div class="ca-blog-inner pt-100 pb-100">
+    <div class="container">
+       <div class="row">
+          <!-- single-blog-item -->
+           @for (item of blog; track $index) {
+          <div class="col-xl-4 col-md-6 mb-30">
+             <div class="ca-team-box ca-blg-box-3 cream-bg-3 br-7 fix p-relative z-index-1">
+                <div class="ca-team-img">
+                   <img class="w-100" [src]="item.image" alt="">
+                </div>
+                <div class="ca-blog-date-3 ca-blg-date-3">
+                   <a href="javascript:void(0);" class="blg-date-3">{{item.date}}</a>
+                </div>
+                <div class="ca-blog-box-content ca-blog-box-content-3">
+                   <div class="ca-b-meta">
+                      <!-- blog meta box -->
+                      <a href="javascript:void(0);" class="ca-blog-meta ca-blog-meta-3">
+                         <div class="ca-meta-icon">
+                            <span><img src="assets/img/icon/user-1.1.svg" alt=""></span>
+                         </div>
+                         <div class="ca-meta-title">
+                            <span>{{item.author}}</span>
+                         </div>
+                      </a>
+                      <!-- blog meta box -->
+                      <a href="javascript:void(0);" class="ca-blog-meta ca-blog-meta-3">
+                         <div class="ca-meta-icon">
+                            <span><img src="assets/img/icon/tag-1.1.svg" alt=""></span>
+                         </div>
+                         <div class="ca-meta-title">
+                            <span>{{item.category}}</span>
+                         </div>
+                      </a>
+                   </div>
+                   <h4 class="ca-blog-title ca-blog-title-3 fnw-600"><a href="javascript:void(0);">{{item.title}}</a></h4>
+                   <p class="pt-16 pb-18">{{item.description}}</p>
+                   <div class="blog-3-rearmore">
+                      <a routerLink="/blog-single" class="read-more3">Read More <span><i class="fa-solid fa-angle-right"></i></span></a>
+                   </div>
+                </div>
+             </div>
+          </div>
+        }
+       </div>
+       <!-- pagination -->
+       <div class="row">
+          <div class="col-12 m-auto">
+             <div class="theme-pagination text-center">
+             <ul>
+                 <li><a href="javascript:void(0);"><i class="fa-solid fa-angle-left"></i></a></li>
+                 <li><a class="active" href="javascript:void(0);">01</a></li>
+                 <li><a href="javascript:void(0);">02</a></li>
+                 <li>...</li>
+                 <li><a href="javascript:void(0);">12</a></li>
+                 <li><a href="javascript:void(0);"><i class="fa-solid fa-angle-right"></i></a></li>
+             </ul>
+             </div>
+         </div>
+       </div>
+    </div>
+ </div>

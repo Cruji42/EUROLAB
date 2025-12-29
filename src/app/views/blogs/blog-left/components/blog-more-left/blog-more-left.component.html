@@ -1,0 +1,48 @@
+<div class="ca-more-section pb-70">
+    <div class="container">
+       <h2 class="ca-more-title theme-black-3 fnw-600 text-center mb-60">View More Blogs</h2>
+       <div class="row">
+        @for (post of blogPosts | slice:0:3; track $index) {
+          <div class="col-lg-4 col-md-6 mb-30">
+            <div class="ca-team-box ca-blg-box-3 cream-bg-3 br-7 fix p-relative z-index-1">
+              <div class="ca-team-img">
+                <img class="w-100" [src]="post.image" alt="">
+              </div>
+              <div class="ca-blog-date-3 ca-blg-date-3">
+                <a href="javascript:void(0);" class="blg-date-3">{{ post.date }}</a>
+              </div>
+              <div class="ca-blog-box-content ca-blog-box-content-3">
+                <div class="ca-b-meta">
+                  <!-- blog meta box -->
+                  <a href="javascript:void(0);" class="ca-blog-meta ca-blog-meta-3">
+                    <div class="ca-meta-icon">
+                      <span><img [src]="'assets/img/icon/user-1.1.svg'" alt=""></span>
+                    </div>
+                    <div class="ca-meta-title">
+                      <span>{{ post.author }}</span>
+                    </div>
+                  </a>
+                  <!-- blog meta box -->
+                  <a href="javascript:void(0);" class="ca-blog-meta ca-blog-meta-3">
+                    <div class="ca-meta-icon">
+                      <span><img [src]="'assets/img/icon/tag-1.1.svg'" alt=""></span>
+                    </div>
+                    <div class="ca-meta-title">
+                      <span>{{ post.category }}</span>
+                    </div>
+                  </a>
+                </div>
+                <h4 class="ca-blog-title ca-blog-title-3 fnw-600">
+                  <a [href]="post.read_more_link">{{ post.title }}</a>
+                </h4>
+                <p class="pt-16 pb-18">{{ post.description }}</p>
+                <div class="blog-3-rearmore">
+                  <a [href]="post.read_more_link" class="read-more3">Read More <span><i class="fa-solid fa-angle-right"></i></span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+ </div>

@@ -1,0 +1,28 @@
+
+<section class="ca-working-section theme-black-bg-3 pt-390 pb-70">
+    <div class="container">
+      <div class="ca-working-section-3 ca-sec-content-3 text-center mb-60" data-aos="fade-up" data-aos-duration="800">
+        <h5 class="ca-section-subtitle subtitle-bg-7 p-relative text-white br-50">Lorem ipsum</h5>
+        <h2 class="ca-section-title theme-black-3 fnw-600 text-white pt-16">Lorem ipsum dolor sit amet</h2>
+        <p class="pt-16">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at ultricies ex.<br> Fusce purus sem, venenatis in mauris at, pulvinar dignissim massa.</p>
+      </div>
+      <div class="row">
+
+        @for (process of workingProcess; track $index) {
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-30">
+          <div class="ca-work-ic-box br-7" data-aos="fade-up" data-aos-duration="800">
+            <div class="ca-work-ic-box-img">
+              <span>
+                <img [src]="process.icon" alt="">
+              </span>
+            </div>
+            <div class="ca-work-ic-box-content">
+              <h4 class="ca-title fnw-600 text-white pt-24 pb-16"><a [href]="process.link">{{ process.title }}</a></h4>
+              <p>{{ process.description }}</p>
+            </div>
+          </div>
+        </div>
+    }
+      </div>
+    </div>
+  </section>

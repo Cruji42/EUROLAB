@@ -1,0 +1,13 @@
+<app-navbar [headerClass]="'header-area-3 stiky'" [navClass]="'ca-mobile-menu-active-3'" [containerClass]="'header-3'"
+    [logo]="'assets/img/logo/laboratorio-euronutec-dark.png'" [mainNavClass]="'ca-main-menu-3'" buttonText="Get A Quote"
+    buttonLink="contact" buttonClass="ca-btn-primary-3 theme-bg-3 text-white br-50" />
+
+<main>
+    <router-outlet />
+</main>
+
+<app-footer />
+
+<!-- @if(showButton){ -->
+    <button id="topBtn3" (click)="scrollToTop($event)"><i class="fa-solid fa-arrow-up"></i></button>
+  <!-- } -->
