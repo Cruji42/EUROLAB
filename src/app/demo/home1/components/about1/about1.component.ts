@@ -15,7 +15,7 @@ export class About1Component {
       imageClass: 'lar-img-1',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Delivered Goods'
+      label: 'Análisis Realizados'
     },
     {
       id: 2,
@@ -23,7 +23,7 @@ export class About1Component {
       imageClass: 'sm-img-1',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Delivered Goods'
+      label: 'Análisis Realizados'
     },
     {
       id: 3,
@@ -31,7 +31,7 @@ export class About1Component {
       imageClass: 'sm-img-2',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Delivered Goods'
+      label: 'Análisis Realizados'
     },
     {
       id: 4,
@@ -39,7 +39,7 @@ export class About1Component {
       imageClass: 'lar-img-2',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Delivered Goods'
+      label: 'Análisis Realizados'
     }
   ];
 }

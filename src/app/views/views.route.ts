@@ -120,6 +120,6 @@ export const VIEWS_ROUTES: Route[] = [
     {
         path:'index',
         component:Home1Component,
-        data:{title:'Cargon 01'}
+        data:{title:'Laboratorio Euronutec'}
     },
 ]
