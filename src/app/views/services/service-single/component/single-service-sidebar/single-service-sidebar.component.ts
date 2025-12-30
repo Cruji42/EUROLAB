@@ -21,7 +21,7 @@ export class SingleServiceSidebarComponent {
     "Detalle del Servicio",
     "Nuestros Servicios Especializados",
     "Destacados del Servicio",
-    "Nuestros servicios en Detalle",
+    "Nuestros Servicios en Detalle",
     "Que ofrecemos",
     "Servicio de Calidad"
   ];
