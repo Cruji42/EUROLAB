@@ -31,27 +31,27 @@ export class FooterComponent {
 
   footerSections = [
     {
-      title: 'Quick Links',
+      title: 'Secciones',
       widgetClass: 'widget-2',
       links: [
         { text: 'Home', url: '/' },
-        { text: 'Service', url: '/service' },
-        { text: 'About Us', url: '/about' },
-        { text: 'Latest News', url: '/blog' },
-        { text: 'Contact Us', url: '/contact' }
+        { text: 'Nosotros', url: '/' },
+        { text: 'Servicios', url: '/service' },
+        { text: 'Noticias', url: '/' },
+        { text: 'Contacto', url: '/' }
       ]
     },
-    {
-      title: 'Other Links',
-      widgetClass: 'widget-3',
-      links: [
-        { text: 'Maintenance', url: '#' },
-        { text: 'Our Team', url: '#' },
-        { text: 'Reviews & Awards', url: '#' },
-        { text: 'Personal', url: '#' },
-        { text: 'Certifications', url: '#' }
-      ]
-    }
+    // {
+    //   title: 'Other Links',
+    //   widgetClass: 'widget-3',
+    //   links: [
+    //     { text: 'Maintenance', url: '#' },
+    //     { text: 'Our Team', url: '#' },
+    //     { text: 'Reviews & Awards', url: '#' },
+    //     { text: 'Personal', url: '#' },
+    //     { text: 'Certifications', url: '#' }
+    //   ]
+    // }
   ];
 
   subscribe() {

@@ -21,7 +21,7 @@ export class LeftServiceSidebarComponent {
     "Service Breakdown",
     "Our Specialized Services",
     "Service Highlights",
-    "Our Services in Detail",
+    "Nuestros servicios in Detail",
     "What We Provide",
     "Extensive Service"
   ];
