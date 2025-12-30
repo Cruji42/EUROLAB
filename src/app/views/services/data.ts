@@ -68,23 +68,23 @@ export const services=[
   export const faqs = [
       {
         "id": "collapseTwo",
-        "question": "What is your policy on damaged or lost goods?",
-        "answer": "That's why we've compiled a list of frequently asked questions to help you get the answers you need quickly and easily. Whether you're curious about our range of services, need information on tracking your shipment, or want to understand."
+        "question": "Pregunta número uno?",
+        "answer": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.. Whether you're curious about our range of services, need information on tracking your shipment, or want to understand."
       },
       {
         "id": "collapseOne",
-        "question": "What should I do if my shipment is delayed?",
-        "answer": "That's why we've compiled a list of frequently asked questions to help you get the answers you need quickly and easily. Whether you're curious about our range of services, need information on tracking your shipment, or want to understand."
+        "question": "Pregunta número dos?",
+        "answer": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.. Whether you're curious about our range of services, need information on tracking your shipment, or want to understand."
       },
       {
         "id": "collapseThree",
-        "question": "Can you handle oversized or special cargo?",
-        "answer": "That's why we've compiled a list of frequently asked questions to help you get the answers you need quickly and easily. Whether you're curious about our range of services, need information on tracking your shipment, or want to understand."
+        "question": "Pregunta número tres?",
+        "answer": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.. Whether you're curious about our range of services, need information on tracking your shipment, or want to understand."
       },
       {
         "id": "collapseFour",
-        "question": "What types of goods can you transport?",
-        "answer": "That's why we've compiled a list of frequently asked questions to help you get the answers you need quickly and easily. Whether you're curious about our range of services, need information on tracking your shipment, or want to understand."
+        "question": "Pregunta número cuatro?",
+        "answer": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.. Whether you're curious about our range of services, need information on tracking your shipment, or want to understand."
       }
     ]
   

@@ -9,7 +9,7 @@ export interface MenuItem {
   
 export const menu: MenuItem[] = [
     {
-      title: 'Home',
+      title: 'Inicio',
       link: '/index',
       // icon: 'fa-solid fa-angle-down',
       // subMenu: [

@@ -11,18 +11,18 @@ import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 export class SingleServiceSidebarComponent {
   faqs = faqs;
   services = [
-    "Supply Chain Management",
+    "Cambio",
     "Domestic Freight Transport",
     "Heavy Lift and Project Cargo",
     "Inventory Optimization",
     "E-commerce Fulfillment"
   ];
   serviceItems = [
-    "Service Breakdown",
-    "Our Specialized Services",
-    "Service Highlights",
-    "Nuestros servicios in Detail",
-    "What We Provide",
-    "Extensive Service"
+    "Detalle del Servicio",
+    "Nuestros Servicios Especializados",
+    "Destacados del Servicio",
+    "Nuestros servicios en Detalle",
+    "Que ofrecemos",
+    "Servicio de Calidad"
   ];
 }

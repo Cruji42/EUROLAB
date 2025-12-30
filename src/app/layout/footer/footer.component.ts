@@ -34,7 +34,7 @@ export class FooterComponent {
       title: 'Secciones',
       widgetClass: 'widget-2',
       links: [
-        { text: 'Home', url: '/' },
+        { text: 'Inicio', url: '/' },
         { text: 'Nosotros', url: '/' },
         { text: 'Servicios', url: '/service' },
         { text: 'Noticias', url: '/' },
