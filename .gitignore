@@ -28,3 +28,7 @@ yarn-debug.log*
 yarn-error.log*
 */.DS_Store
 public/assets/.DS_Store
+public/assets/img/.DS_Store
+.DS_Store
+public/assets/img/.DS_Store
+public/assets/img/.DS_Store
