@@ -20,7 +20,7 @@ export const menu: MenuItem[] = [
       // ],
       // isOpen:false
     },
-    { title: 'Nosotros', link: '/index' },
+    { title: 'Nosotros', link: '/about' },
     {
       title: 'Servicios',
       link: '/service',
@@ -48,7 +48,7 @@ export const menu: MenuItem[] = [
     // },
     {
       title: 'Noticias',
-      link: '/',
+      link: '/blog',
       // icon: 'fa-solid fa-angle-down',
       // subMenu: [
       //   { title: 'Blog', link: '/blog' },
@@ -60,7 +60,7 @@ export const menu: MenuItem[] = [
       // isOpen:false
     },{
       title:'Contacto',
-      link:'/'
+      link:'/contact'
     }
     // ,
     // {

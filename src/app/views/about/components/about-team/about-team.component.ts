@@ -9,13 +9,13 @@ import { RouterLink } from '@angular/router';
 })
 export class AboutTeamComponent {
   teamData={
-    "title": "The People Behind Our Success",
-    "subtitle": "Our Team",
-    "description": "Each member brings a wealth of knowledge and expertise, ensuring that we deliver top-notch transport and logistics solutions to our clients.",
+    "title": "El equipo detrás de cada resultado confiable",
+    "subtitle": "Nuestro Equipo",
+    "description": "Contamos con profesionales capacitados en análisis de laboratorio, comprometidos con la excelencia técnica y el cumplimiento de estándares de calidad. Cada integrante contribuye a garantizar precisión, trazabilidad y responsabilidad en cada proceso analítico.",
     "team_members": [
       {
         "name": "Alex Fargusion",
-        "role": "Specialist",
+        "role": "Responsable Técnico",
         "image": "assets/img/team/ca-team-iner1.1.png",
         "social_links": {
           "twitter": "#",
@@ -26,7 +26,7 @@ export class AboutTeamComponent {
       },
       {
         "name": "Richad Stones",
-        "role": "CEO & Founder",
+        "role": "Analista de Laboratorio",
         "image": "assets/img/team/ca-team-iner1.2.png",
         "social_links": {
           "twitter": "#",
@@ -37,7 +37,7 @@ export class AboutTeamComponent {
       },
       {
         "name": "Pep Gurdiola",
-        "role": "Manager",
+        "role": "Coordinador de Calidad",
         "image": "assets/img/team/ca-team-iner1.3.png",
         "social_links": {
           "twitter": "#",
@@ -48,7 +48,7 @@ export class AboutTeamComponent {
       },
       {
         "name": "Alex Fargusion",
-        "role": "Coordinator",
+        "role": "Especialista en Microbiología",
         "image": "assets/img/team/ca-team-iner1.4.png",
         "social_links": {
           "twitter": "#",
