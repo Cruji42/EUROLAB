@@ -10,7 +10,7 @@ import { TitleService } from '../../title.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit, AfterViewInit{
-  title = 'cargon-ng';
+  title = 'laboratorio-euronutec';
   isLoading = false;
   showButton = true;
   private titleService = inject(TitleService);

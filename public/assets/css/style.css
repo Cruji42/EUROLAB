@@ -1062,7 +1062,7 @@ a.ca-sec-primary-3 span {
     transition: .3s;
 }
 .ca-sec-primary-3:hover span {
-    background: #2B5DAC;
+    background: #1B5EA5;
     transition: .3s;
 }
 .ca-sec-primary-3:hover:after{
@@ -1072,7 +1072,7 @@ a.ca-sec-primary-3 span {
 
 
 .ca-btn-primary-3 span {
-    background: #2B5DAC;
+    background: #1B5EA5;
     height: 32px;
     width: 32px;
     display: inline-block;
@@ -5538,7 +5538,7 @@ iframe.ca-map {
 }
 .ca-btn-cta-3 .ca-btn-primary-3 span {
     background: #CFDAEC;
-    color:#2B5DAC;
+    color:#1B5EA5;
 }
 .ca-cta-shape3 {
     left: 50%;
@@ -6282,7 +6282,7 @@ button.ca-btn-primary.ca-btn-primary-2 span {
     transition: .3s;
 }
 .ca-ser-list-title a:hover span{
-    background: #2B5DAC;
+    background: #1B5EA5;
     color: #fff;
     transition: .3s;
 }
@@ -6302,7 +6302,7 @@ button.ca-btn-primary.ca-btn-primary-2 span {
 }
 
 .ca-ph-ic span {
-    background: #2B5DAC;
+    background: #1B5EA5;
     height: 32px;
     width: 32px;
     display: block;

@@ -8,56 +8,48 @@ import { RouterLink } from '@angular/router';
   styles: ``
 })
 export class AboutTeamComponent {
-  teamData={
+  teamData = {
     "title": "El equipo detrás de cada resultado confiable",
     "subtitle": "Nuestro Equipo",
     "description": "Contamos con profesionales capacitados en análisis de laboratorio, comprometidos con la excelencia técnica y el cumplimiento de estándares de calidad. Cada integrante contribuye a garantizar precisión, trazabilidad y responsabilidad en cada proceso analítico.",
     "team_members": [
       {
-        "name": "Alex Fargusion",
-        "role": "Responsable Técnico",
+        "name": "MICP. Lucía Robles Garay",
+        "role": "Responsable de Laboratorio",
         "image": "assets/img/team/ca-team-iner1.1.png",
         "social_links": {
-          "twitter": "#",
-          "linkedin": "#",
-          "instagram": "#",
-          "facebook": "#"
+          "email": "lrobles@gponutec.com",
+          "phone": "#"
         }
       },
       {
-        "name": "Richad Stones",
-        "role": "Analista de Laboratorio",
+        "name": "QFB. Mónica Arreguín",
+        "role": "Responsable adjunto de Laboratorio",
         "image": "assets/img/team/ca-team-iner1.2.png",
         "social_links": {
-          "twitter": "#",
-          "linkedin": "#",
-          "instagram": "#",
-          "facebook": "#"
+          "email": "marreguin@gponutec.com",
+          "phone": "#"
         }
       },
       {
-        "name": "Pep Gurdiola",
-        "role": "Coordinador de Calidad",
+        "name": "IBQ. Alejandra Ibarra Díaz",
+        "role": "Comercial Laboratorio",
         "image": "assets/img/team/ca-team-iner1.3.png",
         "social_links": {
-          "twitter": "#",
-          "linkedin": "#",
-          "instagram": "#",
-          "facebook": "#"
+          "email": "aibarra@gponutec.com",
+          "phone": "4422742397"
         }
       },
       {
-        "name": "Alex Fargusion",
-        "role": "Especialista en Microbiología",
+        "name": "QFI. Marisol Vertiz Alcantara",
+        "role": "Comercial Laboratorio",
         "image": "assets/img/team/ca-team-iner1.4.png",
         "social_links": {
-          "twitter": "#",
-          "linkedin": "#",
-          "instagram": "#",
-          "facebook": "#"
+          "email": "mvertiz@gponutec.com",
+          "phone": "4421280968"
         }
       }
     ]
   }
-  
+
 }

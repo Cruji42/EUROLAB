@@ -24,102 +24,102 @@ export const VIEWS_ROUTES: Route[] = [
     {
         path: 'about',
         component: AboutComponent,
-        data: { title: 'Cargon-About' },
+        data: { title: 'Laboratorio EURONUTEC-About' },
     },
     {
         path: 'service',
         component: ServicesComponent,
-        data: { title: 'Cargon-Service' },
+        data: { title: 'Laboratorio EURONUTEC-Service' },
     },
     {
         path: 'service-left',
         component: ServiceLeftComponent,
-        data: { title: 'Cargon-Service Left' },
+        data: { title: 'Laboratorio EURONUTEC-Service Left' },
     },
     {
         path: 'service-right',
         component: ServiceRightComponent,
-        data: { title: 'Cargon-Service Right' },
+        data: { title: 'Laboratorio EURONUTEC-Service Right' },
     },
     {
         path: 'service-single',
         component: ServiceSingleComponent,
-        data: { title: 'Cargon-Service Single' },
+        data: { title: 'Laboratorio EURONUTEC-Service Single' },
     },
     {
         path: 'team',
         component: TeamComponent,
-        data: { title: 'Cargon-Team' },
+        data: { title: 'Laboratorio EURONUTEC-Team' },
     },
     {
         path: 'testimonial',
         component: TestimonialComponent,
-        data: { title: 'Cargon-Testimonial' },
+        data: { title: 'Laboratorio EURONUTEC-Testimonial' },
     },
     {
         path: 'faq',
         component: FaqComponent,
-        data: { title: 'Cargon-Faq' },
+        data: { title: 'Laboratorio EURONUTEC-Faq' },
     },
     {
         path: 'pricing',
         component: PricingPlanComponent,
-        data: { title: 'Cargon-Pricing Plan' },
+        data: { title: 'Laboratorio EURONUTEC-Pricing Plan' },
     },
     {
         path: 'contact',
         component: ContactComponent,
-        data: { title: 'Cargon-Contact' },
+        data: { title: 'Laboratorio EURONUTEC-Contact' },
     },
     {
         path: '404',
         component: Error404Component,
-        data: { title: 'Cargon-404' },
+        data: { title: 'Laboratorio EURONUTEC-404' },
     },
     {
         path: 'blog',
         component: BlogComponent,
-        data: { title: 'Cargon-Blog' },
+        data: { title: 'Laboratorio EURONUTEC-Blog' },
     },
     {
         path: 'blog-left',
         component: BlogLeftComponent,
-        data: { title: 'Cargon-Blog Left' },
+        data: { title: 'Laboratorio EURONUTEC-Blog Left' },
     },
     {
         path: 'blog-right',
         component: BlogRightComponent,
-        data: { title: 'Cargon-Blog Right' },
+        data: { title: 'Laboratorio EURONUTEC-Blog Right' },
     },
     {
         path: 'blog-single',
         component: BlogSingleComponent,
-        data: { title: 'Cargon-Blog Single' },
+        data: { title: 'Laboratorio EURONUTEC-Blog Single' },
     },
     {
         path: 'projects',
         component: ProjectComponent,
-        data: { title: 'Cargon-Projects' },
+        data: { title: 'Laboratorio EURONUTEC-Projects' },
     },
     {
         path: 'project-left',
         component: ProjectLeftComponent,
-        data: { title: 'Cargon-Project Left' },
+        data: { title: 'Laboratorio EURONUTEC-Project Left' },
     },
     {
         path: 'project-right',
         component: ProjectRightComponent,
-        data: { title: 'Cargon-Project Eight' },
+        data: { title: 'Laboratorio EURONUTEC-Project Eight' },
     },
 
     {
         path: 'project-single',
         component: ProjectSingleComponent,
-        data: { title: 'Cargon-Project Single' },
+        data: { title: 'Laboratorio EURONUTEC-Project Single' },
     },
     {
         path:'index',
         component:Home1Component,
-        data:{title:'Laboratorio Euronutec'}
+        data:{title:'Laboratorio EURONUTEC'}
     },
 ]
