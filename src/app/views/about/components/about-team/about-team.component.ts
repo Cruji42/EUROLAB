@@ -9,9 +9,9 @@ import { RouterLink } from '@angular/router';
 })
 export class AboutTeamComponent {
   teamData = {
-    "title": "El equipo detrás de cada resultado confiable",
+    "title": "Las personas detrás de nuestros resultados",
     "subtitle": "Nuestro Equipo",
-    "description": "Contamos con profesionales capacitados en análisis de laboratorio, comprometidos con la excelencia técnica y el cumplimiento de estándares de calidad. Cada integrante contribuye a garantizar precisión, trazabilidad y responsabilidad en cada proceso analítico.",
+    "description": "Cada integrante aporta conocimiento técnico y vocación de servicio para ofrecerte soluciones analíticas de primer nivel.",
     "team_members": [
       {
         "name": "MICP. Lucía Robles Garay",
