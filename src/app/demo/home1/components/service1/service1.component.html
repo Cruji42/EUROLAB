@@ -2,14 +2,16 @@
     <div class="container">
       <div class="ca-portfolio-content-3 ca-sec-content-3 text-center mb-60" data-aos="fade-up" data-aos-duration="800">
         <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">Nuestros Servicios</h5>
-        <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">Servicios de análisis</h2>
-        <p class="pt-16">Evaluamos características fisicoquímicas, microbiológicas y nutricionales para asegurar la calidad y cumplimiento regulatorio de tus productos.</p>
+        <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">Análisis especializados para tu industria</h2>
+        <p class="pt-16">Contamos con tecnología de vanguardia y personal especializado para brindarte resultados confiables y precisos.</p>
       </div>
     </div>
     <!-- Expand gallery start -->
     <div class="expand-container">
+      <div class="row">
         @for (service of services; track $index) {
-      <div class="slide"
+<div class="col-lg-3 col-md-4 col-sm-6 col-12">
+        <div class="slide"
        [class.active]="activeIndex === $index"
     (mouseenter)="activeIndex = $index"
     (mouseleave)="activeIndex = null"
@@ -23,7 +25,12 @@
           <p>{{ service.description }}</p>
         </div>
       </div>
+</div>
     }
+      </div>
     </div>
+    <div class="container text-center">
+<a routerLink="/service" class="ca-btn-primary-3 theme-bg-3 text-white br-50">Conoce nuestros servicios<span><i class="fa-solid fa-angle-right"></i></span></a>
+    </div>
+    
     <!-- Expand gallery end -->
-</section>
