@@ -36,16 +36,30 @@ export class ServiceSingleComponent implements OnInit {
   }
 
   loadService(slug: string): void {
+    // Reset state before loading new service
+    this.isLoading = true;
+    this.hasError = false;
+    this.service = null;
+
     this.servicesService.getServiceBySlug(slug).subscribe({
       next: (data: ServiceDetail) => {
         this.service = data;
         this.isLoading = false;
+        // Scroll to top when service is loaded
+        this.scrollToTop();
       },
       error: (err: Error) => {
         console.error('Error fetching service:', err);
         this.hasError = true;
         this.isLoading = false;
       },
+    });
+  }
+
+  private scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
     });
   }
 }

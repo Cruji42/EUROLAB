@@ -1,4 +1,5 @@
-<app-breadcrumb [title]="'Nuestros Servicios'" [subTitle]="'Servicio'"/>
+<app-breadcrumb [title]="'Nuestros Servicios'" [subTitle]="service?.name || 'Servicio'"/>
+
 
 <!-- Loading state -->
 @if (isLoading) {
@@ -32,4 +33,4 @@
 @if (!isLoading && !hasError) {
   <app-single-service-sidebar [service]="service"/>
 }
-<app-more-service-single/>
+<app-more-service-single [currentServiceId]="service?.id || null"/>
