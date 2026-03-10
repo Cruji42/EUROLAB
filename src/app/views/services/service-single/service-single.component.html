@@ -1,4 +1,35 @@
 <app-breadcrumb [title]="'Nuestros Servicios'" [subTitle]="'Servicio'"/>
 
-<app-single-service-sidebar/>
+<!-- Loading state -->
+@if (isLoading) {
+  <div class="ca-service-lft-area pt-100 pb-70">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mb-30 mx-auto text-center py-5">
+          <div class="spinner-border text-secondary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Error state -->
+@if (hasError) {
+  <div class="ca-service-lft-area pt-100 pb-70">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mb-30 mx-auto text-center py-5">
+          <p class="text-muted">No se pudo cargar el servicio. Intenta más tarde.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Service content -->
+@if (!isLoading && !hasError) {
+  <app-single-service-sidebar [service]="service"/>
+}
 <app-more-service-single/>

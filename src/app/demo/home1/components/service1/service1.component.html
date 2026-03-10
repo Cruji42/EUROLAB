@@ -8,26 +8,48 @@
     </div>
     <!-- Expand gallery start -->
     <div class="expand-container">
-      <div class="row">
-        @for (service of services; track $index) {
-<div class="col-lg-3 col-md-4 col-sm-6 col-12">
-        <div class="slide"
-       [class.active]="activeIndex === $index"
-    (mouseenter)="activeIndex = $index"
-    (mouseleave)="activeIndex = null"
-      >
-        <img class="expand-slide-img" [src]="service.image" alt="">
-        <div class="expand-slide-ic-box">
-          <div class="ca-expand-ic">
-            <span><img [src]="service.icon" alt=""></span>
+
+      <!-- Loading state -->
+      @if (isLoading) {
+        <div class="text-center py-5">
+          <div class="spinner-border text-secondary" role="status">
+            <span class="visually-hidden">Cargando...</span>
           </div>
-          <h2 class="ca-expand-title"><a href="javascript:void(0);">{{ service.title }}</a></h2>
-          <p>{{ service.description }}</p>
         </div>
-      </div>
-</div>
-    }
-      </div>
+      }
+
+      <!-- Error state -->
+      @if (hasError) {
+        <div class="text-center py-4">
+          <p class="text-muted">No se pudieron cargar los servicios. Intenta más tarde.</p>
+        </div>
+      }
+
+      <!-- Services grid -->
+      @if (!isLoading && !hasError) {
+        <div class="row">
+@for (service of services | slice:0:8; track $index) {
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+              <div class="slide"
+                [class.active]="activeIndex === $index"
+                (mouseenter)="activeIndex = $index"
+                (mouseleave)="activeIndex = null"
+              >
+                <img class="expand-slide-img" [src]="service.image" alt="">
+                <div class="expand-slide-ic-box">
+                  <div class="ca-expand-ic">
+                    <span><img [src]="service.icon" alt=""></span>
+                  </div>
+                  <h2 class="ca-expand-title"><a href="javascript:void(0);">{{ service.title }}</a></h2>
+                  <p>{{ service.description }}</p>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
     </div>
     <div class="container text-center">
 <a routerLink="/service" class="ca-btn-primary-3 theme-bg-3 text-white br-50">Conoce nuestros servicios<span><i class="fa-solid fa-angle-right"></i></span></a>

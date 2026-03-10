@@ -1,28 +1,49 @@
+@if (service) {
 <div class="ca-service-lft-area pt-100 pb-70">
     <div class="container">
        <div class="row">
           <div class="col-lg-8 mb-30 mx-auto">
              <div class="ca-service-content-area">
+                <!-- Service Image -->
                 <div class="ca-servic-thumb br-7 mb-40">
-                   <img class="w-100" src="assets/img/service/ca-servic-larg.png" alt="">
+                   <img class="w-100" [src]="service.hero_image_url || 'assets/img/service/ca-servic-larg.png'" [alt]="service.name">
                 </div>
+                
                 <div class="ca-servic-thumb-content">
-                   <h2 class="ca-service-thumb-title theme-black-3 fnw-600 ca-text-cap">Servicio</h2>
-                   <p class="pt-16">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
-                   <p class="pt-16">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<br> Excepteur sint occaecat cupidatat non proident.</p>
-                   <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 pt-40 ca-text-cap">Excepteur sint occaecat cupidatat non proident</h3>
-                   <p class="pt-16 pb-40">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+                   <!-- Service Title -->
+                   <h2 class="ca-service-thumb-title theme-black-3 fnw-600 ca-text-cap">{{ service.name }}</h2>
+                   
+                   <!-- Main Content - Body P1 -->
+                   @if (service.body_p1) {
+                   <p class="pt-16" [innerHTML]="service.body_p1"></p>
+                   }
+                   
+                   <!-- Sub Title and Paragraph -->
+                   @if (service.sub_title) {
+                   <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 pt-40 ca-text-cap">{{ service.sub_title }}</h3>
+                   }
+                   @if (service.sub_paragraph) {
+                   <p class="pt-16 pb-40" [innerHTML]="service.sub_paragraph"></p>
+                   }
+
+                   <!-- Body P2 -->
+                   @if (service.body_p2) {
+                   <p class="pt-16" [innerHTML]="service.body_p2"></p>
+                   }
+
+                   <!-- FAQs Section -->
+                   @if (service.faqs && service.faqs.length > 0) {
                    <div class="ca-acordion-area">
                       <div class="accordion" ngbAccordion id="accordionExample" [closeOthers]="true">
                          <!-- single accordion item -->
-                          @for (item of faqs; track $index) {
+                          @for (item of service.faqs; track $index) {
                          <div class="ca-accordion-item ca-accordion-item-2 mb-24" ngbAccordionItem [collapsed]="false">
-                            <h2 class="ca-accordion-header" id="headingTwo" ngbAccordionHeader>
-                               <button class="accordion-button" ngbAccordionButton type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <h2 class="ca-accordion-header" [id]="'headingTwo-' + $index" ngbAccordionHeader>
+                               <button class="accordion-button" ngbAccordionButton type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseTwo-' + $index" [attr.aria-controls]="'collapseTwo-' + $index">
                                {{item.question}}
                                </button>
                             </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" ngbAccordionCollapse aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div [id]="'collapseTwo-' + $index" class="accordion-collapse collapse" ngbAccordionCollapse [attr.aria-labelledby]="'headingTwo-' + $index" data-bs-parent="#accordionExample">
                                <div class="ca-accordion-body" ngbAccordionBody>
                                   <p>{{item.answer}}</p>
                                </div>
@@ -31,29 +52,53 @@
                         }
                       </div>
                    </div>
-                   <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 pt-16 ca-text-cap">Información del Servicio</h3>
-                   <p class="pt-16 pb-40">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
-                   <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 ca-text-cap">Descripción del Servicio</h3>
-                   <p class="pt-16 pb-40">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error nemo maiores, porro sit necessitatibus suscipit quia accusantium, neque illum consequuntur reiciendis vel placeat doloremque provident tempora autem officiis voluptate aliquam!</p>
-                   <h4 class="ca-thumb-title-4 theme-black-3 fnw-600 pb-16">Detalles del Servicio</h4>
+                   }
+
+                   <!-- Info Section -->
+                   @if (service.info_title) {
+                   <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 pt-16 ca-text-cap">{{ service.info_title }}</h3>
+                   }
+                   @if (service.info_paragraph) {
+                   <p class="pt-16 pb-40" [innerHTML]="service.info_paragraph"></p>
+                   }
+
+                   <!-- Description Section -->
+                   @if (service.desc_title) {
+                   <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 ca-text-cap">{{ service.desc_title }}</h3>
+                   }
+                   @if (service.desc_paragraph) {
+                   <p class="pt-16 pb-40" [innerHTML]="service.desc_paragraph"></p>
+                   }
+
+                   <!-- Detail Section with Checks -->
+                   @if (service.detail_title) {
+                   <h4 class="ca-thumb-title-4 theme-black-3 fnw-600 pb-16">{{ service.detail_title }}</h4>
+                   }
+                   @if (service.checks && service.checks.length > 0) {
                    <div class="ca-ab-item-check ca-ab-item-check-2">
                       <!-- single-item -->
-                       @for (item of serviceItems; track $index) {
+                       @for (item of service.checks; track $index) {
                       <div class="ca-ab-sngle-item">
                          <div class="ca-ab-sngle-item-ic">
                             <span><i class="fa-solid fa-check"></i></span>
                          </div>
                          <div class="ca-ab-sngle-item-content">
-                            <h4 class="ca-item-ch-title">{{ item }}</h4>
+                            <h4 class="ca-item-ch-title">{{ item.label }}</h4>
                          </div>
                       </div>
                     }
                    </div>
-                   <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 pt-30">Nuestros Servicios en Detalle</h3>
-                   <p class="pt-16">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque repellat eius deleniti esse quasi itaque eligendi quos natus ipsa nihil possimus consequuntur architecto, cupiditate accusamus qui magni. Eos, praesentium. Aliquid?</p>
+                   }
+
+                   <!-- Detail Paragraph -->
+                   @if (service.detail_paragraph) {
+                   <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 pt-30">{{ service.detail_title || 'Nuestros Servicios en Detalle' }}</h3>
+                   <p class="pt-16" [innerHTML]="service.detail_paragraph"></p>
+                   }
                 </div>
              </div>
           </div>
        </div>
     </div>
  </div>
+}

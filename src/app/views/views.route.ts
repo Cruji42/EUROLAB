@@ -47,6 +47,11 @@ export const VIEWS_ROUTES: Route[] = [
         data: { title: 'Laboratorio EURONUTEC-Service Single' },
     },
     {
+        path: 'service-single/:slug',
+        component: ServiceSingleComponent,
+        data: { title: 'Laboratorio EURONUTEC-Service Single' },
+    },
+    {
         path: 'team',
         component: TeamComponent,
         data: { title: 'Laboratorio EURONUTEC-Team' },
