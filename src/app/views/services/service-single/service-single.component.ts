@@ -29,7 +29,7 @@ export class ServiceSingleComponent implements OnInit {
       if (slug) {
         this.loadService(slug);
       } else {
-        // No slug provided, just show the default content
+        // No slug provided, just show the default content of template
         this.isLoading = false;
       }
     });
