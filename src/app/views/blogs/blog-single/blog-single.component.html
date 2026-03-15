@@ -1,4 +1,14 @@
-<app-breadcrumb [title]="'Noticias'" [subTitle]="'Handling Project Cargo: Expert Tips and Strategies'"/>
+<app-breadcrumb [title]="'Noticias'" [subTitle]="post?.title || 'Detalle de noticia'"/>
 
-<app-blog-single-sidebar/>
-<app-blog-single-more/>
+@if (isLoading) {
+  <div class="container py-5">
+    <p class="text-center">Cargando noticia...</p>
+  </div>
+} @else if (errorMessage) {
+  <div class="container py-5">
+    <p class="text-center text-danger">{{ errorMessage }}</p>
+  </div>
+} @else {
+  <app-blog-single-sidebar [post]="post"/>
+  <app-blog-single-more/>
+}

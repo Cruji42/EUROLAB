@@ -102,6 +102,11 @@ export const VIEWS_ROUTES: Route[] = [
         data: { title: 'Laboratorio EURONUTEC-Blog Single' },
     },
     {
+        path: 'blog-single/:slug',
+        component: BlogSingleComponent,
+        data: { title: 'Laboratorio EURONUTEC-Blog Single' },
+    },
+    {
         path: 'projects',
         component: ProjectComponent,
         data: { title: 'Laboratorio EURONUTEC-Projects' },

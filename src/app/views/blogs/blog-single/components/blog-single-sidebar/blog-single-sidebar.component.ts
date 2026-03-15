@@ -1,37 +1,16 @@
-import { Component } from '@angular/core';
-import { blogCategoryItems, serviceItems } from '../../../data';
-import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { DatePipe, CommonModule } from '@angular/common';
+import { serviceItems } from '../../../data';
+import { NewsPostDetail } from '../../../../../models/news.model';
 
 @Component({
   selector: 'app-blog-single-sidebar',
-  imports: [CommonModule],
+  imports: [CommonModule, DatePipe],
   templateUrl: './blog-single-sidebar.component.html',
   styles: ``
 })
 export class BlogSingleSidebarComponent {
-"blogs": [
-    {
-      "title": "Supply Chain Management",
-      "link": "#"
-    },
-    {
-      "title": "Domestic Freight Transport",
-      "link": "#"
-    },
-    {
-      "title": "Heavy Lift and Project Cargo",
-      "link": "#"
-    },
-    {
-      "title": "Inventory Optimization",
-      "link": "#"
-    },
-    {
-      "title": "E-commerce Fulfillment",
-      "link": "#"
-    }
-  ]
+  @Input() post: NewsPostDetail | null = null;
 
   serviceItems = serviceItems;
-  blogCategoryItems = blogCategoryItems;
 }
