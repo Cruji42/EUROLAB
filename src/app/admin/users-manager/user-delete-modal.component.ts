@@ -1,9 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminUsersService, AdminUser } from '../services/admin-users.service';
 
 @Component({
   selector: 'app-user-delete-modal',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './user-delete-modal.component.html',
   styleUrls: ['./user-delete-modal.component.scss']
 })

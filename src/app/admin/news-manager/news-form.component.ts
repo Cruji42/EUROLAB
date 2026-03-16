@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminNewsService, NewsPost, NewsCategory, NewsPostCreate, NewsPostUpdate } from '../services/admin-news.service';
 
 @Component({
   selector: 'app-news-form',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './news-form.component.html',
   styleUrls: ['./news-form.component.scss']
 })

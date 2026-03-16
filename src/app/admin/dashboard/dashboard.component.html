@@ -73,8 +73,7 @@
               <tr *ngFor="let service of latestServices">
                 <td>{{ service.name }}</td>
                 <td>
-                  <span class="badge bg-success" *ngIf="service.is_active">Activo</span>
-                  <span class="badge bg-secondary" *ngIf="!service.is_active">Inactivo</span>
+                  <span class="badge bg-success">Activo</span>
                 </td>
                 <td>
                   <a [routerLink]="['/admin/servicios', service.id]" class="btn btn-sm btn-outline-primary me-2">
@@ -113,8 +112,7 @@
                 <td>{{ news.title }}</td>
                 <td>{{ news.category?.name || 'Sin categoría' }}</td>
                 <td>
-                  <span class="badge bg-success" *ngIf="news.is_published">Publicado</span>
-                  <span class="badge bg-warning text-dark" *ngIf="!news.is_published">Borrador</span>
+                  <span class="badge bg-success">Publicado</span>
                 </td>
                 <td>
                   <a [routerLink]="['/admin/noticias', news.id]" class="btn btn-sm btn-outline-primary me-2">

@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { AdminNewsService, NewsPost, NewsCategory } from '../services/admin-news.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NewsDeleteModalComponent } from './news-delete-modal.component';
 
 @Component({
   selector: 'app-news-list',
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './news-list.component.html',
   styleUrls: ['./news-list.component.scss']
 })

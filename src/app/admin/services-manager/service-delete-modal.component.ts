@@ -1,10 +1,13 @@
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminServicesService } from '../services/admin-services.service';
 import { ServiceDetail } from '../../models/service.model';
 
 @Component({
   selector: 'app-service-delete-modal',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './service-delete-modal.component.html',
   styleUrls: ['./service-delete-modal.component.scss']
 })

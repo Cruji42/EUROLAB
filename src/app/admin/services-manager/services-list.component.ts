@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { AdminServicesService } from '../services/admin-services.service';
 import { ServiceDetail } from '../../models/service.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -6,6 +9,8 @@ import { ServiceDeleteModalComponent } from './service-delete-modal.component';
 
 @Component({
   selector: 'app-services-list',
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './services-list.component.html',
   styleUrls: ['./services-list.component.scss']
 })

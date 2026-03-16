@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminServicesService, ServiceCreate, ServiceUpdate } from '../services/admin-services.service';
 import { ServiceDetail } from '../../models/service.model';
 
 @Component({
   selector: 'app-service-form',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './service-form.component.html',
   styleUrls: ['./service-form.component.scss']
 })

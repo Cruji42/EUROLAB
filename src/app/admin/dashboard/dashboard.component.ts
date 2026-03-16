@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { ServicesService } from '../../services/services.service';
 import { NewsService } from '../../services/news.service';
 import { AdminUsersService } from '../services/admin-users.service';
@@ -9,6 +10,8 @@ import { NewsPostCard } from '../../models/news.model';
 
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })

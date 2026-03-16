@@ -1,9 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminNewsService, NewsPost } from '../services/admin-news.service';
 
 @Component({
   selector: 'app-news-delete-modal',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './news-delete-modal.component.html',
   styleUrls: ['./news-delete-modal.component.scss']
 })
