@@ -1,0 +1,97 @@
+.users-list-container {
+  padding: 20px 0;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  margin: 0;
+  font-weight: 600;
+  color: #343a40;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.card {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  
+  .card-body {
+    padding: 20px;
+  }
+}
+
+.search-box {
+  max-width: 400px;
+  
+  .input-group-text {
+    background-color: #fff;
+    border-right: none;
+  }
+  
+  .form-control {
+    border-left: none;
+    
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+.table {
+  th {
+    font-weight: 600;
+    color: #495057;
+  }
+  
+  td {
+    vertical-align: middle;
+  }
+}
+
+.form-check-input {
+  cursor: pointer;
+  
+  &:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+}
+
+.form-switch .form-check-input {
+  width: 2.5em;
+  height: 1.25em;
+}
+
+.form-check-label {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .header-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .btn {
+      margin-top: 10px;
+    }
+  }
+}

@@ -32,3 +32,10 @@ public/assets/img/.DS_Store
 .DS_Store
 public/assets/img/.DS_Store
 public/assets/img/.DS_Store
+/Info Resources
+/euronutec-api
+/API
+/alembic
+alembic.ini
+/app
+.env.example

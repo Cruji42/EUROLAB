@@ -1,0 +1,362 @@
+<div class="service-form-container">
+  <div class="header-actions">
+    <h2 class="section-title">
+      {{ isEditMode ? 'Editar Servicio' : 'Nuevo Servicio' }}
+    </h2>
+    <a routerLink="/admin/servicios" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left me-2"></i>
+      Volver
+    </a>
+  </div>
+  
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+  
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+  
+  <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Información Básica</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="name" class="form-label">Nombre *</label>
+            <input 
+              type="text" 
+              id="name" 
+              class="form-control" 
+              formControlName="name"
+              (blur)="generateSlug()"
+              [ngClass]="{'is-invalid': getFormControl('name')?.invalid && getFormControl('name')?.touched}"
+            >
+            <div class="invalid-feedback" *ngIf="getFormControl('name')?.errors?.['required'] && getFormControl('name')?.touched">
+              El nombre es obligatorio
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <label for="slug" class="form-label">Slug *</label>
+            <input 
+              type="text" 
+              id="slug" 
+              class="form-control" 
+              formControlName="slug"
+              [ngClass]="{'is-invalid': getFormControl('slug')?.invalid && getFormControl('slug')?.touched}"
+            >
+            <div class="invalid-feedback" *ngIf="getFormControl('slug')?.errors?.['required'] && getFormControl('slug')?.touched">
+              El slug es obligatorio
+            </div>
+            <div class="invalid-feedback" *ngIf="getFormControl('slug')?.errors?.['pattern'] && getFormControl('slug')?.touched">
+              El slug solo puede contener letras minúsculas, números y guiones
+            </div>
+            <small class="form-text text-muted">Usado en la URL: /servicios/slug</small>
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="breadcrumb" class="form-label">Texto Breadcrumb</label>
+            <input type="text" id="breadcrumb" class="form-control" formControlName="breadcrumb">
+          </div>
+          
+          <div class="col-md-6">
+            <label for="hero_image_url" class="form-label">URL Imagen Hero</label>
+            <input type="text" id="hero_image_url" class="form-control" formControlName="hero_image_url">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Contenido Principal</h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <label for="body_p1" class="form-label">Párrafo 1 *</label>
+          <textarea 
+            id="body_p1" 
+            class="form-control" 
+            rows="4" 
+            formControlName="body_p1"
+            [ngClass]="{'is-invalid': getFormControl('body_p1')?.invalid && getFormControl('body_p1')?.touched}"
+          ></textarea>
+          <div class="invalid-feedback" *ngIf="getFormControl('body_p1')?.errors?.['required'] && getFormControl('body_p1')?.touched">
+            El párrafo 1 es obligatorio
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <label for="body_p2" class="form-label">Párrafo 2 *</label>
+          <textarea 
+            id="body_p2" 
+            class="form-control" 
+            rows="4" 
+            formControlName="body_p2"
+            [ngClass]="{'is-invalid': getFormControl('body_p2')?.invalid && getFormControl('body_p2')?.touched}"
+          ></textarea>
+          <div class="invalid-feedback" *ngIf="getFormControl('body_p2')?.errors?.['required'] && getFormControl('body_p2')?.touched">
+            El párrafo 2 es obligatorio
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Secciones Adicionales</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="sub_title" class="form-label">Subtítulo</label>
+            <input type="text" id="sub_title" class="form-control" formControlName="sub_title">
+          </div>
+          
+          <div class="col-md-6">
+            <label for="sub_paragraph" class="form-label">Párrafo Subtítulo</label>
+            <textarea id="sub_paragraph" class="form-control" rows="3" formControlName="sub_paragraph"></textarea>
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="info_title" class="form-label">Título Info</label>
+            <input type="text" id="info_title" class="form-control" formControlName="info_title">
+          </div>
+          
+          <div class="col-md-6">
+            <label for="info_paragraph" class="form-label">Párrafo Info</label>
+            <textarea id="info_paragraph" class="form-control" rows="3" formControlName="info_paragraph"></textarea>
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="desc_title" class="form-label">Título Descripción</label>
+            <input type="text" id="desc_title" class="form-control" formControlName="desc_title">
+          </div>
+          
+          <div class="col-md-6">
+            <label for="desc_paragraph" class="form-label">Párrafo Descripción</label>
+            <textarea id="desc_paragraph" class="form-control" rows="3" formControlName="desc_paragraph"></textarea>
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="detail_title" class="form-label">Título Detalle</label>
+            <input type="text" id="detail_title" class="form-control" formControlName="detail_title">
+          </div>
+          
+          <div class="col-md-6">
+            <label for="detail_paragraph" class="form-label">Párrafo Detalle</label>
+            <textarea id="detail_paragraph" class="form-control" rows="3" formControlName="detail_paragraph"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Card Home</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="card_hover_text" class="form-label">Texto Hover</label>
+            <input type="text" id="card_hover_text" class="form-control" formControlName="card_hover_text">
+          </div>
+          
+          <div class="col-md-6">
+            <label for="card_icon_url" class="form-label">URL Icono</label>
+            <input type="text" id="card_icon_url" class="form-control" formControlName="card_icon_url">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Checks</h5>
+        <button type="button" class="btn btn-sm btn-primary" (click)="addCheck()">
+          <i class="bi bi-plus-circle me-1"></i> Agregar
+        </button>
+      </div>
+      <div class="card-body">
+        <div formArrayName="checks">
+          <div *ngFor="let check of checks.controls; let i = index" [formGroupName]="i" class="row mb-3 align-items-center">
+            <div class="col-md-5">
+              <label [for]="'check_label_' + i" class="form-label">Texto *</label>
+              <input 
+                [id]="'check_label_' + i" 
+                type="text" 
+                class="form-control" 
+                formControlName="label"
+                [ngClass]="{'is-invalid': check.get('label')?.invalid && check.get('label')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="check.get('label')?.errors?.['required'] && check.get('label')?.touched">
+                El texto es obligatorio
+              </div>
+            </div>
+            
+            <div class="col-md-5">
+              <label [for]="'check_order_' + i" class="form-label">Orden</label>
+              <input [id]="'check_order_' + i" type="number" class="form-control" formControlName="sort_order">
+            </div>
+            
+            <div class="col-md-2 d-flex align-items-end">
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeCheck(i)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div *ngIf="checks.length === 0" class="text-center py-3">
+            <p class="text-muted">No hay checks agregados</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">FAQs</h5>
+        <button type="button" class="btn btn-sm btn-primary" (click)="addFaq()">
+          <i class="bi bi-plus-circle me-1"></i> Agregar
+        </button>
+      </div>
+      <div class="card-body">
+        <div formArrayName="faqs">
+          <div *ngFor="let faq of faqs.controls; let i = index" [formGroupName]="i" class="mb-4 border-bottom pb-3">
+            <div class="row mb-3">
+              <div class="col-md-10">
+                <label [for]="'faq_question_' + i" class="form-label">Pregunta *</label>
+                <input 
+                  [id]="'faq_question_' + i" 
+                  type="text" 
+                  class="form-control" 
+                  formControlName="question"
+                  [ngClass]="{'is-invalid': faq.get('question')?.invalid && faq.get('question')?.touched}"
+                >
+                <div class="invalid-feedback" *ngIf="faq.get('question')?.errors?.['required'] && faq.get('question')?.touched">
+                  La pregunta es obligatoria
+                </div>
+              </div>
+              
+              <div class="col-md-2">
+                <label [for]="'faq_order_' + i" class="form-label">Orden</label>
+                <input [id]="'faq_order_' + i" type="number" class="form-control" formControlName="sort_order">
+              </div>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-10">
+                <label [for]="'faq_answer_' + i" class="form-label">Respuesta *</label>
+                <textarea 
+                  [id]="'faq_answer_' + i" 
+                  class="form-control" 
+                  rows="3" 
+                  formControlName="answer"
+                  [ngClass]="{'is-invalid': faq.get('answer')?.invalid && faq.get('answer')?.touched}"
+                ></textarea>
+                <div class="invalid-feedback" *ngIf="faq.get('answer')?.errors?.['required'] && faq.get('answer')?.touched">
+                  La respuesta es obligatoria
+                </div>
+              </div>
+              
+              <div class="col-md-2 d-flex align-items-end">
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeFaq(i)">
+                  <i class="bi bi-trash"></i> Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div *ngIf="faqs.length === 0" class="text-center py-3">
+            <p class="text-muted">No hay FAQs agregadas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">SEO</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="meta_title" class="form-label">Meta Título</label>
+            <input 
+              type="text" 
+              id="meta_title" 
+              class="form-control" 
+              formControlName="meta_title"
+              [ngClass]="{'is-invalid': getFormControl('meta_title')?.invalid && getFormControl('meta_title')?.touched}"
+            >
+            <div class="invalid-feedback" *ngIf="getFormControl('meta_title')?.errors?.['maxlength'] && getFormControl('meta_title')?.touched">
+              El meta título no debe exceder los 160 caracteres
+            </div>
+            <small class="form-text text-muted">Máximo 160 caracteres</small>
+          </div>
+          
+          <div class="col-md-6">
+            <label for="meta_description" class="form-label">Meta Descripción</label>
+            <textarea 
+              id="meta_description" 
+              class="form-control" 
+              rows="2" 
+              formControlName="meta_description"
+              [ngClass]="{'is-invalid': getFormControl('meta_description')?.invalid && getFormControl('meta_description')?.touched}"
+            ></textarea>
+            <div class="invalid-feedback" *ngIf="getFormControl('meta_description')?.errors?.['maxlength'] && getFormControl('meta_description')?.touched">
+              La meta descripción no debe exceder los 320 caracteres
+            </div>
+            <small class="form-text text-muted">Máximo 320 caracteres</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Configuración</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="is_active" formControlName="is_active">
+              <label class="form-check-label" for="is_active">Activo</label>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <label for="sort_order" class="form-label">Orden</label>
+            <input type="number" id="sort_order" class="form-control" formControlName="sort_order">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary me-2" routerLink="/admin/servicios">Cancelar</button>
+      <button 
+        type="submit" 
+        class="btn btn-primary" 
+        [disabled]="serviceForm.invalid || submitting"
+      >
+        <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        {{ isEditMode ? 'Actualizar' : 'Crear' }} Servicio
+      </button>
+    </div>
+  </form>
+</div>

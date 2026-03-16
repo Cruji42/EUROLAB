@@ -1,0 +1,81 @@
+<div class="users-list-container">
+  <div class="header-actions">
+    <h2 class="section-title">Gestión de Usuarios</h2>
+    <a routerLink="nuevo" class="btn btn-primary">
+      <i class="bi bi-plus-circle me-2"></i>
+      Nuevo Usuario
+    </a>
+  </div>
+  
+  <div class="card">
+    <div class="card-body">
+      <div class="search-box mb-4">
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-search"></i>
+          </span>
+          <input 
+            type="text" 
+            class="form-control" 
+            placeholder="Buscar por nombre o correo..." 
+            [(ngModel)]="searchTerm"
+            (input)="search()"
+          >
+        </div>
+      </div>
+      
+      <div *ngIf="loading" class="loading-spinner">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+      
+      <div *ngIf="!loading" class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of filteredUsers">
+              <td>{{ user.id }}</td>
+              <td>{{ user.full_name || 'Sin nombre' }}</td>
+              <td>{{ user.email }}</td>
+              <td>
+                <div class="form-check form-switch">
+                  <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    [checked]="user.is_active" 
+                    (change)="toggleUserStatus(user)"
+                  >
+                  <label class="form-check-label">
+                    {{ user.is_active ? 'Activo' : 'Inactivo' }}
+                  </label>
+                </div>
+              </td>
+              <td>
+                <div class="action-buttons">
+                  <a [routerLink]="[user.id]" class="btn btn-sm btn-outline-primary me-2">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                  <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(user)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="filteredUsers.length === 0">
+              <td colspan="5" class="text-center">No se encontraron usuarios</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+<div class="user-form-container">
+  <div class="header-actions">
+    <h2 class="section-title">
+      {{ isEditMode ? 'Editar Usuario' : 'Nuevo Usuario' }}
+    </h2>
+    <a routerLink="/admin/usuarios" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left me-2"></i>
+      Volver
+    </a>
+  </div>
+  
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+  
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+  
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Información del Usuario</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="email" class="form-label">Correo Electrónico *</label>
+            <input 
+              type="email" 
+              id="email" 
+              class="form-control" 
+              formControlName="email"
+              [ngClass]="{'is-invalid': getFormControl('email')?.invalid && getFormControl('email')?.touched}"
+            >
+            <div class="invalid-feedback" *ngIf="getFormControl('email')?.errors?.['required'] && getFormControl('email')?.touched">
+              El correo electrónico es obligatorio
+            </div>
+            <div class="invalid-feedback" *ngIf="getFormControl('email')?.errors?.['email'] && getFormControl('email')?.touched">
+              Ingrese un correo electrónico válido
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <label for="full_name" class="form-label">Nombre Completo</label>
+            <input type="text" id="full_name" class="form-control" formControlName="full_name">
+          </div>
+        </div>
+        
+        <div class="row mb-3" *ngIf="isEditMode">
+          <div class="col-md-12">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="changePassword" formControlName="changePassword">
+              <label class="form-check-label" for="changePassword">
+                Cambiar contraseña
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mb-3" *ngIf="!isEditMode || getFormControl('changePassword')?.value">
+          <div class="col-md-6">
+            <label for="password" class="form-label">Contraseña *</label>
+            <div class="input-group">
+              <input 
+                [type]="showPassword ? 'text' : 'password'" 
+                id="password" 
+                class="form-control" 
+                formControlName="password"
+                [ngClass]="{'is-invalid': getFormControl('password')?.invalid && getFormControl('password')?.touched}"
+              >
+              <button 
+                class="btn btn-outline-secondary" 
+                type="button" 
+                (click)="togglePasswordVisibility()"
+              >
+                <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+              </button>
+              <div class="invalid-feedback" *ngIf="getFormControl('password')?.errors?.['required'] && getFormControl('password')?.touched">
+                La contraseña es obligatoria
+              </div>
+              <div class="invalid-feedback" *ngIf="getFormControl('password')?.errors?.['minlength'] && getFormControl('password')?.touched">
+                La contraseña debe tener al menos 8 caracteres
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="is_active" formControlName="is_active">
+              <label class="form-check-label" for="is_active">Usuario activo</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary me-2" routerLink="/admin/usuarios">Cancelar</button>
+      <button 
+        type="submit" 
+        class="btn btn-primary" 
+        [disabled]="userForm.invalid || submitting"
+      >
+        <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        {{ isEditMode ? 'Actualizar' : 'Crear' }} Usuario
+      </button>
+    </div>
+  </form>
+</div>

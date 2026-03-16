@@ -1,0 +1,31 @@
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #fff;
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #343a40;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  
+  .welcome-text {
+    color: #6c757d;
+    margin-right: 5px;
+  }
+  
+  .user-name {
+    font-weight: 600;
+    color: #343a40;
+  }
+}

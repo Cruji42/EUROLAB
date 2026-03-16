@@ -1,0 +1,109 @@
+<div class="news-list-container">
+  <div class="header-actions">
+    <h2 class="section-title">Gestión de Noticias</h2>
+    <a routerLink="nueva" class="btn btn-primary">
+      <i class="bi bi-plus-circle me-2"></i>
+      Nueva Noticia
+    </a>
+  </div>
+  
+  <div class="card">
+    <div class="card-body">
+      <div class="filters mb-4">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-search"></i>
+              </span>
+              <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Buscar por título..." 
+                [(ngModel)]="searchTerm"
+                (input)="search()"
+              >
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="category-filter">
+              <label class="me-2">Filtrar por categoría:</label>
+              <div class="btn-group" role="group">
+                <button 
+                  type="button" 
+                  class="btn" 
+                  [ngClass]="{'btn-primary': selectedCategory === null, 'btn-outline-primary': selectedCategory !== null}"
+                  (click)="filterByCategory(null)"
+                >
+                  Todas
+                </button>
+                <button 
+                  *ngFor="let category of categories" 
+                  type="button" 
+                  class="btn" 
+                  [ngClass]="{'btn-primary': selectedCategory === category.slug, 'btn-outline-primary': selectedCategory !== category.slug}"
+                  (click)="filterByCategory(category.slug)"
+                >
+                  {{ category.name }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="loading" class="loading-spinner">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+      
+      <div *ngIf="!loading" class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Título</th>
+              <th>Categoría</th>
+              <th>Estado</th>
+              <th>Destacada</th>
+              <th>Fecha Publicación</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let post of filteredPosts">
+              <td>{{ post.id }}</td>
+              <td>{{ post.title }}</td>
+              <td>{{ post.category?.name || 'Sin categoría' }}</td>
+              <td>
+                <span class="badge" [ngClass]="getStatusBadgeClass(post)">
+                  {{ getStatusText(post) }}
+                </span>
+              </td>
+              <td>
+                <span class="badge bg-warning" *ngIf="post.is_featured">Destacada</span>
+                <span *ngIf="!post.is_featured">-</span>
+              </td>
+              <td>{{ post.published_at | date:'dd/MM/yyyy' || '-' }}</td>
+              <td>
+                <div class="action-buttons">
+                  <a [routerLink]="[post.id]" class="btn btn-sm btn-outline-primary me-2">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                  <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(post)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="filteredPosts.length === 0">
+              <td colspan="7" class="text-center">No se encontraron noticias</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

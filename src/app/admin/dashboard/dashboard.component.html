@@ -1,0 +1,134 @@
+<div class="dashboard-container">
+  <h2 class="section-title">Dashboard</h2>
+  
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+  
+  <div *ngIf="!loading" class="dashboard-content">
+    <!-- Stats Cards -->
+    <div class="row stats-cards">
+      <div class="col-md-4">
+        <div class="card stats-card">
+          <div class="card-body">
+            <div class="stats-icon">
+              <i class="bi bi-box"></i>
+            </div>
+            <div class="stats-info">
+              <h3>{{ serviceCount }}</h3>
+              <p>Servicios</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="card stats-card">
+          <div class="card-body">
+            <div class="stats-icon">
+              <i class="bi bi-newspaper"></i>
+            </div>
+            <div class="stats-info">
+              <h3>{{ newsCount }}</h3>
+              <p>Noticias</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="card stats-card">
+          <div class="card-body">
+            <div class="stats-icon">
+              <i class="bi bi-people"></i>
+            </div>
+            <div class="stats-info">
+              <h3>{{ userCount }}</h3>
+              <p>Usuarios</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Latest Services -->
+    <div class="card mt-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Últimos Servicios</h5>
+        <a routerLink="/admin/servicios" class="btn btn-sm btn-outline-primary">Ver todos</a>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let service of latestServices">
+                <td>{{ service.name }}</td>
+                <td>
+                  <span class="badge bg-success" *ngIf="service.is_active">Activo</span>
+                  <span class="badge bg-secondary" *ngIf="!service.is_active">Inactivo</span>
+                </td>
+                <td>
+                  <a [routerLink]="['/admin/servicios', service.id]" class="btn btn-sm btn-outline-primary me-2">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr *ngIf="latestServices.length === 0">
+                <td colspan="3" class="text-center">No hay servicios disponibles</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Latest News -->
+    <div class="card mt-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Últimas Noticias</h5>
+        <a routerLink="/admin/noticias" class="btn btn-sm btn-outline-primary">Ver todas</a>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Categoría</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let news of latestNews">
+                <td>{{ news.title }}</td>
+                <td>{{ news.category?.name || 'Sin categoría' }}</td>
+                <td>
+                  <span class="badge bg-success" *ngIf="news.is_published">Publicado</span>
+                  <span class="badge bg-warning text-dark" *ngIf="!news.is_published">Borrador</span>
+                </td>
+                <td>
+                  <a [routerLink]="['/admin/noticias', news.id]" class="btn btn-sm btn-outline-primary me-2">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr *ngIf="latestNews.length === 0">
+                <td colspan="4" class="text-center">No hay noticias disponibles</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,233 @@
+<div class="news-form-container">
+  <div class="header-actions">
+    <h2 class="section-title">
+      {{ isEditMode ? 'Editar Noticia' : 'Nueva Noticia' }}
+    </h2>
+    <a routerLink="/admin/noticias" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left me-2"></i>
+      Volver
+    </a>
+  </div>
+  
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+  
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+  
+  <form [formGroup]="newsForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Información Básica</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="title" class="form-label">Título *</label>
+            <input 
+              type="text" 
+              id="title" 
+              class="form-control" 
+              formControlName="title"
+              (blur)="generateSlug()"
+              [ngClass]="{'is-invalid': getFormControl('title')?.invalid && getFormControl('title')?.touched}"
+            >
+            <div class="invalid-feedback" *ngIf="getFormControl('title')?.errors?.['required'] && getFormControl('title')?.touched">
+              El título es obligatorio
+            </div>
+            <div class="invalid-feedback" *ngIf="getFormControl('title')?.errors?.['maxlength'] && getFormControl('title')?.touched">
+              El título no debe exceder los 300 caracteres
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <label for="slug" class="form-label">Slug *</label>
+            <input 
+              type="text" 
+              id="slug" 
+              class="form-control" 
+              formControlName="slug"
+              [ngClass]="{'is-invalid': getFormControl('slug')?.invalid && getFormControl('slug')?.touched}"
+            >
+            <div class="invalid-feedback" *ngIf="getFormControl('slug')?.errors?.['required'] && getFormControl('slug')?.touched">
+              El slug es obligatorio
+            </div>
+            <div class="invalid-feedback" *ngIf="getFormControl('slug')?.errors?.['pattern'] && getFormControl('slug')?.touched">
+              El slug solo puede contener letras minúsculas, números y guiones
+            </div>
+            <small class="form-text text-muted">Usado en la URL: /noticias/slug</small>
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="category_id" class="form-label">Categoría</label>
+            <select id="category_id" class="form-select" formControlName="category_id">
+              <option [ngValue]="null">Sin categoría</option>
+              <option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
+              </option>
+            </select>
+          </div>
+          
+          <div class="col-md-6">
+            <label for="cover_image_url" class="form-label">URL Imagen de Portada</label>
+            <input type="text" id="cover_image_url" class="form-control" formControlName="cover_image_url">
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <label for="excerpt" class="form-label">Extracto</label>
+          <textarea 
+            id="excerpt" 
+            class="form-control" 
+            rows="2" 
+            formControlName="excerpt"
+            [ngClass]="{'is-invalid': getFormControl('excerpt')?.invalid && getFormControl('excerpt')?.touched}"
+          ></textarea>
+          <div class="invalid-feedback" *ngIf="getFormControl('excerpt')?.errors?.['maxlength'] && getFormControl('excerpt')?.touched">
+            El extracto no debe exceder los 500 caracteres
+          </div>
+          <small class="form-text text-muted">Breve descripción para mostrar en listados (máximo 500 caracteres)</small>
+        </div>
+        
+        <div class="mb-3">
+          <label for="content" class="form-label">Contenido *</label>
+          <textarea 
+            id="content" 
+            class="form-control" 
+            rows="10" 
+            formControlName="content"
+            [ngClass]="{'is-invalid': getFormControl('content')?.invalid && getFormControl('content')?.touched}"
+          ></textarea>
+          <div class="invalid-feedback" *ngIf="getFormControl('content')?.errors?.['required'] && getFormControl('content')?.touched">
+            El contenido es obligatorio
+          </div>
+          <small class="form-text text-muted">Admite formato HTML</small>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Información del Autor</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="author_name" class="form-label">Nombre del Autor</label>
+            <input 
+              type="text" 
+              id="author_name" 
+              class="form-control" 
+              formControlName="author_name"
+              [ngClass]="{'is-invalid': getFormControl('author_name')?.invalid && getFormControl('author_name')?.touched}"
+            >
+            <div class="invalid-feedback" *ngIf="getFormControl('author_name')?.errors?.['maxlength'] && getFormControl('author_name')?.touched">
+              El nombre del autor no debe exceder los 150 caracteres
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <label for="author_image_url" class="form-label">URL Imagen del Autor</label>
+            <input type="text" id="author_image_url" class="form-control" formControlName="author_image_url">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">SEO</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="meta_title" class="form-label">Meta Título</label>
+            <input 
+              type="text" 
+              id="meta_title" 
+              class="form-control" 
+              formControlName="meta_title"
+              [ngClass]="{'is-invalid': getFormControl('meta_title')?.invalid && getFormControl('meta_title')?.touched}"
+            >
+            <div class="invalid-feedback" *ngIf="getFormControl('meta_title')?.errors?.['maxlength'] && getFormControl('meta_title')?.touched">
+              El meta título no debe exceder los 160 caracteres
+            </div>
+            <small class="form-text text-muted">Máximo 160 caracteres</small>
+          </div>
+          
+          <div class="col-md-6">
+            <label for="meta_description" class="form-label">Meta Descripción</label>
+            <textarea 
+              id="meta_description" 
+              class="form-control" 
+              rows="2" 
+              formControlName="meta_description"
+              [ngClass]="{'is-invalid': getFormControl('meta_description')?.invalid && getFormControl('meta_description')?.touched}"
+            ></textarea>
+            <div class="invalid-feedback" *ngIf="getFormControl('meta_description')?.errors?.['maxlength'] && getFormControl('meta_description')?.touched">
+              La meta descripción no debe exceder los 320 caracteres
+            </div>
+            <small class="form-text text-muted">Máximo 320 caracteres</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Publicación</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="form-check form-switch mb-3">
+              <input 
+                class="form-check-input" 
+                type="checkbox" 
+                id="is_published" 
+                formControlName="is_published"
+                (change)="onPublishedChange()"
+              >
+              <label class="form-check-label" for="is_published">Publicado</label>
+            </div>
+            
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="is_featured" formControlName="is_featured">
+              <label class="form-check-label" for="is_featured">Destacado</label>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <label for="published_at" class="form-label">Fecha de Publicación</label>
+            <input 
+              type="date" 
+              id="published_at" 
+              class="form-control" 
+              formControlName="published_at"
+              [disabled]="!getFormControl('is_published')?.value"
+            >
+            <small class="form-text text-muted">Solo disponible si la noticia está publicada</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary me-2" routerLink="/admin/noticias">Cancelar</button>
+      <button 
+        type="submit" 
+        class="btn btn-primary" 
+        [disabled]="newsForm.invalid || submitting"
+      >
+        <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        {{ isEditMode ? 'Actualizar' : 'Crear' }} Noticia
+      </button>
+    </div>
+  </form>
+</div>

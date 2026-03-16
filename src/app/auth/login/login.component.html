@@ -1,0 +1,55 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="text-center mb-4">
+      <h2>Laboratorio Euronutec</h2>
+      <h4>Panel Administrativo</h4>
+    </div>
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="alert alert-danger" *ngIf="error">
+        {{ error }}
+      </div>
+      
+      <div class="mb-3">
+        <label for="username" class="form-label">Correo electrónico</label>
+        <input 
+          type="email" 
+          formControlName="username" 
+          class="form-control" 
+          [ngClass]="{ 'is-invalid': submitted && f['username'].errors }" 
+          id="username" 
+          placeholder="correo@ejemplo.com"
+        >
+        <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+          <div *ngIf="f['username'].errors['required']">El correo es requerido</div>
+          <div *ngIf="f['username'].errors['email']">Ingrese un correo válido</div>
+        </div>
+      </div>
+      
+      <div class="mb-4">
+        <label for="password" class="form-label">Contraseña</label>
+        <input 
+          type="password" 
+          formControlName="password" 
+          class="form-control" 
+          [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" 
+          id="password"
+        >
+        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+          <div *ngIf="f['password'].errors['required']">La contraseña es requerida</div>
+        </div>
+      </div>
+      
+      <div class="d-grid">
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [disabled]="loading"
+        >
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+          Iniciar sesión
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

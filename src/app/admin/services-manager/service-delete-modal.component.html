@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h4 class="modal-title">Confirmar eliminación</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <p>¿Está seguro que desea eliminar el servicio <strong>{{ service.name }}</strong>?</p>
+  <p class="text-danger">Esta acción no se puede deshacer.</p>
+  
+  <div *ngIf="error" class="alert alert-danger mt-3">
+    {{ error }}
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="dismiss()">Cancelar</button>
+  <button 
+    type="button" 
+    class="btn btn-danger" 
+    (click)="confirmDelete()" 
+    [disabled]="deleting"
+  >
+    <span *ngIf="deleting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+    Eliminar
+  </button>
+</div>
