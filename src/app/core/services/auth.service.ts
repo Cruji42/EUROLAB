@@ -53,18 +53,33 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest): Observable<UserProfile> {
-    return this.http.post<TokenResponse>(`${this.apiUrl}/token`, credentials)
-      .pipe(
-        tap(response => {
-          localStorage.setItem(this.tokenKey, response.access_token);
-          const user = this.parseJwt(response.access_token);
-          this.currentUserSubject.next(user);
-        }),
-        map(() => this.currentUserSubject.value!),
-        catchError(error => {
-          return throwError(() => new Error('Login failed: ' + (error.error?.detail || 'Unknown error')));
-        })
-      );
+    // Create URLSearchParams as expected by OAuth2PasswordRequestForm
+    const body = new URLSearchParams();
+    body.set('username', credentials.username);
+    body.set('password', credentials.password);
+    
+    console.log('Login request to:', `${this.apiUrl}/token`);
+    console.log('With credentials:', credentials.username);
+    
+    // Use HttpClient with appropriate headers for form data
+    return this.http.post<TokenResponse>(`${this.apiUrl}/token`, body.toString(), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }).pipe(
+      tap(response => {
+        console.log('Login successful, token received:', response.access_token.substring(0, 10) + '...');
+        localStorage.setItem(this.tokenKey, response.access_token);
+        const user = this.parseJwt(response.access_token);
+        console.log('Parsed user from token:', user);
+        this.currentUserSubject.next(user);
+      }),
+      map(() => this.currentUserSubject.value!),
+      catchError(error => {
+        console.error('Login error:', error);
+        return throwError(() => new Error('Login failed: ' + (error.error?.detail || 'Unknown error')));
+      })
+    );
   }
 
   logout(): void {

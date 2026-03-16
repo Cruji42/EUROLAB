@@ -9,7 +9,7 @@ import { TitleService } from '../../title.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit, AfterViewInit{
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'laboratorio-euronutec';
   isLoading = false;
   showButton = true;

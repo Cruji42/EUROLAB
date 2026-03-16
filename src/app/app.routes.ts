@@ -21,7 +21,7 @@ export const routes: Routes = [
         path: 'admin',
         loadChildren: () =>
             import('./admin/admin.routes').then((m) => m.ADMIN_ROUTES),
-        // canActivate: [AdminGuard],
+        canActivate: [AdminGuard],
         data: { title: 'Laboratorio EURONUTEC - Admin' }
     },
     {

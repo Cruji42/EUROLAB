@@ -73,4 +73,11 @@ export class AdminUsersService {
         catchError(error => throwError(() => new Error('Error updating user status: ' + error.message)))
       );
   }
+
+  getCurrentUser(): Observable<AdminUser> {
+    return this.http.get<AdminUser>(`${this.apiUrl}/me`)
+      .pipe(
+        catchError(error => throwError(() => new Error('Error fetching current user: ' + error.message)))
+      );
+  }
 }

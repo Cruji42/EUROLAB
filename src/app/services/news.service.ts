@@ -40,8 +40,40 @@ export class NewsService {
     return this.http.get<NewsPostCard[]>(this.apiUrl, { params: httpParams });
   }
 
+  getAdminNews(params?: {
+    skip?: number;
+    limit?: number;
+  }): Observable<NewsPostDetail[]> {
+    let httpParams = new HttpParams();
+
+    if (params?.skip !== undefined) {
+      httpParams = httpParams.set('skip', params.skip);
+    }
+    if (params?.limit !== undefined) {
+      httpParams = httpParams.set('limit', params.limit);
+    }
+
+    return this.http.get<NewsPostDetail[]>(`${this.apiUrl}/admin/all`, { params: httpParams });
+  }
+
   getNewsBySlug(slug: string): Observable<NewsPostDetail> {
     return this.http.get<NewsPostDetail>(`${this.apiUrl}/${slug}`);
+  }
+
+  getNewsById(id: number): Observable<NewsPostDetail> {
+    return this.http.get<NewsPostDetail>(`${this.apiUrl}/admin/${id}`);
+  }
+
+  createNews(news: any): Observable<NewsPostDetail> {
+    return this.http.post<NewsPostDetail>(`${this.apiUrl}/admin`, news);
+  }
+
+  updateNews(id: number, news: any): Observable<NewsPostDetail> {
+    return this.http.put<NewsPostDetail>(`${this.apiUrl}/admin/${id}`, news);
+  }
+
+  deleteNews(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/admin/${id}`);
   }
 
   getCategories(): Observable<NewsCategory[]> {
@@ -50,5 +82,21 @@ export class NewsService {
 
   getTags(): Observable<NewsTag[]> {
     return this.http.get<NewsTag[]>(`${this.apiUrl}/tags`);
+  }
+
+  createCategory(category: { name: string, slug: string }): Observable<NewsCategory> {
+    return this.http.post<NewsCategory>(`${this.apiUrl}/admin/categorias`, category);
+  }
+
+  deleteCategory(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/admin/categorias/${id}`);
+  }
+
+  createTag(tag: { name: string, slug: string }): Observable<NewsTag> {
+    return this.http.post<NewsTag>(`${this.apiUrl}/admin/tags`, tag);
+  }
+
+  deleteTag(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/admin/tags/${id}`);
   }
 }
