@@ -4844,7 +4844,7 @@ textarea{
 	border: 0;
     background: #fff;
     border-radius: 7px;
-	text-transform: capitalize;
+	/* text-transform: capitalize; */
 	font-weight: 400;
     font-family: "Outfit", sans-serif;
     padding-left: 20px;
@@ -5372,7 +5372,7 @@ iframe.ca-map {
 .ca-blog-title-3 a{
     color: #00060F;
     transition: .3s;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 .ca-blog-box-content-3 p {
     color: #5A5D63;
@@ -6334,7 +6334,7 @@ button.ca-btn-primary.ca-btn-primary-2 span {
 .ca-service-thumb-title {
     font-size: 40px;
     line-height: 40px;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .ca-servic-thumb-content p {

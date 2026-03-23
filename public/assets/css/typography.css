@@ -103,7 +103,7 @@ a:focus {
 }
 
 .ca-text-cap{
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .p-relative{
