@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-about1',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './about1.component.html',
   styles: ``
 })
@@ -15,7 +16,7 @@ export class About1Component {
       imageClass: 'lar-img-1',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Análisis Realizados'
+      label: 'Personal especializado y rapidez en el servicio'
     },
     {
       id: 2,
@@ -23,7 +24,7 @@ export class About1Component {
       imageClass: 'sm-img-1',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Análisis Realizados'
+      label: 'Métodos acreditados y rigorosos de análisis'
     },
     {
       id: 3,
@@ -31,7 +32,7 @@ export class About1Component {
       imageClass: 'sm-img-2',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Análisis Realizados'
+      label: 'Colaboración con laboratorios de referencia AAFCO y Bipea'
     },
     {
       id: 4,
@@ -39,7 +40,7 @@ export class About1Component {
       imageClass: 'lar-img-2',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Análisis Realizados'
+      label: 'Consulta de resultados en línea con EuroLab Online'
     }
   ];
 }

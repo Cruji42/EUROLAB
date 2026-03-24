@@ -35,10 +35,10 @@ export class FooterComponent {
       widgetClass: 'widget-2',
       links: [
         { text: 'Inicio', url: '/' },
-        { text: 'Nosotros', url: '/' },
+        { text: 'Nosotros', url: '/about' },
         { text: 'Servicios', url: '/service' },
-        { text: 'Noticias', url: '/' },
-        { text: 'Contacto', url: '/' }
+        { text: 'Noticias', url: '/blog' },
+        { text: 'Contacto', url: '/contact' }
       ]
     },
     // {
