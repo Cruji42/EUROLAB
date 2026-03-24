@@ -2354,6 +2354,12 @@ header.header-4 {
     text-align: center;
     transition: .3s;
 }
+.ca-about-ic img {
+    transition: .3s;
+    height: 70px;
+    width: 70px;
+    border-radius: 50px;
+}
 .ca-about-content p {
     color: #4A4A49;
     font-size: 16px;
