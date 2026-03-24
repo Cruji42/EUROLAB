@@ -23,10 +23,9 @@ export class FooterComponent {
   email: string = '';
 
   socialLinks = [
-    { icon: 'fa-brands fa-instagram', url: '#' },
-    { icon: 'fa-brands fa-facebook-f', url: '#' },
-    { icon: 'fa-brands fa-linkedin-in', url: '#' },
-    { icon: 'fa-brands fa-x-twitter', url: '#' }
+    { icon: 'fa-brands fa-instagram', url: 'https://www.instagram.com/lab_euronutec' },
+    { icon: 'fa-brands fa-facebook-f', url: 'https://www.facebook.com/LaboratorioEuronutec' },
+    { icon: 'fa-brands fa-linkedin-in', url: 'https://mx.linkedin.com/in/laboratorio-euronutec-b4ba9621b' }
   ];
 
   footerSections = [
