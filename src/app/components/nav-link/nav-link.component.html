@@ -1,7 +1,7 @@
 <ul>
     @for (item of menu; track $index) {
     <li>
-      <a [href]="item.link">{{ item.title }}
+      <a [routerLink]="item.link">{{ item.title }}
         @if(item.icon){
         <span><i [class]="item.icon"></i></span>
         }

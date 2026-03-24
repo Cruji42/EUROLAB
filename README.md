@@ -134,3 +134,7 @@ alembic upgrade head
 # Revertir última migración
 alembic downgrade -1
 ```
+
+## Deploy
+
+ng build --configuration production --base-href=http://137.184.132.38/EUROLAB

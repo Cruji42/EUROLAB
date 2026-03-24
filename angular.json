@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cargon-ng": {
+    "eurolab": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/cargon-ng",
+            "outputPath": "dist/eurolab",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js", "@angular/localize/init"],
@@ -86,10 +86,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "cargon-ng:build:production"
+              "buildTarget": "eurolab:build:production"
             },
             "development": {
-              "buildTarget": "cargon-ng:build:development"
+              "buildTarget": "eurolab:build:development"
             }
           },
           "defaultConfiguration": "development"
