@@ -57,6 +57,51 @@
             </div>
             <span class="chatbot-time">{{ msg.time | date:'HH:mm' }}</span>
 
+            <!-- Action buttons (contact form, downloads, external links) -->
+            @if (msg.role === 'bot' && msg.actions && msg.actions.length > 0) {
+              <div class="chatbot-actions">
+                @for (action of msg.actions; track $index) {
+                  @if (action.type === 'route') {
+                    <button class="chatbot-action-btn action-route" (click)="navigateTo(action.value)">
+                      <i class="fa-solid fa-paper-plane"></i>
+                      {{ action.label }}
+                    </button>
+                  } @else if (action.type === 'download') {
+                    <a class="chatbot-action-btn action-download"
+                       [href]="action.value"
+                       download
+                       target="_blank">
+                      <i class="fa-solid fa-download"></i>
+                      {{ action.label }}
+                    </a>
+                  } @else if (action.type === 'external') {
+                    <a class="chatbot-action-btn action-external"
+                       [href]="action.value"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                      {{ action.label }}
+                    </a>
+                  } @else if (action.type === 'whatsapp') {
+                    <a class="chatbot-action-btn action-whatsapp"
+                       [href]="action.value"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                      <i class="fa-brands fa-whatsapp"></i>
+                      {{ action.label }}
+                    </a>
+                  } @else if (action.type === 'email') {
+                    <a class="chatbot-action-btn action-email"
+                       [href]="action.value">
+                      <i class="fa-solid fa-envelope"></i>
+                      {{ action.label }}
+                    </a>
+                  }
+                }
+              </div>
+            }
+
+            <!-- Quick reply chips -->
             @if (msg.role === 'bot' && msg.suggestions && msg.suggestions.length > 0) {
               <div class="chatbot-suggestions">
                 @for (s of msg.suggestions; track $index) {
@@ -107,6 +152,6 @@
         </svg>
       </button>
     </div>
-    <p class="chatbot-footer-note">Presiona Enter para enviar • Shift+Enter para nueva línea</p>
+    <p class="chatbot-footer-note">Presiona Enter para enviar &bull; Shift+Enter para nueva línea</p>
   </div>
 }

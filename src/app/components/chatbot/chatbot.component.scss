@@ -246,6 +246,104 @@ $radius: 18px;
   text-align: right;
 }
 
+// ── Action buttons (contact form / downloads / external) ───────────────────
+.chatbot-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.chatbot-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  transition: all 0.18s ease;
+  width: 100%;
+  justify-content: flex-start;
+  line-height: 1.3;
+
+  i { font-size: 13px; flex-shrink: 0; }
+
+  &.action-route {
+    background: $primary;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(13,110,253,0.3);
+
+    &:hover {
+      background: $primary-dark;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(13,110,253,0.4);
+      color: #fff;
+    }
+  }
+
+  &.action-download {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1.5px solid #bbf7d0;
+
+    &:hover {
+      background: #dcfce7;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(22,163,74,0.2);
+      color: #16a34a;
+    }
+  }
+
+  &.action-external {
+    background: #f8fafc;
+    color: #0369a1;
+    border: 1.5px solid #bae6fd;
+
+    &:hover {
+      background: #e0f2fe;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(3,105,161,0.2);
+      color: #0369a1;
+    }
+  }
+
+  &.action-whatsapp {
+    background: #f0fdf4;
+    color: #128c7e;
+    border: 1.5px solid #a7f3d0;
+    font-size: 13px;
+
+    i { color: #25d366; font-size: 16px; }
+
+    &:hover {
+      background: #25d366;
+      color: #fff;
+      border-color: #25d366;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(37,211,102,0.35);
+      i { color: #fff; }
+    }
+  }
+
+  &.action-email {
+    background: #fef9f0;
+    color: #92400e;
+    border: 1.5px solid #fde68a;
+
+    &:hover {
+      background: #f59e0b;
+      color: #fff;
+      border-color: #f59e0b;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(245,158,11,0.35);
+    }
+  }
+}
+
 // ── Suggestions / Quick Replies ─────────────────────────────────────────────
 .chatbot-suggestions {
   display: flex;
