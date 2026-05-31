@@ -16,7 +16,7 @@ export class About1Component {
       imageClass: 'lar-img-1',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Personal especializado y rapidez en el servicio'
+      label: 'Análisis bromatológico: humedad, proteína, grasa, fibra y cenizas'
     },
     {
       id: 2,
@@ -24,7 +24,7 @@ export class About1Component {
       imageClass: 'sm-img-1',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Métodos acreditados y rigorosos de análisis'
+      label: 'Detección de micotoxinas: aflatoxinas, zearalenona, ocratoxina y más'
     },
     {
       id: 3,
@@ -32,7 +32,7 @@ export class About1Component {
       imageClass: 'sm-img-2',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Colaboración con laboratorios de referencia AAFCO y Bipea'
+      label: 'Microbiología Tipo 2: PCR, indicadores y reto microbiano'
     },
     {
       id: 4,
@@ -40,7 +40,7 @@ export class About1Component {
       imageClass: 'lar-img-2',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Consulta de resultados en línea con EuroLab Online'
+      label: 'NIRS: resultados en segundos sin preparación de muestra'
     }
   ];
 }

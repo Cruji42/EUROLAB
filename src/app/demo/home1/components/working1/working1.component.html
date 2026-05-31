@@ -18,7 +18,7 @@
             </div>
             <div class="ca-work-ic-box-content">
               <h4 class="ca-title fnw-600 text-white pt-24 pb-16"><a [routerLink]="['/' + process.link]">{{ process.title }}</a></h4>
-              <p>{{ process.description }}</p>
+              <ul [innerHTML]="process.description" class="text-white"></ul>
             </div>
           </div>
         </div>

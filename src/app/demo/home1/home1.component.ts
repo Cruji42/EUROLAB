@@ -8,10 +8,11 @@ import { Working1Component } from "./components/working1/working1.component";
 import { Testimonial1Component } from "./components/testimonial1/testimonial1.component";
 import { Contact1Component } from "./components/contact1/contact1.component";
 import { Blog1Component } from "./components/blog1/blog1.component";
+import { About3Component } from "../home3/components/about3/about3.component";
 
 @Component({
   selector: 'app-home1',
-  imports: [Hero1Component, About1Component, Service1Component, Portfolio1Component, VideoAreaComponent, Working1Component, Testimonial1Component, Contact1Component, Blog1Component],
+  imports: [Hero1Component, About1Component, Service1Component, Portfolio1Component, VideoAreaComponent, Working1Component, Testimonial1Component, Contact1Component, Blog1Component, About3Component],
   templateUrl: './home1.component.html',
   styles: ``
 })
