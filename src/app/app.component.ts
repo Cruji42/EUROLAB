@@ -2,10 +2,11 @@ import { AfterViewInit, Component, ElementRef, HostListener, inject, OnInit, Ren
 import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import * as AOS from 'aos';
 import { TitleService } from '../../title.service';
+import { ChatbotComponent } from './components/chatbot/chatbot.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ChatbotComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
