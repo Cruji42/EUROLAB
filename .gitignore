@@ -39,3 +39,6 @@ public/assets/img/.DS_Store
 alembic.ini
 /app
 .env.example
+EUROLAB_API/
+requirements.txt
+/Info_Resources
