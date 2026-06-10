@@ -5,6 +5,7 @@ import { AdminGuard } from '../core/guards/admin.guard';
 import { AdminUsersService } from './services/admin-users.service';
 import { ServicesService } from '../services/services.service';
 import { NewsService } from '../services/news.service';
+import { SliderManagerComponent } from './slider-manager/slider-manager.component';
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -19,6 +20,7 @@ export const ADMIN_ROUTES: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'slider', component: SliderManagerComponent },
       {
         path: 'servicios',
         loadChildren: () =>

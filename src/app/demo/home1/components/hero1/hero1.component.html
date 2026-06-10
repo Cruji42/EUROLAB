@@ -1,95 +1,45 @@
 <ngx-slick-carousel class="ca-slider-active-3" [config]="sliderConfig">
-   <!-- SLIDE 1: Propuesta de valor principal -->
-   <div ngxSlickItem class="ca-slider-3 cream-bg-3 p-relative z-index-1 fix">
-      <div class="ca-slider-3-shape d-none d-lg-block">
-         <img src="assets/img/shape/ca-shape3.3.png" alt="">
-         <div class="ca-slider-top-shape-img">
-            <img src="assets/img/shape/ca-image-shape3.3.png" alt="">
-         </div>
+  <div *ngFor="let slide of slides" ngxSlickItem class="ca-slider-3 cream-bg-3 p-relative z-index-1 fix">
+
+    <div class="ca-slider-3-shape d-none d-lg-block">
+      <img src="assets/img/shape/ca-shape3.3.png" alt="">
+      <div class="ca-slider-top-shape-img">
+        <img src="assets/img/shape/ca-image-shape3.3.png" alt="">
       </div>
-      <div class="ca-slider-img-3 p-absolute">
-         <img src="assets/img/slider/truck-slide3.png" alt="">
-      </div>
-      <div class="ca-line-shape3">
-         <img src="assets/img/shape/ca-shape3.1.png" alt="">
-      </div>
-      <div class="ca-overlay-shape3 p-absolute">
-         <img src="assets/img/shape/overlay-shape3.2.png" alt="">
-      </div>
-      <div class="container">
-         <div class="row">
-            <div class="col-lg-6 col-md-10">
-               <div class="ca-hero-content-3">
-                  <h6 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">Acreditado ante EMA · Aprobado por SADER</h6>
-                  <h6 class="ca-slider-heading theme-black-3 fnw-600 pt-20 pb-20">Laboratorio especializado en análisis bromatológicos, micotoxinas y digestibilidad</h6>
-                  <p class="pt-16 pb-32">En el sector agropecuario, la calidad de los alimentos y materias primas impacta directamente en la productividad y la sanidad animal. Resultados precisos, rápidos y confiables para el control de calidad en tu operación.</p>
-                  <div class="hero3-btn">
-                     <a routerLink="/service" class="ca-btn-primary-3 theme-bg-3 text-white br-50">Conoce nuestros servicios<span><i class="fa-solid fa-angle-right"></i></span></a>
-                     <a routerLink="/contact" class="ca-sec-primary-3 theme-color-3 br-50">Contáctanos<span><i class="fa-solid fa-angle-right"></i></span></a>
-                  </div>
-               </div>
+    </div>
+
+    <div class="ca-slider-img-3 p-absolute">
+      <img [src]="slide.image_url" alt="">
+    </div>
+
+    <div class="ca-line-shape3">
+      <img src="assets/img/shape/ca-shape3.1.png" alt="">
+    </div>
+
+    <div class="ca-overlay-shape3 p-absolute">
+      <img src="assets/img/shape/overlay-shape3.2.png" alt="">
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-10">
+          <div class="ca-hero-content-3">
+            <h6 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">{{ slide.subtitle }}</h6>
+            <h1 class="ca-slider-heading theme-black-3 fnw-600 pt-20 pb-20">{{ slide.title }}</h1>
+            <p class="pt-16 pb-32">{{ slide.description }}</p>
+            <div class="hero3-btn">
+              <a [routerLink]="slide.btn_primary_link" class="ca-btn-primary-3 theme-bg-3 text-white br-50">
+                {{ slide.btn_primary_text }}<span><i class="fa-solid fa-angle-right"></i></span>
+              </a>
+              <a *ngIf="slide.btn_secondary_text" [routerLink]="slide.btn_secondary_link"
+                 class="ca-sec-primary-3 theme-color-3 br-50">
+                {{ slide.btn_secondary_text }}<span><i class="fa-solid fa-angle-right"></i></span>
+              </a>
             </div>
-         </div>
+          </div>
+        </div>
       </div>
-   </div>
-   <!-- SLIDE 2: Tecnología NIRSLAB -->
-   <div ngxSlickItem class="ca-slider-3 cream-bg-3 p-relative z-index-1 fix">
-      <div class="ca-slider-3-shape d-none d-lg-block">
-         <img src="assets/img/shape/ca-shape3.3.png" alt="">
-         <div class="ca-slider-top-shape-img">
-            <img src="assets/img/shape/ca-image-shape3.3.png" alt="">
-         </div>
-      </div>
-      <div class="ca-slider-img-3 p-absolute">
-         <img src="assets/img/slider/truck-slide2.png" alt="">
-      </div>
-      <div class="ca-line-shape3">
-         <img src="assets/img/shape/ca-shape3.1.png" alt="">
-      </div>
-      <div class="container">
-         <div class="row">
-            <div class="col-lg-6 col-md-10">
-               <div class="ca-hero-content-3">
-                  <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">Tecnología NIRS</h5>
-                  <h1 class="ca-slider-heading theme-black-3 fnw-600 pt-20 pb-20">Analiza. Decide. Optimiza. En segundos.</h1>
-                  <p class="pt-16 pb-32">Análisis rápidos, precisos y no destructivos de materias primas y alimentos balanceados. Sin preparación de muestra, con respaldo técnico especializado en el sector pecuario.</p>
-                  <div class="hero3-btn">
-                     <a routerLink="/service" class="ca-btn-primary-3 theme-bg-3 text-white br-50">Conoce NIRS<span><i class="fa-solid fa-angle-right"></i></span></a>
-                     <a routerLink="/contact" class="ca-sec-primary-3 theme-color-3 br-50">Solicitar análisis<span><i class="fa-solid fa-angle-right"></i></span></a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-   <!-- SLIDE 3: Confianza / Acreditaciones -->
-   <div ngxSlickItem class="ca-slider-3 cream-bg-3 p-relative z-index-1 fix">
-      <div class="ca-slider-3-shape d-none d-lg-block">
-         <img src="assets/img/shape/ca-shape3.3.png" alt="">
-         <div class="ca-slider-top-shape-img">
-            <img src="assets/img/shape/ca-image-shape3.3.png" alt="">
-         </div>
-      </div>
-      <div class="ca-slider-img-3 p-absolute">
-         <img src="assets/img/slider/truck-slide3.png" alt="">
-      </div>
-      <div class="ca-line-shape3">
-         <img src="assets/img/shape/ca-shape3.1.png" alt="">
-      </div>
-      <div class="container">
-         <div class="row">
-            <div class="col-lg-6 col-md-10">
-               <div class="ca-hero-content-3">
-                  <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">Microbiología · Laboratorio Tipo 2</h5>
-                  <h1 class="ca-slider-heading theme-black-3 fnw-600 pt-20 pb-20">El único laboratorio de alimentos de la región con instalaciones Tipo 2</h1>
-                  <p class="pt-16 pb-32">Contamos con barreras de contención, equipos especializados y protocolos de bioseguridad rigurosos. Detecta patógenos con PCR en horas y valida tus sanitizantes con certeza científica.</p>
-                  <div class="hero3-btn">
-                     <a routerLink="/service" class="ca-btn-primary-3 theme-bg-3 text-white br-50">Ver servicios de microbiología<span><i class="fa-solid fa-angle-right"></i></span></a>
-                     <a routerLink="/about" class="ca-sec-primary-3 theme-color-3 br-50">Nosotros<span><i class="fa-solid fa-angle-right"></i></span></a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
+    </div>
+
+  </div>
 </ngx-slick-carousel>

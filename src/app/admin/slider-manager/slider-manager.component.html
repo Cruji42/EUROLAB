@@ -1,0 +1,194 @@
+<div class="slider-manager-container">
+  <div class="header-actions">
+    <h2 class="section-title">Gestión del Slider Principal</h2>
+    <button class="ca-sec-primary-3" (click)="openCreate()">
+      <i class="bi bi-plus-circle me-2"></i>Nuevo Slide
+    </button>
+  </div>
+
+  <div *ngIf="successMsg" class="alert alert-success alert-dismissible">
+    {{ successMsg }}
+  </div>
+  <div *ngIf="error && !modalRef" class="alert alert-danger alert-dismissible">
+    {{ error }}
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div *ngIf="loading" class="loading-spinner">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!loading" class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th style="width:60px">Orden</th>
+              <th style="width:100px">Imagen</th>
+              <th>Subtítulo</th>
+              <th>Título</th>
+              <th style="width:90px">Estado</th>
+              <th style="width:100px">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let slide of slides">
+              <td class="text-center">{{ slide.sort_order }}</td>
+              <td>
+                <img *ngIf="slide.image_url" [src]="slide.image_url" alt=""
+                     class="slide-thumb" onerror="this.style.display='none'">
+                <span *ngIf="!slide.image_url" class="text-muted fst-italic">Sin imagen</span>
+              </td>
+              <td>{{ slide.subtitle }}</td>
+              <td>{{ slide.title }}</td>
+              <td>
+                <span class="badge" [class.bg-success]="slide.is_active" [class.bg-secondary]="!slide.is_active">
+                  {{ slide.is_active ? 'Activo' : 'Inactivo' }}
+                </span>
+              </td>
+              <td>
+                <div class="action-buttons">
+                  <button class="btn btn-sm btn-outline-primary me-2" (click)="openEdit(slide)" title="Editar">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger" (click)="openDelete(slide)" title="Eliminar">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="slides.length === 0">
+              <td colspan="6" class="text-center text-muted py-4">No hay slides. Crea el primero.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Slide create/edit modal ───────────────────────────────── -->
+<ng-template #slideModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ editingSlide ? 'Editar Slide' : 'Nuevo Slide' }}</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+
+  <div class="modal-body">
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+    <form [formGroup]="slideForm" (ngSubmit)="saveSlide()" novalidate>
+      <div class="row g-3">
+
+        <!-- Image URL -->
+        <div class="col-12">
+          <label class="form-label fw-semibold">URL de imagen <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="image_url"
+                 placeholder="assets/img/slider/mi-imagen.png"
+                 [class.is-invalid]="isInvalid('image_url')">
+          <div class="invalid-feedback">La URL de imagen es obligatoria.</div>
+          <small class="text-muted">Ruta relativa desde la raíz del proyecto (<code>assets/img/slider/...</code>) o URL absoluta.</small>
+        </div>
+
+        <!-- Preview -->
+        <div class="col-12" *ngIf="field('image_url')?.value">
+          <img [src]="field('image_url')?.value" alt="Vista previa" class="img-preview"
+               onerror="this.style.display='none'">
+        </div>
+
+        <!-- Subtitle -->
+        <div class="col-12">
+          <label class="form-label fw-semibold">Subtítulo / etiqueta <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="subtitle"
+                 placeholder="Acreditado ante EMA · Aprobado por SADER"
+                 [class.is-invalid]="isInvalid('subtitle')">
+          <div class="invalid-feedback">El subtítulo es obligatorio.</div>
+        </div>
+
+        <!-- Title -->
+        <div class="col-12">
+          <label class="form-label fw-semibold">Título principal <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="title"
+                 placeholder="Analiza. Decide. Optimiza."
+                 [class.is-invalid]="isInvalid('title')">
+          <div class="invalid-feedback">El título es obligatorio.</div>
+        </div>
+
+        <!-- Description -->
+        <div class="col-12">
+          <label class="form-label fw-semibold">Descripción <span class="text-danger">*</span></label>
+          <textarea class="form-control" formControlName="description" rows="3"
+                    placeholder="Descripción breve del slide..."
+                    [class.is-invalid]="isInvalid('description')"></textarea>
+          <div class="invalid-feedback">La descripción es obligatoria.</div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Botón primario — texto <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="btn_primary_text"
+                 placeholder="Conoce nuestros servicios"
+                 [class.is-invalid]="isInvalid('btn_primary_text')">
+          <div class="invalid-feedback">Requerido.</div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Botón primario — enlace <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="btn_primary_link"
+                 placeholder="/service"
+                 [class.is-invalid]="isInvalid('btn_primary_link')">
+          <div class="invalid-feedback">Requerido.</div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Botón secundario — texto</label>
+          <input type="text" class="form-control" formControlName="btn_secondary_text"
+                 placeholder="Contáctanos">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Botón secundario — enlace</label>
+          <input type="text" class="form-control" formControlName="btn_secondary_link"
+                 placeholder="/contact">
+        </div>
+
+        <!-- Order / status -->
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Orden</label>
+          <input type="number" class="form-control" formControlName="sort_order" min="0">
+        </div>
+        <div class="col-md-6 d-flex align-items-end pb-1">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="isActiveCheck" formControlName="is_active">
+            <label class="form-check-label fw-semibold" for="isActiveCheck">Activo (visible en el sitio)</label>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()" [disabled]="submitting">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary" (click)="saveSlide()" [disabled]="submitting">
+      <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2"></span>
+      {{ editingSlide ? 'Guardar cambios' : 'Crear slide' }}
+    </button>
+  </div>
+</ng-template>
+
+<!-- ── Delete confirm modal ───────────────────────────────────── -->
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title text-danger">Eliminar slide</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <p>¿Estás seguro de que deseas eliminar el slide <strong>{{ slideToDelete?.title }}</strong>? Esta acción no se puede deshacer.</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">Cancelar</button>
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+  </div>
+</ng-template>
