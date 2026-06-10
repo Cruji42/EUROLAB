@@ -42,14 +42,18 @@
       </div>
       
       <div class="d-grid">
-        <button 
-          type="submit" 
-          class="text-white theme-bg-3" 
+        <button
+          type="submit"
+          class="text-white theme-bg-3"
           [disabled]="loading"
         >
           <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
           Iniciar sesión
         </button>
+      </div>
+
+      <div class="text-center mt-3">
+        <a routerLink="/forgot-password" class="text-muted" style="font-size:14px;">¿Olvidaste tu contraseña?</a>
       </div>
     </form>
   </div>

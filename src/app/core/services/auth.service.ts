@@ -82,6 +82,18 @@ export class AuthService {
     );
   }
 
+  requestPasswordReset(email: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/forgot-password`, { email }).pipe(
+      catchError(error => throwError(() => new Error(error.error?.detail || 'Error al enviar el correo')))
+    );
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/reset-password`, { token, new_password: newPassword }).pipe(
+      catchError(error => throwError(() => new Error(error.error?.detail || 'Error al restablecer la contraseña')))
+    );
+  }
+
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     this.currentUserSubject.next(null);
