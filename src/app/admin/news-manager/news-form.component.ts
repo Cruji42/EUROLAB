@@ -19,27 +19,30 @@ export class NewsFormComponent implements OnInit {
   submitting = false;
   error = '';
   categories: NewsCategory[] = [];
-  
+
+  coverPreview: string | null = null;
+  authorPreview: string | null = null;
+  uploadingCover = false;
+  uploadingAuthor = false;
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private newsService: AdminNewsService
   ) {}
-  
+
   ngOnInit(): void {
     this.initForm();
     this.loadCategories();
-    
-    // Check if we're in edit mode
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
-      this.newsId = +idParam;
+
+    const slugParam = this.route.snapshot.paramMap.get('slug');
+    if (slugParam) {
       this.isEditMode = true;
-      this.loadNews(this.newsId);
+      this.loadNews(slugParam);
     }
   }
-  
+
   private initForm(): void {
     this.newsForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(300)]],
@@ -57,42 +60,34 @@ export class NewsFormComponent implements OnInit {
       published_at: [null]
     });
   }
-  
+
   private loadCategories(): void {
     this.newsService.getCategories().subscribe({
-      next: (categories) => {
-        this.categories = categories;
-      },
-      error: (error) => {
-        console.error('Error loading categories', error);
-      }
+      next: (categories) => { this.categories = categories; },
+      error: () => {}
     });
   }
-  
-  private loadNews(id: number): void {
+
+  private loadNews(slug: string): void {
     this.loading = true;
-    
-    this.newsService.getNewsById(id).subscribe({
+    this.newsService.getNewsBySlug(slug).subscribe({
       next: (news) => {
+        this.newsId = news.id;
         this.patchFormValues(news);
         this.loading = false;
       },
       error: (error) => {
         this.error = `Error al cargar la noticia: ${error.message}`;
         this.loading = false;
-        console.error('Error loading news', error);
       }
     });
   }
-  
+
   private patchFormValues(news: NewsPost): void {
-    // Format the date for the form
     let publishedAt = null;
     if (news.published_at) {
-      const date = new Date(news.published_at);
-      publishedAt = date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+      publishedAt = new Date(news.published_at).toISOString().split('T')[0];
     }
-    
     this.newsForm.patchValue({
       title: news.title,
       slug: news.slug,
@@ -108,94 +103,87 @@ export class NewsFormComponent implements OnInit {
       is_featured: news.is_featured,
       published_at: publishedAt
     });
+    this.coverPreview = news.cover_image_url || null;
+    this.authorPreview = news.author_image_url || null;
   }
-  
+
+  onCoverSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => (this.coverPreview = reader.result as string);
+    reader.readAsDataURL(file);
+    this.uploadingCover = true;
+    this.newsService.uploadImage(file, 'noticias').subscribe({
+      next: (url) => { this.newsForm.patchValue({ cover_image_url: url }); this.uploadingCover = false; },
+      error: (err) => { this.uploadingCover = false; this.error = err?.error?.detail ?? 'Error al subir imagen de portada.'; }
+    });
+  }
+
+  onAuthorSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => (this.authorPreview = reader.result as string);
+    reader.readAsDataURL(file);
+    this.uploadingAuthor = true;
+    this.newsService.uploadImage(file, 'autores').subscribe({
+      next: (url) => { this.newsForm.patchValue({ author_image_url: url }); this.uploadingAuthor = false; },
+      error: (err) => { this.uploadingAuthor = false; this.error = err?.error?.detail ?? 'Error al subir imagen del autor.'; }
+    });
+  }
+
   onSubmit(): void {
+    if (this.uploadingCover || this.uploadingAuthor) return;
     if (this.newsForm.invalid) {
       this.markFormGroupTouched(this.newsForm);
       return;
     }
-    
     this.submitting = true;
     this.error = '';
-    
-    const formData = this.newsForm.value;
-    
-    // Format the date for the API
+    const formData = { ...this.newsForm.value };
     if (formData.published_at && formData.is_published) {
       formData.published_at = new Date(formData.published_at).toISOString();
     } else if (!formData.is_published) {
       formData.published_at = null;
     }
-    
     if (this.isEditMode && this.newsId) {
-      // Update existing news
       this.newsService.updateNews(this.newsId, formData as NewsPostUpdate).subscribe({
-        next: () => {
-          this.submitting = false;
-          this.router.navigate(['/admin/noticias']);
-        },
-        error: (error) => {
-          this.submitting = false;
-          this.error = `Error al actualizar la noticia: ${error.message}`;
-          console.error('Error updating news', error);
-        }
+        next: () => { this.submitting = false; this.router.navigate(['/admin/noticias']); },
+        error: (error) => { this.submitting = false; this.error = `Error al actualizar la noticia: ${error.message}`; }
       });
     } else {
-      // Create new news
       this.newsService.createNews(formData as NewsPostCreate).subscribe({
-        next: () => {
-          this.submitting = false;
-          this.router.navigate(['/admin/noticias']);
-        },
-        error: (error) => {
-          this.submitting = false;
-          this.error = `Error al crear la noticia: ${error.message}`;
-          console.error('Error creating news', error);
-        }
+        next: () => { this.submitting = false; this.router.navigate(['/admin/noticias']); },
+        error: (error) => { this.submitting = false; this.error = `Error al crear la noticia: ${error.message}`; }
       });
     }
   }
-  
+
   private markFormGroupTouched(formGroup: FormGroup): void {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
-      
-      if (control instanceof FormGroup) {
-        this.markFormGroupTouched(control);
-      }
+      if (control instanceof FormGroup) this.markFormGroupTouched(control);
     });
   }
-  
-  // Helper for template
+
   getFormControl(name: string) {
     return this.newsForm.get(name);
   }
-  
-  // Generate slug from title
+
   generateSlug(): void {
-    const titleControl = this.newsForm.get('title');
-    const slugControl = this.newsForm.get('slug');
-    
-    if (titleControl && slugControl && titleControl.value && !slugControl.value) {
-      const slug = titleControl.value
-        .toLowerCase()
-        .replace(/[^\w\s-]/g, '')
-        .replace(/\s+/g, '-');
-      
-      slugControl.setValue(slug);
+    const title = this.newsForm.get('title');
+    const slug = this.newsForm.get('slug');
+    if (title && slug && title.value && !slug.value) {
+      slug.setValue(title.value.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-'));
     }
   }
-  
-  // Toggle published_at field based on is_published
+
   onPublishedChange(): void {
     const isPublished = this.newsForm.get('is_published')?.value;
-    const publishedAtControl = this.newsForm.get('published_at');
-    
-    if (isPublished && !publishedAtControl?.value) {
-      // Set current date if published is checked and no date is set
-      const today = new Date().toISOString().split('T')[0];
-      publishedAtControl?.setValue(today);
+    const publishedAt = this.newsForm.get('published_at');
+    if (isPublished && !publishedAt?.value) {
+      publishedAt?.setValue(new Date().toISOString().split('T')[0]);
     }
   }
 }

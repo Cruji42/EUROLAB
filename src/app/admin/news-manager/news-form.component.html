@@ -75,8 +75,22 @@
           </div>
           
           <div class="col-md-6">
-            <label for="cover_image_url" class="form-label">URL Imagen de Portada</label>
-            <input type="text" id="cover_image_url" class="form-control" formControlName="cover_image_url">
+            <label class="form-label">Imagen de Portada</label>
+            <div class="upload-area">
+              <label class="upload-label" [class.uploading]="uploadingCover">
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                       (change)="onCoverSelected($event)" style="display:none">
+                <ng-container *ngIf="!uploadingCover">
+                  <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>
+                  <span>{{ coverPreview ? 'Cambiar imagen' : 'Seleccionar imagen' }}</span>
+                </ng-container>
+                <ng-container *ngIf="uploadingCover">
+                  <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                  <span class="ms-2">Subiendo...</span>
+                </ng-container>
+              </label>
+            </div>
+            <img *ngIf="coverPreview" [src]="coverPreview" class="img-preview mt-2">
           </div>
         </div>
         
@@ -133,8 +147,22 @@
           </div>
           
           <div class="col-md-6">
-            <label for="author_image_url" class="form-label">URL Imagen del Autor</label>
-            <input type="text" id="author_image_url" class="form-control" formControlName="author_image_url">
+            <label class="form-label">Imagen del Autor</label>
+            <div class="upload-area">
+              <label class="upload-label" [class.uploading]="uploadingAuthor">
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                       (change)="onAuthorSelected($event)" style="display:none">
+                <ng-container *ngIf="!uploadingAuthor">
+                  <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>
+                  <span>{{ authorPreview ? 'Cambiar imagen' : 'Seleccionar imagen' }}</span>
+                </ng-container>
+                <ng-container *ngIf="uploadingAuthor">
+                  <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                  <span class="ms-2">Subiendo...</span>
+                </ng-container>
+              </label>
+            </div>
+            <img *ngIf="authorPreview" [src]="authorPreview" class="img-preview mt-2">
           </div>
         </div>
       </div>
@@ -221,9 +249,9 @@
     <div class="form-actions">
       <button type="button" class="btn btn-secondary me-2" routerLink="/admin/noticias">Cancelar</button>
       <button 
-        type="submit" 
-        class="ca-sec-primary-3" 
-        [disabled]="newsForm.invalid || submitting"
+        type="submit"
+        class="ca-sec-primary-3"
+        [disabled]="newsForm.invalid || submitting || uploadingCover || uploadingAuthor"
       >
         <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
         {{ isEditMode ? 'Actualizar' : 'Crear' }} Noticia

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 export interface NewsCategory {
@@ -72,6 +72,7 @@ export interface NewsPostUpdate {
 })
 export class AdminNewsService {
   private readonly apiUrl = `${environment.apiUrl}/noticias`;
+  private readonly uploadUrl = `${environment.apiUrl}/upload`;
 
   constructor(private http: HttpClient) {}
 
@@ -82,11 +83,19 @@ export class AdminNewsService {
       );
   }
 
-  getNewsById(id: number): Observable<NewsPost> {
-    return this.http.get<NewsPost>(`${this.apiUrl}/${id}`)
+  getNewsBySlug(slug: string): Observable<NewsPost> {
+    return this.http.get<NewsPost>(`${this.apiUrl}/${slug}`)
       .pipe(
         catchError(error => throwError(() => new Error('Error fetching news post: ' + error.message)))
       );
+  }
+
+  uploadImage(file: File, folder = 'noticias'): Observable<string> {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('folder', folder);
+    return this.http.post<{ url: string }>(`${this.uploadUrl}/image`, form)
+      .pipe(map(r => r.url));
   }
 
   createNews(news: NewsPostCreate): Observable<NewsPost> {

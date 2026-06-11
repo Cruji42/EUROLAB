@@ -86,6 +86,34 @@
   cursor: pointer;
 }
 
+.upload-area {
+  border: 2px dashed #ced4da;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+  &:hover { border-color: #0d6efd; }
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  cursor: pointer;
+  color: #6c757d;
+  margin: 0;
+  width: 100%;
+  &.uploading { flex-direction: row; cursor: default; }
+}
+
+.img-preview {
+  max-height: 120px;
+  max-width: 100%;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+  object-fit: cover;
+}
+
 // Responsive adjustments
 @media (max-width: 768px) {
   .header-actions {

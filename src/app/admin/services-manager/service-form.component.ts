@@ -19,6 +19,11 @@ export class ServiceFormComponent implements OnInit {
   loading = false;
   submitting = false;
   error = '';
+
+  heroPreview: string | null = null;
+  iconPreview: string | null = null;
+  uploadingHero = false;
+  uploadingIcon = false;
   
   constructor(
     private fb: FormBuilder,
@@ -29,13 +34,11 @@ export class ServiceFormComponent implements OnInit {
   
   ngOnInit(): void {
     this.initForm();
-    
-    // Check if we're in edit mode
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
-      this.serviceId = +idParam;
+
+    const slugParam = this.route.snapshot.paramMap.get('slug');
+    if (slugParam) {
       this.isEditMode = true;
-      this.loadService(this.serviceId);
+      this.loadService(slugParam);
     }
   }
   
@@ -66,23 +69,24 @@ export class ServiceFormComponent implements OnInit {
     });
   }
   
-  private loadService(id: number): void {
+  private loadService(slug: string): void {
     this.loading = true;
-    
-    this.servicesService.getServiceById(id).subscribe({
+    this.servicesService.getServiceBySlug(slug).subscribe({
       next: (service) => {
+        this.serviceId = service.id;
         this.patchFormValues(service);
         this.loading = false;
       },
       error: (error) => {
         this.error = `Error al cargar el servicio: ${error.message}`;
         this.loading = false;
-        console.error('Error loading service', error);
       }
     });
   }
   
   private patchFormValues(service: ServiceDetail): void {
+    this.heroPreview = service.hero_image_url || null;
+    this.iconPreview = service.card_icon_url || null;
     this.serviceForm.patchValue({
       name: service.name,
       slug: service.slug,
@@ -153,7 +157,34 @@ export class ServiceFormComponent implements OnInit {
     this.faqs.removeAt(index);
   }
   
+  onHeroSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => (this.heroPreview = reader.result as string);
+    reader.readAsDataURL(file);
+    this.uploadingHero = true;
+    this.servicesService.uploadImage(file, 'servicios').subscribe({
+      next: (url) => { this.serviceForm.patchValue({ hero_image_url: url }); this.uploadingHero = false; },
+      error: (err) => { this.uploadingHero = false; this.error = err?.error?.detail ?? 'Error al subir imagen hero.'; }
+    });
+  }
+
+  onIconSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => (this.iconPreview = reader.result as string);
+    reader.readAsDataURL(file);
+    this.uploadingIcon = true;
+    this.servicesService.uploadImage(file, 'servicios').subscribe({
+      next: (url) => { this.serviceForm.patchValue({ card_icon_url: url }); this.uploadingIcon = false; },
+      error: (err) => { this.uploadingIcon = false; this.error = err?.error?.detail ?? 'Error al subir icono.'; }
+    });
+  }
+
   onSubmit(): void {
+    if (this.uploadingHero || this.uploadingIcon) return;
     if (this.serviceForm.invalid) {
       this.markFormGroupTouched(this.serviceForm);
       return;

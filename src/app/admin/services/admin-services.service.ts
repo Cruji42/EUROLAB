@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { ServiceCard, ServiceDetail } from '../../models/service.model';
 
@@ -71,6 +71,7 @@ export interface ServiceFAQCreate {
 })
 export class AdminServicesService {
   private readonly apiUrl = `${environment.apiUrl}/servicios`;
+  private readonly uploadUrl = `${environment.apiUrl}/upload`;
 
   constructor(private http: HttpClient) {}
 
@@ -81,11 +82,19 @@ export class AdminServicesService {
       );
   }
 
-  getServiceById(id: number): Observable<ServiceDetail> {
-    return this.http.get<ServiceDetail>(`${this.apiUrl}/${id}`)
+  getServiceBySlug(slug: string): Observable<ServiceDetail> {
+    return this.http.get<ServiceDetail>(`${this.apiUrl}/${slug}`)
       .pipe(
         catchError(error => throwError(() => new Error('Error fetching service: ' + error.message)))
       );
+  }
+
+  uploadImage(file: File, folder = 'servicios'): Observable<string> {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('folder', folder);
+    return this.http.post<{ url: string }>(`${this.uploadUrl}/image`, form)
+      .pipe(map(r => r.url));
   }
 
   createService(service: ServiceCreate): Observable<ServiceDetail> {

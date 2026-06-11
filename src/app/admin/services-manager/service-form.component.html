@@ -67,8 +67,22 @@
           </div>
           
           <div class="col-md-6">
-            <label for="hero_image_url" class="form-label">URL Imagen Hero</label>
-            <input type="text" id="hero_image_url" class="form-control" formControlName="hero_image_url">
+            <label class="form-label">Imagen Hero</label>
+            <div class="upload-area">
+              <label class="upload-label" [class.uploading]="uploadingHero">
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                       (change)="onHeroSelected($event)" style="display:none">
+                <ng-container *ngIf="!uploadingHero">
+                  <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>
+                  <span>{{ heroPreview ? 'Cambiar imagen' : 'Seleccionar imagen' }}</span>
+                </ng-container>
+                <ng-container *ngIf="uploadingHero">
+                  <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                  <span class="ms-2">Subiendo...</span>
+                </ng-container>
+              </label>
+            </div>
+            <img *ngIf="heroPreview" [src]="heroPreview" class="img-preview mt-2">
           </div>
         </div>
       </div>
@@ -176,8 +190,22 @@
           </div>
           
           <div class="col-md-6">
-            <label for="card_icon_url" class="form-label">URL Icono</label>
-            <input type="text" id="card_icon_url" class="form-control" formControlName="card_icon_url">
+            <label class="form-label">Icono Card</label>
+            <div class="upload-area">
+              <label class="upload-label" [class.uploading]="uploadingIcon">
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                       (change)="onIconSelected($event)" style="display:none">
+                <ng-container *ngIf="!uploadingIcon">
+                  <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>
+                  <span>{{ iconPreview ? 'Cambiar icono' : 'Seleccionar icono' }}</span>
+                </ng-container>
+                <ng-container *ngIf="uploadingIcon">
+                  <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                  <span class="ms-2">Subiendo...</span>
+                </ng-container>
+              </label>
+            </div>
+            <img *ngIf="iconPreview" [src]="iconPreview" class="img-preview mt-2">
           </div>
         </div>
       </div>
@@ -352,7 +380,7 @@
       <button 
         type="submit" 
         class="ca-sec-primary-3" 
-        [disabled]="serviceForm.invalid || submitting"
+        [disabled]="serviceForm.invalid || submitting || uploadingHero || uploadingIcon"
       >
         <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
         {{ isEditMode ? 'Actualizar' : 'Crear' }} Servicio

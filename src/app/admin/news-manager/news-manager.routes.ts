@@ -10,7 +10,7 @@ export const NEWS_MANAGER_ROUTES: Routes = [
     children: [
       { path: '', component: NewsListComponent },
       { path: 'nueva', component: NewsFormComponent },
-      { path: ':id', component: NewsFormComponent }
+      { path: ':slug', component: NewsFormComponent }
     ]
   }
 ];
