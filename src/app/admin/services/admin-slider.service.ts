@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { BannerSlide, BannerSlidePayload } from '../../models/slider.model';
 
 @Injectable({ providedIn: 'root' })
 export class AdminSliderService {
   private readonly base = `${environment.apiUrl}/slider`;
+  private readonly uploadBase = `${environment.apiUrl}/upload`;
 
   constructor(private http: HttpClient) {}
 
@@ -24,5 +26,14 @@ export class AdminSliderService {
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.base}/admin/${id}`);
+  }
+
+  uploadImage(file: File, folder = 'slider'): Observable<string> {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('folder', folder);
+    return this.http
+      .post<{ url: string }>(`${this.uploadBase}/image`, form)
+      .pipe(map(r => r.url));
   }
 }

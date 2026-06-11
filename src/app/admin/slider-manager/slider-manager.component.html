@@ -82,20 +82,33 @@
     <form [formGroup]="slideForm" (ngSubmit)="saveSlide()" novalidate>
       <div class="row g-3">
 
-        <!-- Image URL -->
+        <!-- Image upload -->
         <div class="col-12">
-          <label class="form-label fw-semibold">URL de imagen <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" formControlName="image_url"
-                 placeholder="assets/img/slider/mi-imagen.png"
-                 [class.is-invalid]="isInvalid('image_url')">
-          <div class="invalid-feedback">La URL de imagen es obligatoria.</div>
-          <small class="text-muted">Ruta relativa desde la raíz del proyecto (<code>assets/img/slider/...</code>) o URL absoluta.</small>
+          <label class="form-label fw-semibold">Imagen <span class="text-danger">*</span></label>
+
+          <div class="upload-area" [class.is-invalid]="isInvalid('image_url')">
+            <label class="upload-label" [class.uploading]="uploading">
+              <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                     (change)="onFileSelected($event)" style="display:none">
+              <ng-container *ngIf="!uploading">
+                <i class="bi bi-cloud-upload fs-3 d-block mb-1"></i>
+                <span>{{ imagePreview ? 'Cambiar imagen' : 'Seleccionar imagen' }}</span>
+                <small class="d-block text-muted mt-1">JPG, PNG, WebP o GIF · máx 5 MB</small>
+              </ng-container>
+              <ng-container *ngIf="uploading">
+                <div class="spinner-border text-primary" role="status"></div>
+                <span class="ms-2">Subiendo...</span>
+              </ng-container>
+            </label>
+          </div>
+          <div class="invalid-feedback d-block" *ngIf="isInvalid('image_url')">
+            La imagen es obligatoria.
+          </div>
         </div>
 
         <!-- Preview -->
-        <div class="col-12" *ngIf="field('image_url')?.value">
-          <img [src]="field('image_url')?.value" alt="Vista previa" class="img-preview"
-               onerror="this.style.display='none'">
+        <div class="col-12" *ngIf="imagePreview">
+          <img [src]="imagePreview" alt="Vista previa" class="img-preview">
         </div>
 
         <!-- Subtitle -->
@@ -171,7 +184,7 @@
     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()" [disabled]="submitting">
       Cancelar
     </button>
-    <button type="button" class="btn btn-primary" (click)="saveSlide()" [disabled]="submitting">
+    <button type="button" class="btn btn-primary" (click)="saveSlide()" [disabled]="submitting || uploading">
       <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2"></span>
       {{ editingSlide ? 'Guardar cambios' : 'Crear slide' }}
     </button>

@@ -19,8 +19,10 @@ export class SliderManagerComponent implements OnInit {
   slides: BannerSlide[] = [];
   loading = true;
   submitting = false;
+  uploading = false;
   error = '';
   successMsg = '';
+  imagePreview: string | null = null;
 
   slideForm!: FormGroup;
   editingSlide: BannerSlide | null = null;
@@ -64,6 +66,7 @@ export class SliderManagerComponent implements OnInit {
   openCreate(): void {
     this.editingSlide = null;
     this.error = '';
+    this.imagePreview = null;
     this.slideForm.reset({
       sort_order: this.slides.length + 1,
       is_active: true,
@@ -76,8 +79,40 @@ export class SliderManagerComponent implements OnInit {
   openEdit(slide: BannerSlide): void {
     this.editingSlide = slide;
     this.error = '';
+    this.imagePreview = slide.image_url
+      ? this.resolvePreviewUrl(slide.image_url)
+      : null;
     this.slideForm.patchValue(slide);
     this.modalRef = this.modalService.open(this.slideModal, { size: 'lg', backdrop: 'static' });
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => (this.imagePreview = reader.result as string);
+    reader.readAsDataURL(file);
+
+    this.uploading = true;
+    this.error = '';
+    this.sliderService.uploadImage(file).subscribe({
+      next: (url) => {
+        this.slideForm.patchValue({ image_url: url });
+        this.uploading = false;
+      },
+      error: (err) => {
+        this.uploading = false;
+        this.error = err?.error?.detail ?? 'Error al subir la imagen.';
+      },
+    });
+  }
+
+  private resolvePreviewUrl(url: string): string {
+    if (url.startsWith('http') || url.startsWith('data:')) return url;
+    const apiBase = (window as any).__env?.apiBase ?? 'http://137.184.132.38:8009';
+    return `${apiBase}/${url}`;
   }
 
   openDelete(slide: BannerSlide): void {
@@ -86,6 +121,7 @@ export class SliderManagerComponent implements OnInit {
   }
 
   saveSlide(): void {
+    if (this.uploading) return;
     if (this.slideForm.invalid) {
       this.slideForm.markAllAsTouched();
       return;
