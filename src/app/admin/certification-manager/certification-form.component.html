@@ -1,0 +1,175 @@
+<div class="news-form-container">
+  <div class="header-actions">
+    <h2 class="section-title">
+      {{ isEditMode ? 'Editar Certificación' : 'Nueva Certificación' }}
+    </h2>
+    <a routerLink="/admin/certificaciones" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left me-2"></i>Volver
+    </a>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <form [formGroup]="certForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+
+    <!-- Información básica -->
+    <div class="card mb-4">
+      <div class="card-header"><h5 class="mb-0">Información Básica</h5></div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Título *</label>
+            <input type="text" class="form-control" formControlName="title" (blur)="generateSlug()"
+              [ngClass]="{'is-invalid': fc('title')?.invalid && fc('title')?.touched}">
+            <div class="invalid-feedback" *ngIf="fc('title')?.errors?.['required'] && fc('title')?.touched">El título es obligatorio</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Slug *</label>
+            <input type="text" class="form-control" formControlName="slug"
+              [ngClass]="{'is-invalid': fc('slug')?.invalid && fc('slug')?.touched}">
+            <div class="invalid-feedback" *ngIf="fc('slug')?.errors?.['required'] && fc('slug')?.touched">El slug es obligatorio</div>
+            <div class="invalid-feedback" *ngIf="fc('slug')?.errors?.['pattern'] && fc('slug')?.touched">Solo minúsculas, números y guiones</div>
+            <small class="form-text text-muted">Usado en la URL: /certificaciones/slug</small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Organismo Emisor *</label>
+            <input type="text" class="form-control" formControlName="issuing_body"
+              [ngClass]="{'is-invalid': fc('issuing_body')?.invalid && fc('issuing_body')?.touched}"
+              placeholder="Ej: EMA, SADER, COFEPRIS">
+            <div class="invalid-feedback" *ngIf="fc('issuing_body')?.errors?.['required'] && fc('issuing_body')?.touched">El organismo es obligatorio</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Tipo de Certificación *</label>
+            <input type="text" class="form-control" formControlName="cert_type"
+              [ngClass]="{'is-invalid': fc('cert_type')?.invalid && fc('cert_type')?.touched}"
+              placeholder="Ej: Acreditación, Aprobación, Certificación">
+            <div class="invalid-feedback" *ngIf="fc('cert_type')?.errors?.['required'] && fc('cert_type')?.touched">El tipo es obligatorio</div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Fecha de Emisión</label>
+            <input type="date" class="form-control" formControlName="issued_at">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Fecha de Vencimiento</label>
+            <input type="date" class="form-control" formControlName="expires_at">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Extracto</label>
+          <textarea class="form-control" rows="2" formControlName="excerpt"
+            [ngClass]="{'is-invalid': fc('excerpt')?.invalid && fc('excerpt')?.touched}"></textarea>
+          <div class="invalid-feedback" *ngIf="fc('excerpt')?.errors?.['maxlength'] && fc('excerpt')?.touched">Máximo 500 caracteres</div>
+          <small class="form-text text-muted">Breve descripción para el listado (máximo 500 caracteres)</small>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Descripción Completa</label>
+          <textarea class="form-control" rows="8" formControlName="description"></textarea>
+          <small class="form-text text-muted">Admite HTML para la página de detalle</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Imágenes y archivos -->
+    <div class="card mb-4">
+      <div class="card-header"><h5 class="mb-0">Imagen y Constancia</h5></div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Imagen de Portada</label>
+            <div class="upload-area">
+              <label class="upload-label" [class.uploading]="uploadingCover">
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                       (change)="onCoverSelected($event)" style="display:none">
+                <ng-container *ngIf="!uploadingCover">
+                  <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>
+                  <span>{{ coverPreview ? 'Cambiar imagen' : 'Seleccionar imagen' }}</span>
+                </ng-container>
+                <ng-container *ngIf="uploadingCover">
+                  <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                  <span class="ms-2">Subiendo...</span>
+                </ng-container>
+              </label>
+            </div>
+            <img *ngIf="coverPreview" [src]="coverPreview" class="img-preview mt-2">
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Constancia de Certificación (PDF / imagen)</label>
+            <div class="upload-area">
+              <label class="upload-label" [class.uploading]="uploadingFile">
+                <input type="file" accept=".pdf,image/jpeg,image/png,image/webp"
+                       (change)="onFileSelected($event)" style="display:none">
+                <ng-container *ngIf="!uploadingFile">
+                  <i class="bi bi-file-earmark-arrow-up fs-4 d-block mb-1"></i>
+                  <span>{{ fileUploaded ? 'Cambiar archivo' : 'Seleccionar archivo' }}</span>
+                </ng-container>
+                <ng-container *ngIf="uploadingFile">
+                  <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                  <span class="ms-2">Subiendo...</span>
+                </ng-container>
+              </label>
+            </div>
+            <div *ngIf="fileUploaded" class="mt-2 text-success">
+              <i class="bi bi-check-circle me-1"></i>{{ uploadedFileName }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO -->
+    <div class="card mb-4">
+      <div class="card-header"><h5 class="mb-0">SEO</h5></div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Meta Título</label>
+            <input type="text" class="form-control" formControlName="meta_title">
+            <small class="form-text text-muted">Máximo 160 caracteres</small>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Meta Descripción</label>
+            <textarea class="form-control" rows="2" formControlName="meta_description"></textarea>
+            <small class="form-text text-muted">Máximo 320 caracteres</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Publicación -->
+    <div class="card mb-4">
+      <div class="card-header"><h5 class="mb-0">Visibilidad</h5></div>
+      <div class="card-body">
+        <div class="form-check form-switch mb-3">
+          <input class="form-check-input" type="checkbox" id="is_active" formControlName="is_active">
+          <label class="form-check-label" for="is_active">Activa (visible en el sitio)</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="is_featured" formControlName="is_featured">
+          <label class="form-check-label" for="is_featured">Destacada (aparece en el home)</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary me-2" routerLink="/admin/certificaciones">Cancelar</button>
+      <button type="submit" class="ca-sec-primary-3"
+        [disabled]="certForm.invalid || submitting || uploadingCover || uploadingFile">
+        <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        {{ isEditMode ? 'Actualizar' : 'Crear' }} Certificación
+      </button>
+    </div>
+  </form>
+</div>

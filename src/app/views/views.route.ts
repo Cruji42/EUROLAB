@@ -19,6 +19,8 @@ import { ProjectLeftComponent } from "./projects/project-left/project-left.compo
 import { ProjectRightComponent } from "./projects/project-right/project-right.component";
 import { ProjectSingleComponent } from "./projects/project-single/project-single.component";
 import { Home1Component } from "../demo/home1/home1.component";
+import { CertificationListComponent } from "./certifications/certification-list/certification-list.component";
+import { CertificationSingleComponent } from "./certifications/certification-single/certification-single.component";
 
 export const VIEWS_ROUTES: Route[] = [
     {
@@ -126,6 +128,16 @@ export const VIEWS_ROUTES: Route[] = [
         path: 'project-single',
         component: ProjectSingleComponent,
         data: { title: 'Laboratorio EURONUTEC-Project Single' },
+    },
+    {
+        path: 'certificaciones',
+        component: CertificationListComponent,
+        data: { title: 'Laboratorio EURONUTEC-Certificaciones' },
+    },
+    {
+        path: 'certificaciones/:slug',
+        component: CertificationSingleComponent,
+        data: { title: 'Laboratorio EURONUTEC-Certificación' },
     },
     {
         path:'index',

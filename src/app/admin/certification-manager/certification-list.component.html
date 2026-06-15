@@ -1,0 +1,87 @@
+<div class="news-list-container">
+  <div class="header-actions">
+    <h2 class="section-title">Gestión de Certificaciones</h2>
+    <a routerLink="nueva" class="ca-sec-primary-3">
+      <i class="bi bi-plus-circle me-2"></i>
+      Nueva Certificación
+    </a>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="filters mb-4">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-search"></i></span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Buscar por título u organismo..."
+                [(ngModel)]="searchTerm"
+                (input)="search()"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="loading" class="loading-spinner">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!loading" class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Título</th>
+              <th>Organismo</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Destacada</th>
+              <th>Constancia</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cert of filtered">
+              <td>{{ cert.id }}</td>
+              <td>{{ cert.title }}</td>
+              <td>{{ cert.issuing_body }}</td>
+              <td>{{ cert.cert_type }}</td>
+              <td>
+                <span class="badge" [ngClass]="getStatusClass(cert)">{{ getStatusText(cert) }}</span>
+              </td>
+              <td>
+                <span class="badge bg-warning" *ngIf="cert.is_featured">Destacada</span>
+                <span *ngIf="!cert.is_featured">-</span>
+              </td>
+              <td>
+                <a *ngIf="cert.certificate_file_url" [href]="cert.certificate_file_url" target="_blank" class="btn btn-sm btn-outline-info">
+                  <i class="bi bi-file-earmark-pdf"></i>
+                </a>
+                <span *ngIf="!cert.certificate_file_url">-</span>
+              </td>
+              <td>
+                <div class="action-buttons">
+                  <a [routerLink]="[cert.slug]" class="btn btn-sm btn-outline-primary me-2">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                  <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(cert)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="filtered.length === 0">
+              <td colspan="8" class="text-center">No se encontraron certificaciones</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

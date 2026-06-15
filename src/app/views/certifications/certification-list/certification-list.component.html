@@ -1,0 +1,60 @@
+<app-breadcrumb [title]="'Certificaciones'"/>
+
+<div class="ca-blog-inner pt-100 pb-100">
+  <div class="container">
+    @if (isLoading) {
+      <p class="text-center">Cargando certificaciones...</p>
+    } @else if (errorMessage) {
+      <p class="text-center text-danger">{{ errorMessage }}</p>
+    } @else {
+      <div class="row">
+        @for (cert of certifications; track cert.id) {
+          <div class="col-xl-4 col-md-6 mb-30">
+            <div class="ca-team-box ca-blg-box-3 cream-bg-3 br-7 fix p-relative z-index-1">
+              <div class="ca-team-img">
+                <img class="w-100" [src]="cert.cover_image_url || 'assets/img/blog/ca-blog-1.1.png'" alt="{{ cert.title }}">
+              </div>
+              <div class="ca-blog-date-3 ca-blg-date-3">
+                <a href="javascript:void(0);" class="blg-date-3">{{ cert.cert_type }}</a>
+              </div>
+              <div class="ca-blog-box-content ca-blog-box-content-3">
+                <div class="ca-b-meta">
+                  <a href="javascript:void(0);" class="ca-blog-meta ca-blog-meta-3">
+                    <div class="ca-meta-icon">
+                      <span><img src="assets/img/icon/user-1.1.svg" alt=""></span>
+                    </div>
+                    <div class="ca-meta-title">
+                      <span>{{ cert.issuing_body }}</span>
+                    </div>
+                  </a>
+                  <a href="javascript:void(0);" class="ca-blog-meta ca-blog-meta-3">
+                    <div class="ca-meta-icon">
+                      <span><img src="assets/img/icon/tag-1.1.svg" alt=""></span>
+                    </div>
+                    <div class="ca-meta-title">
+                      <span>{{ cert.cert_type }}</span>
+                    </div>
+                  </a>
+                </div>
+                <h4 class="ca-blog-title ca-blog-title-3 fnw-600">
+                  <a [routerLink]="['/certificaciones', cert.slug]">{{ cert.title }}</a>
+                </h4>
+                <p class="pt-16 pb-18">{{ cert.excerpt || '' }}</p>
+                <div class="blog-3-rearmore">
+                  <a [routerLink]="['/certificaciones', cert.slug]" class="read-more3">
+                    Ver más <span><i class="fa-solid fa-angle-right"></i></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+        @if (certifications.length === 0) {
+          <div class="col-12 text-center">
+            <p>No hay certificaciones disponibles.</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

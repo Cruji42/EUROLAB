@@ -47,6 +47,10 @@ export const menu: MenuItem[] = [
     //   ]
     // },
     {
+      title: 'Certificaciones',
+      link: '/certificaciones',
+    },
+    {
       title: 'Noticias',
       link: '/blog',
       // icon: 'fa-solid fa-angle-down',

@@ -36,6 +36,13 @@ export const ADMIN_ROUTES: Routes = [
           )
       },
       {
+        path: 'certificaciones',
+        loadChildren: () =>
+          import('./certification-manager/certification-manager.routes').then(
+            (m) => m.CERTIFICATION_MANAGER_ROUTES
+          )
+      },
+      {
         path: 'usuarios',
         loadChildren: () =>
           import('./users-manager/users-manager.routes').then(

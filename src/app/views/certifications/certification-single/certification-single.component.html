@@ -1,0 +1,91 @@
+<app-breadcrumb [title]="cert?.title || 'Certificación'"/>
+
+<div class="ca-blog-details pt-100 pb-100">
+  <div class="container">
+    @if (isLoading) {
+      <p class="text-center">Cargando...</p>
+    } @else if (errorMessage) {
+      <p class="text-center text-danger">{{ errorMessage }}</p>
+    } @else if (cert) {
+      <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-10">
+
+          <!-- Imagen portada -->
+          @if (cert.cover_image_url) {
+            <div class="ca-blog-details-img mb-40">
+              <img class="w-100 br-7" [src]="cert.cover_image_url" alt="{{ cert.title }}">
+            </div>
+          }
+
+          <!-- Meta -->
+          <div class="ca-b-meta mb-20">
+            <a href="javascript:void(0);" class="ca-blog-meta ca-blog-meta-3 me-3">
+              <div class="ca-meta-icon">
+                <span><img src="assets/img/icon/user-1.1.svg" alt=""></span>
+              </div>
+              <div class="ca-meta-title">
+                <span>{{ cert.issuing_body }}</span>
+              </div>
+            </a>
+            <a href="javascript:void(0);" class="ca-blog-meta ca-blog-meta-3">
+              <div class="ca-meta-icon">
+                <span><img src="assets/img/icon/tag-1.1.svg" alt=""></span>
+              </div>
+              <div class="ca-meta-title">
+                <span>{{ cert.cert_type }}</span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Título -->
+          <h2 class="ca-blog-title fnw-600 mb-20">{{ cert.title }}</h2>
+
+          <!-- Fechas -->
+          @if (cert.issued_at || cert.expires_at) {
+            <div class="mb-20 d-flex gap-4 flex-wrap">
+              @if (cert.issued_at) {
+                <span class="badge bg-success fs-6 fw-normal">
+                  Emitida: {{ cert.issued_at | date:'dd/MM/yyyy' }}
+                </span>
+              }
+              @if (cert.expires_at) {
+                <span class="badge bg-warning text-dark fs-6 fw-normal">
+                  Vigente hasta: {{ cert.expires_at | date:'dd/MM/yyyy' }}
+                </span>
+              }
+            </div>
+          }
+
+          <!-- Extracto -->
+          @if (cert.excerpt) {
+            <p class="lead mb-30">{{ cert.excerpt }}</p>
+          }
+
+          <!-- Descripción HTML -->
+          @if (cert.description) {
+            <div class="ca-blog-content mb-40" [innerHTML]="cert.description"></div>
+          }
+
+          <!-- Constancia de certificación -->
+          @if (cert.certificate_file_url) {
+            <div class="ca-cert-download mb-40 p-4 br-7" style="background:#f8f9fa; border: 1px solid #dee2e6;">
+              <h5 class="fnw-600 mb-10"><i class="fa-solid fa-certificate me-2 theme-color-3"></i>Constancia de Certificación</h5>
+              <p class="mb-15">Descarga la constancia oficial de esta certificación.</p>
+              <a [href]="cert.certificate_file_url" target="_blank" rel="noopener" class="ca-sec-primary-3">
+                <i class="fa-solid fa-file-pdf me-2"></i>Descargar Constancia
+              </a>
+            </div>
+          }
+
+          <!-- Volver -->
+          <div class="mt-40">
+            <a routerLink="/certificaciones" class="read-more3">
+              <span><i class="fa-solid fa-angle-left me-1"></i></span> Volver a Certificaciones
+            </a>
+          </div>
+
+        </div>
+      </div>
+    }
+  </div>
+</div>
