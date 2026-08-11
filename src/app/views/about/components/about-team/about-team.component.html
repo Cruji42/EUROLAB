@@ -3,12 +3,12 @@
     <div class="ca-team-iner-content-3 ca-sec-content-3 text-center mb-60 wow tpFadeInUp" data-wow-duration="1.5s"
       data-wow-delay=".2s">
       <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">
-        {{ teamData.subtitle }}
+        {{ teamData.subtitle | translate }}
       </h5>
       <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">
-        {{ teamData.title }}
+        {{ teamData.title | translate }}
       </h2>
-      <p class="pt-16">{{ teamData.description }}</p>
+      <p class="pt-16">{{ teamData.description | translate }}</p>
     </div>
     <div class="row">
 
@@ -39,7 +39,7 @@
                   {{member.name}}
                 </h5>
                 <br>
-                <h6>{{ member.role }}</h6>
+                <h6>{{ member.role | translate }}</h6>
                 <hr>
                 <p>
                   <span><img src="assets/img/icon/ca-envelop3.3.svg" alt=""> {{member.social_links.email}}</span>

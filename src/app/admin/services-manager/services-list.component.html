@@ -1,12 +1,12 @@
 <div class="services-list-container">
   <div class="header-actions">
-    <h2 class="section-title">Gestión de Servicios</h2>
+    <h2 class="section-title">{{ 'admin.services.list.title' | translate }}</h2>
     <a routerLink="nuevo" class="ca-sec-primary-3">
       <i class="bi bi-plus-circle me-2"></i>
-      Nuevo Servicio
+      {{ 'admin.services.list.newService' | translate }}
     </a>
   </div>
-  
+
   <div class="card">
     <div class="card-body">
       <div class="search-box mb-4">
@@ -14,32 +14,32 @@
           <span class="input-group-text">
             <i class="bi bi-search"></i>
           </span>
-          <input 
-            type="text" 
-            class="form-control" 
-            placeholder="Buscar por nombre..." 
+          <input
+            type="text"
+            class="form-control"
+            [attr.placeholder]="'admin.services.list.searchPlaceholder' | translate"
             [(ngModel)]="searchTerm"
             (input)="search()"
           >
         </div>
       </div>
-      
+
       <div *ngIf="loading" class="loading-spinner">
         <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Cargando...</span>
+          <span class="visually-hidden">{{ 'admin.common.loading' | translate }}</span>
         </div>
       </div>
-      
+
       <div *ngIf="!loading" class="table-responsive">
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Slug</th>
-              <th>Estado</th>
-              <th>Orden</th>
-              <th>Acciones</th>
+              <th>{{ 'admin.services.list.table.id' | translate }}</th>
+              <th>{{ 'admin.services.list.table.name' | translate }}</th>
+              <th>{{ 'admin.services.list.table.slug' | translate }}</th>
+              <th>{{ 'admin.common.status' | translate }}</th>
+              <th>{{ 'admin.services.list.table.order' | translate }}</th>
+              <th>{{ 'admin.common.actions' | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -48,8 +48,8 @@
               <td>{{ service.name }}</td>
               <td>{{ service.slug }}</td>
               <td>
-                <span class="badge bg-success" *ngIf="service.is_active">Activo</span>
-                <span class="badge bg-secondary" *ngIf="!service.is_active">Inactivo</span>
+                <span class="badge bg-success" *ngIf="service.is_active">{{ 'admin.common.active' | translate }}</span>
+                <span class="badge bg-secondary" *ngIf="!service.is_active">{{ 'admin.common.inactive' | translate }}</span>
               </td>
               <td>{{ service.sort_order }}</td>
               <td>
@@ -64,7 +64,7 @@
               </td>
             </tr>
             <tr *ngIf="filteredServices.length === 0">
-              <td colspan="6" class="text-center">No se encontraron servicios</td>
+              <td colspan="6" class="text-center">{{ 'admin.services.list.empty' | translate }}</td>
             </tr>
           </tbody>
         </table>

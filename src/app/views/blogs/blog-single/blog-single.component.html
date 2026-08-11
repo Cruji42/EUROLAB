@@ -1,12 +1,12 @@
-<app-breadcrumb [title]="'Noticias'" [subTitle]="post?.title || 'Detalle de noticia'"/>
+<app-breadcrumb [title]="'views.blog.breadcrumbTitle' | translate" [subTitle]="post?.title || ('views.blogSingle.defaultDetailTitle' | translate)"/>
 
 @if (isLoading) {
   <div class="container py-5">
-    <p class="text-center">Cargando noticia...</p>
+    <p class="text-center">{{ 'views.blogSingle.loading' | translate }}</p>
   </div>
 } @else if (errorMessage) {
   <div class="container py-5">
-    <p class="text-center text-danger">{{ errorMessage }}</p>
+    <p class="text-center text-danger">{{ errorMessage | translate }}</p>
   </div>
 } @else {
   <app-blog-single-sidebar [post]="post"/>

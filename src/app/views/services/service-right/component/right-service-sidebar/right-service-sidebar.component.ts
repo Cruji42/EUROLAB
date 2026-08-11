@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { faqs } from '../../../data';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-right-service-sidebar',
-  imports: [NgbAccordionModule],
+  imports: [NgbAccordionModule, TranslatePipe],
   templateUrl: './right-service-sidebar.component.html',
   styles: ``
 })
@@ -21,7 +22,7 @@ export class RightServiceSidebarComponent {
     "Service Breakdown",
     "Our Specialized Services",
     "Service Highlights",
-    "Nuestros servicios in Detail",
+    "Our services in Detail",
     "What We Provide",
     "Extensive Service"
   ];

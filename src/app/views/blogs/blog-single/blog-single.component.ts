@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BreadcrumbComponent } from "../../../components/breadcrumb/breadcrumb.component";
 import { BlogSingleSidebarComponent } from "./components/blog-single-sidebar/blog-single-sidebar.component";
 import { BlogSingleMOreComponent } from "./components/blog-single-more/blog-single-more.component";
@@ -8,7 +9,7 @@ import { NewsPostDetail } from '../../../models/news.model';
 
 @Component({
   selector: 'app-blog-single',
-  imports: [BreadcrumbComponent, BlogSingleSidebarComponent, BlogSingleMOreComponent],
+  imports: [BreadcrumbComponent, BlogSingleSidebarComponent, BlogSingleMOreComponent, TranslatePipe],
   templateUrl: './blog-single.component.html',
   styles: ``
 })
@@ -26,7 +27,7 @@ export class BlogSingleComponent implements OnInit {
     const slug = this.route.snapshot.paramMap.get('slug');
 
     if (!slug) {
-      this.errorMessage = 'Noticia no encontrada.';
+      this.errorMessage = 'views.blogSingle.notFound';
       this.isLoading = false;
       return;
     }
@@ -37,7 +38,7 @@ export class BlogSingleComponent implements OnInit {
         this.isLoading = false;
       },
       error: () => {
-        this.errorMessage = 'No se pudo cargar la noticia.';
+        this.errorMessage = 'views.blogSingle.loadError';
         this.isLoading = false;
       }
     });

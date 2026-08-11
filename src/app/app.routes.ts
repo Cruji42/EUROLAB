@@ -22,7 +22,7 @@ export const routes: Routes = [
         loadChildren: () =>
             import('./admin/admin.routes').then((m) => m.ADMIN_ROUTES),
         canActivate: [AdminGuard],
-        data: { title: 'Laboratorio EURONUTEC - Admin' }
+        data: { title: 'routes.titles.admin' }
     },
     {
         path: '',
@@ -32,16 +32,16 @@ export const routes: Routes = [
     {
         path:'index-02',
         component:Home2Component,
-        data:{title:'Cargon 02'}
+        data:{title:'routes.titles.index02'}
     },
     {
         path:'index-03',
         component:Home3Component,
-        data:{title:'Cargon 03'}
+        data:{title:'routes.titles.index03'}
     },
     {
         path:'index-04',
         component:Home4Component,
-        data:{title:'Cargon 04'}
+        data:{title:'routes.titles.index04'}
     },
 ];

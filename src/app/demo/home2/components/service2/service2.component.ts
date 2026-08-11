@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-service2',
-  imports: [SlickCarouselModule,RouterLink],
+  imports: [SlickCarouselModule, RouterLink, TranslatePipe],
   templateUrl: './service2.component.html',
   styles: ``
 })

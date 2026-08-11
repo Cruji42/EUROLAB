@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AdminNewsService, NewsPost, NewsCategory, NewsPostCreate, NewsPostUpdate } from '../services/admin-news.service';
 
 @Component({
   selector: 'app-news-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslatePipe],
   templateUrl: './news-form.component.html',
   styleUrls: ['./news-form.component.scss']
 })
@@ -24,6 +25,7 @@ export class NewsFormComponent implements OnInit {
   authorPreview: string | null = null;
   uploadingCover = false;
   uploadingAuthor = false;
+  private translate = inject(TranslateService);
 
   constructor(
     private fb: FormBuilder,
@@ -77,7 +79,7 @@ export class NewsFormComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        this.error = `Error al cargar la noticia: ${error.message}`;
+        this.error = this.translate.instant('admin.news.errors.loadFailed', { message: error.message });
         this.loading = false;
       }
     });
@@ -116,7 +118,7 @@ export class NewsFormComponent implements OnInit {
     this.uploadingCover = true;
     this.newsService.uploadImage(file, 'noticias').subscribe({
       next: (url) => { this.newsForm.patchValue({ cover_image_url: url }); this.uploadingCover = false; },
-      error: (err) => { this.uploadingCover = false; this.error = err?.error?.detail ?? 'Error al subir imagen de portada.'; }
+      error: (err) => { this.uploadingCover = false; this.error = err?.error?.detail ?? this.translate.instant('admin.news.errors.uploadCoverFailed'); }
     });
   }
 
@@ -129,7 +131,7 @@ export class NewsFormComponent implements OnInit {
     this.uploadingAuthor = true;
     this.newsService.uploadImage(file, 'autores').subscribe({
       next: (url) => { this.newsForm.patchValue({ author_image_url: url }); this.uploadingAuthor = false; },
-      error: (err) => { this.uploadingAuthor = false; this.error = err?.error?.detail ?? 'Error al subir imagen del autor.'; }
+      error: (err) => { this.uploadingAuthor = false; this.error = err?.error?.detail ?? this.translate.instant('admin.news.errors.uploadAuthorFailed'); }
     });
   }
 
@@ -150,12 +152,12 @@ export class NewsFormComponent implements OnInit {
     if (this.isEditMode && this.newsId) {
       this.newsService.updateNews(this.newsId, formData as NewsPostUpdate).subscribe({
         next: () => { this.submitting = false; this.router.navigate(['/admin/noticias']); },
-        error: (error) => { this.submitting = false; this.error = `Error al actualizar la noticia: ${error.message}`; }
+        error: (error) => { this.submitting = false; this.error = this.translate.instant('admin.news.errors.updateFailed', { message: error.message }); }
       });
     } else {
       this.newsService.createNews(formData as NewsPostCreate).subscribe({
         next: () => { this.submitting = false; this.router.navigate(['/admin/noticias']); },
-        error: (error) => { this.submitting = false; this.error = `Error al crear la noticia: ${error.message}`; }
+        error: (error) => { this.submitting = false; this.error = this.translate.instant('admin.news.errors.createFailed', { message: error.message }); }
       });
     }
   }

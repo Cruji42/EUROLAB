@@ -1,12 +1,12 @@
 <div class="users-list-container">
   <div class="header-actions">
-    <h2 class="section-title">Gestión de Usuarios</h2>
+    <h2 class="section-title">{{ 'admin.users.list.title' | translate }}</h2>
     <a routerLink="nuevo" class="ca-sec-primary-3">
       <i class="bi bi-plus-circle me-2"></i>
-      Nuevo Usuario
+      {{ 'admin.users.list.newUser' | translate }}
     </a>
   </div>
-  
+
   <div class="card">
     <div class="card-body">
       <div class="search-box mb-4">
@@ -14,48 +14,48 @@
           <span class="input-group-text">
             <i class="bi bi-search"></i>
           </span>
-          <input 
-            type="text" 
-            class="form-control" 
-            placeholder="Buscar por nombre o correo..." 
+          <input
+            type="text"
+            class="form-control"
+            [attr.placeholder]="'admin.users.list.searchPlaceholder' | translate"
             [(ngModel)]="searchTerm"
             (input)="search()"
           >
         </div>
       </div>
-      
+
       <div *ngIf="loading" class="loading-spinner">
         <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Cargando...</span>
+          <span class="visually-hidden">{{ 'admin.common.loading' | translate }}</span>
         </div>
       </div>
-      
+
       <div *ngIf="!loading" class="table-responsive">
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Correo</th>
-              <th>Estado</th>
-              <th>Acciones</th>
+              <th>{{ 'admin.users.list.table.id' | translate }}</th>
+              <th>{{ 'admin.users.list.table.name' | translate }}</th>
+              <th>{{ 'admin.users.list.table.email' | translate }}</th>
+              <th>{{ 'admin.common.status' | translate }}</th>
+              <th>{{ 'admin.common.actions' | translate }}</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let user of filteredUsers">
               <td>{{ user.id }}</td>
-              <td>{{ user.full_name || 'Sin nombre' }}</td>
+              <td>{{ user.full_name || ('admin.users.list.noName' | translate) }}</td>
               <td>{{ user.email }}</td>
               <td>
                 <div class="form-check form-switch">
-                  <input 
-                    class="form-check-input" 
-                    type="checkbox" 
-                    [checked]="user.is_active" 
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="user.is_active"
                     (change)="toggleUserStatus(user)"
                   >
                   <label class="form-check-label">
-                    {{ user.is_active ? 'Activo' : 'Inactivo' }}
+                    {{ (user.is_active ? 'admin.common.active' : 'admin.common.inactive') | translate }}
                   </label>
                 </div>
               </td>
@@ -71,7 +71,7 @@
               </td>
             </tr>
             <tr *ngIf="filteredUsers.length === 0">
-              <td colspan="5" class="text-center">No se encontraron usuarios</td>
+              <td colspan="5" class="text-center">{{ 'admin.users.list.empty' | translate }}</td>
             </tr>
           </tbody>
         </table>

@@ -1,11 +1,11 @@
-<app-breadcrumb [title]="'Certificaciones'"/>
+<app-breadcrumb [title]="'views.certificationList.breadcrumbTitle' | translate"/>
 
 <div class="ca-blog-inner pt-100 pb-100">
   <div class="container">
     @if (isLoading) {
-      <p class="text-center">Cargando certificaciones...</p>
+      <p class="text-center">{{ 'views.certificationList.loading' | translate }}</p>
     } @else if (errorMessage) {
-      <p class="text-center text-danger">{{ errorMessage }}</p>
+      <p class="text-center text-danger">{{ errorMessage | translate }}</p>
     } @else {
       <div class="row">
         @for (cert of certifications; track cert.id) {
@@ -42,7 +42,7 @@
                 <p class="pt-16 pb-18">{{ cert.excerpt || '' }}</p>
                 <div class="blog-3-rearmore">
                   <a [routerLink]="['/certificaciones', cert.slug]" class="read-more3">
-                    Ver más <span><i class="fa-solid fa-angle-right"></i></span>
+                    {{ 'views.blog.readMore' | translate }} <span><i class="fa-solid fa-angle-right"></i></span>
                   </a>
                 </div>
               </div>
@@ -51,7 +51,7 @@
         }
         @if (certifications.length === 0) {
           <div class="col-12 text-center">
-            <p>No hay certificaciones disponibles.</p>
+            <p>{{ 'views.certificationList.empty' | translate }}</p>
           </div>
         }
       </div>

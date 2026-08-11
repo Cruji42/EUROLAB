@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AdminUsersService, AdminUser } from '../services/admin-users.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe } from '@ngx-translate/core';
 import { UserDeleteModalComponent } from './user-delete-modal.component';
 
 @Component({
   selector: 'app-users-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe],
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.scss']
 })

@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AdminCertificationsService, Certification } from '../services/admin-certifications.service';
 import { CertificationDeleteModalComponent } from './certification-delete-modal.component';
 
 @Component({
   selector: 'app-certification-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe],
   templateUrl: './certification-list.component.html',
   styleUrls: ['./certification-list.component.scss']
 })
@@ -18,6 +19,7 @@ export class CertificationListComponent implements OnInit {
   filtered: Certification[] = [];
   loading = true;
   searchTerm = '';
+  private translate = inject(TranslateService);
 
   constructor(
     private certService: AdminCertificationsService,
@@ -57,6 +59,6 @@ export class CertificationListComponent implements OnInit {
   }
 
   getStatusText(cert: Certification): string {
-    return cert.is_active ? 'Activa' : 'Inactiva';
+    return this.translate.instant(cert.is_active ? 'admin.certifications.list.active' : 'admin.certifications.list.inactive');
   }
 }

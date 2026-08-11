@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-service4',
-  imports: [SlickCarouselModule],
+  imports: [SlickCarouselModule, TranslatePipe],
   templateUrl: './service4.component.html',
   styles: ``
 })

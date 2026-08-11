@@ -6,6 +6,8 @@ import { routes } from './app.routes';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -54,7 +56,12 @@ export const appConfig: ApplicationConfig = {
     ),
     BrowserAnimationsModule,
     BrowserModule,
-    provideAnimations()
+    provideAnimations(),
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({ prefix: '/assets/i18n/', suffix: '.json' }),
+      fallbackLang: 'es',
+      lang: 'es'
+    })
   ]
 };
 

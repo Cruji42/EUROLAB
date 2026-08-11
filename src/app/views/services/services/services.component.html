@@ -1,4 +1,4 @@
-<app-breadcrumb [title]="'Nuestros servicios'" />
+<app-breadcrumb [title]="'views.services.breadcrumbTitle' | translate" />
 
 <!-- Loading state -->
 @if (isLoading) {
@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-12 text-center py-5">
           <div class="spinner-border text-secondary" role="status">
-            <span class="visually-hidden">Cargando...</span>
+            <span class="visually-hidden">{{ 'views.services.loading' | translate }}</span>
           </div>
         </div>
       </div>
@@ -21,7 +21,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center py-5">
-          <p class="text-muted">No se pudieron cargar los servicios. Intenta más tarde.</p>
+          <p class="text-muted">{{ 'views.services.loadError' | translate }}</p>
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@
               <div class="ca-service-content ca-service-content-iner">
                 <h4 class="ca-title fnw-700 pb-16 pt-32">{{item.title}}</h4>
                 <p class="pb-24">{{item.description}}</p>
-                <span class="read-more">Ver más <span><i class="fa-solid fa-angle-right"></i></span></span>
+                <span class="read-more">{{ 'views.blog.readMore' | translate }} <span><i class="fa-solid fa-angle-right"></i></span></span>
               </div>
             </div>
           </div>

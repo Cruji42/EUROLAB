@@ -1,8 +1,8 @@
 <div class="slider-manager-container">
   <div class="header-actions">
-    <h2 class="section-title">Gestión del Slider Principal</h2>
+    <h2 class="section-title">{{ 'admin.slider.title' | translate }}</h2>
     <button class="ca-sec-primary-3" (click)="openCreate()">
-      <i class="bi bi-plus-circle me-2"></i>Nuevo Slide
+      <i class="bi bi-plus-circle me-2"></i>{{ 'admin.slider.newSlide' | translate }}
     </button>
   </div>
 
@@ -17,7 +17,7 @@
     <div class="card-body">
       <div *ngIf="loading" class="loading-spinner">
         <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Cargando...</span>
+          <span class="visually-hidden">{{ 'admin.common.loading' | translate }}</span>
         </div>
       </div>
 
@@ -25,12 +25,12 @@
         <table class="table table-hover align-middle">
           <thead>
             <tr>
-              <th style="width:60px">Orden</th>
-              <th style="width:100px">Imagen</th>
-              <th>Subtítulo</th>
-              <th>Título</th>
-              <th style="width:90px">Estado</th>
-              <th style="width:100px">Acciones</th>
+              <th style="width:60px">{{ 'admin.slider.table.order' | translate }}</th>
+              <th style="width:100px">{{ 'admin.slider.table.image' | translate }}</th>
+              <th>{{ 'admin.slider.table.subtitle' | translate }}</th>
+              <th>{{ 'admin.slider.table.titleCol' | translate }}</th>
+              <th style="width:90px">{{ 'admin.common.status' | translate }}</th>
+              <th style="width:100px">{{ 'admin.common.actions' | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -39,28 +39,28 @@
               <td>
                 <img *ngIf="slide.image_url" [src]="slide.image_url" alt=""
                      class="slide-thumb" onerror="this.style.display='none'">
-                <span *ngIf="!slide.image_url" class="text-muted fst-italic">Sin imagen</span>
+                <span *ngIf="!slide.image_url" class="text-muted fst-italic">{{ 'admin.slider.table.noImage' | translate }}</span>
               </td>
               <td>{{ slide.subtitle }}</td>
               <td>{{ slide.title }}</td>
               <td>
                 <span class="badge" [class.bg-success]="slide.is_active" [class.bg-secondary]="!slide.is_active">
-                  {{ slide.is_active ? 'Activo' : 'Inactivo' }}
+                  {{ (slide.is_active ? 'admin.common.active' : 'admin.common.inactive') | translate }}
                 </span>
               </td>
               <td>
                 <div class="action-buttons">
-                  <button class="btn btn-sm btn-outline-primary me-2" (click)="openEdit(slide)" title="Editar">
+                  <button class="btn btn-sm btn-outline-primary me-2" (click)="openEdit(slide)" [attr.title]="'admin.common.edit' | translate">
                     <i class="bi bi-pencil"></i>
                   </button>
-                  <button class="btn btn-sm btn-outline-danger" (click)="openDelete(slide)" title="Eliminar">
+                  <button class="btn btn-sm btn-outline-danger" (click)="openDelete(slide)" [attr.title]="'admin.common.delete' | translate">
                     <i class="bi bi-trash"></i>
                   </button>
                 </div>
               </td>
             </tr>
             <tr *ngIf="slides.length === 0">
-              <td colspan="6" class="text-center text-muted py-4">No hay slides. Crea el primero.</td>
+              <td colspan="6" class="text-center text-muted py-4">{{ 'admin.slider.empty' | translate }}</td>
             </tr>
           </tbody>
         </table>
@@ -72,7 +72,7 @@
 <!-- ── Slide create/edit modal ───────────────────────────────── -->
 <ng-template #slideModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title">{{ editingSlide ? 'Editar Slide' : 'Nuevo Slide' }}</h5>
+    <h5 class="modal-title">{{ (editingSlide ? 'admin.slider.editSlide' : 'admin.slider.newSlide') | translate }}</h5>
     <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
   </div>
 
@@ -84,7 +84,7 @@
 
         <!-- Image upload -->
         <div class="col-12">
-          <label class="form-label fw-semibold">Imagen <span class="text-danger">*</span></label>
+          <label class="form-label fw-semibold">{{ 'admin.slider.form.imageLabel' | translate }} <span class="text-danger">*</span></label>
 
           <div class="upload-area" [class.is-invalid]="isInvalid('image_url')">
             <label class="upload-label" [class.uploading]="uploading">
@@ -92,87 +92,87 @@
                      (change)="onFileSelected($event)" style="display:none">
               <ng-container *ngIf="!uploading">
                 <i class="bi bi-cloud-upload fs-3 d-block mb-1"></i>
-                <span>{{ imagePreview ? 'Cambiar imagen' : 'Seleccionar imagen' }}</span>
-                <small class="d-block text-muted mt-1">JPG, PNG, WebP o GIF · máx 5 MB</small>
+                <span>{{ (imagePreview ? 'admin.common.changeImage' : 'admin.common.selectImage') | translate }}</span>
+                <small class="d-block text-muted mt-1">{{ 'admin.slider.form.imageHint' | translate }}</small>
               </ng-container>
               <ng-container *ngIf="uploading">
                 <div class="spinner-border text-primary" role="status"></div>
-                <span class="ms-2">Subiendo...</span>
+                <span class="ms-2">{{ 'admin.common.uploading' | translate }}</span>
               </ng-container>
             </label>
           </div>
           <div class="invalid-feedback d-block" *ngIf="isInvalid('image_url')">
-            La imagen es obligatoria.
+            {{ 'admin.slider.validation.imageRequired' | translate }}
           </div>
         </div>
 
         <!-- Preview -->
         <div class="col-12" *ngIf="imagePreview">
-          <img [src]="imagePreview" alt="Vista previa" class="img-preview">
+          <img [src]="imagePreview" [attr.alt]="'admin.slider.form.previewAlt' | translate" class="img-preview">
         </div>
 
         <!-- Subtitle -->
         <div class="col-12">
-          <label class="form-label fw-semibold">Subtítulo / etiqueta <span class="text-danger">*</span></label>
+          <label class="form-label fw-semibold">{{ 'admin.slider.form.subtitleLabel' | translate }} <span class="text-danger">*</span></label>
           <input type="text" class="form-control" formControlName="subtitle"
-                 placeholder="Acreditado ante EMA · Aprobado por SADER"
+                 [attr.placeholder]="'admin.slider.form.subtitlePlaceholder' | translate"
                  [class.is-invalid]="isInvalid('subtitle')">
-          <div class="invalid-feedback">El subtítulo es obligatorio.</div>
+          <div class="invalid-feedback">{{ 'admin.slider.validation.subtitleRequired' | translate }}</div>
         </div>
 
         <!-- Title -->
         <div class="col-12">
-          <label class="form-label fw-semibold">Título principal <span class="text-danger">*</span></label>
+          <label class="form-label fw-semibold">{{ 'admin.slider.form.titleLabel' | translate }} <span class="text-danger">*</span></label>
           <input type="text" class="form-control" formControlName="title"
-                 placeholder="Analiza. Decide. Optimiza."
+                 [attr.placeholder]="'admin.slider.form.titlePlaceholder' | translate"
                  [class.is-invalid]="isInvalid('title')">
-          <div class="invalid-feedback">El título es obligatorio.</div>
+          <div class="invalid-feedback">{{ 'admin.slider.validation.titleRequired' | translate }}</div>
         </div>
 
         <!-- Description -->
         <div class="col-12">
-          <label class="form-label fw-semibold">Descripción <span class="text-danger">*</span></label>
+          <label class="form-label fw-semibold">{{ 'admin.slider.form.descriptionLabel' | translate }} <span class="text-danger">*</span></label>
           <textarea class="form-control" formControlName="description" rows="3"
-                    placeholder="Descripción breve del slide..."
+                    [attr.placeholder]="'admin.slider.form.descriptionPlaceholder' | translate"
                     [class.is-invalid]="isInvalid('description')"></textarea>
-          <div class="invalid-feedback">La descripción es obligatoria.</div>
+          <div class="invalid-feedback">{{ 'admin.slider.validation.descriptionRequired' | translate }}</div>
         </div>
 
         <!-- Buttons -->
         <div class="col-md-6">
-          <label class="form-label fw-semibold">Botón primario — texto <span class="text-danger">*</span></label>
+          <label class="form-label fw-semibold">{{ 'admin.slider.form.btnPrimaryTextLabel' | translate }} <span class="text-danger">*</span></label>
           <input type="text" class="form-control" formControlName="btn_primary_text"
-                 placeholder="Conoce nuestros servicios"
+                 [attr.placeholder]="'admin.slider.form.btnPrimaryTextPlaceholder' | translate"
                  [class.is-invalid]="isInvalid('btn_primary_text')">
-          <div class="invalid-feedback">Requerido.</div>
+          <div class="invalid-feedback">{{ 'admin.common.required' | translate }}</div>
         </div>
         <div class="col-md-6">
-          <label class="form-label fw-semibold">Botón primario — enlace <span class="text-danger">*</span></label>
+          <label class="form-label fw-semibold">{{ 'admin.slider.form.btnPrimaryLinkLabel' | translate }} <span class="text-danger">*</span></label>
           <input type="text" class="form-control" formControlName="btn_primary_link"
                  placeholder="/service"
                  [class.is-invalid]="isInvalid('btn_primary_link')">
-          <div class="invalid-feedback">Requerido.</div>
+          <div class="invalid-feedback">{{ 'admin.common.required' | translate }}</div>
         </div>
         <div class="col-md-6">
-          <label class="form-label fw-semibold">Botón secundario — texto</label>
+          <label class="form-label fw-semibold">{{ 'admin.slider.form.btnSecondaryTextLabel' | translate }}</label>
           <input type="text" class="form-control" formControlName="btn_secondary_text"
-                 placeholder="Contáctanos">
+                 [attr.placeholder]="'admin.slider.form.btnSecondaryTextPlaceholder' | translate">
         </div>
         <div class="col-md-6">
-          <label class="form-label fw-semibold">Botón secundario — enlace</label>
+          <label class="form-label fw-semibold">{{ 'admin.slider.form.btnSecondaryLinkLabel' | translate }}</label>
           <input type="text" class="form-control" formControlName="btn_secondary_link"
                  placeholder="/contact">
         </div>
 
         <!-- Order / status -->
         <div class="col-md-6">
-          <label class="form-label fw-semibold">Orden</label>
+          <label class="form-label fw-semibold">{{ 'admin.slider.form.orderLabel' | translate }}</label>
           <input type="number" class="form-control" formControlName="sort_order" min="0">
         </div>
         <div class="col-md-6 d-flex align-items-end pb-1">
           <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="isActiveCheck" formControlName="is_active">
-            <label class="form-check-label fw-semibold" for="isActiveCheck">Activo (visible en el sitio)</label>
+            <label class="form-check-label fw-semibold" for="isActiveCheck">{{ 'admin.slider.form.activeLabel' | translate }}</label>
           </div>
         </div>
 
@@ -182,11 +182,11 @@
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()" [disabled]="submitting">
-      Cancelar
+      {{ 'admin.common.cancel' | translate }}
     </button>
     <button type="button" class="btn btn-primary" (click)="saveSlide()" [disabled]="submitting || uploading">
       <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2"></span>
-      {{ editingSlide ? 'Guardar cambios' : 'Crear slide' }}
+      {{ (editingSlide ? 'admin.slider.form.saveChanges' : 'admin.slider.form.createSlide') | translate }}
     </button>
   </div>
 </ng-template>
@@ -194,14 +194,14 @@
 <!-- ── Delete confirm modal ───────────────────────────────────── -->
 <ng-template #deleteModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title text-danger">Eliminar slide</h5>
+    <h5 class="modal-title text-danger">{{ 'admin.slider.delete.title' | translate }}</h5>
     <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body">
-    <p>¿Estás seguro de que deseas eliminar el slide <strong>{{ slideToDelete?.title }}</strong>? Esta acción no se puede deshacer.</p>
+    <p>{{ 'admin.slider.delete.confirm' | translate: { title: slideToDelete?.title } }}</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">Cancelar</button>
-    <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">{{ 'admin.common.cancel' | translate }}</button>
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()">{{ 'admin.common.delete' | translate }}</button>
   </div>
 </ng-template>

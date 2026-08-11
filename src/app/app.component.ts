@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, inject, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import * as AOS from 'aos';
+import { TranslateService } from '@ngx-translate/core';
 import { TitleService } from '../../title.service';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
 
@@ -15,6 +16,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   isLoading = false;
   showButton = true;
   private titleService = inject(TitleService);
+  private translate = inject(TranslateService);
 
   @ViewChild('preloader') preloader!: ElementRef;
   @ViewChild('ctnPreloader') ctnPreloader!: ElementRef;
@@ -32,9 +34,16 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.initLanguage();
     this.titleService.init()
 
     AOS.init();
+  }
+
+  private initLanguage(): void {
+    this.translate.addLangs(['es', 'en']);
+    const saved = localStorage.getItem('lang');
+    this.translate.use(saved === 'en' ? 'en' : 'es');
   }
 
   ngAfterViewInit() {

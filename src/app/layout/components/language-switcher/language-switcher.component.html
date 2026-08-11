@@ -1,0 +1,12 @@
+<div class="ca-lang-switcher" ngbDropdown>
+   <button class="ca-lang-switcher-toggle" type="button" ngbDropdownToggle>
+      {{ currentLang.toUpperCase() }}
+   </button>
+   <div ngbDropdownMenu>
+      @for (lang of langs; track lang.code) {
+      <button ngbDropdownItem type="button" [class.active]="lang.code === currentLang" (click)="switchLang(lang.code)">
+         {{ lang.label }}
+      </button>
+      }
+   </div>
+</div>

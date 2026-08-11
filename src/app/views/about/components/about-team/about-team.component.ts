@@ -1,21 +1,22 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-about-team',
-  imports: [RouterLink],
+  imports: [RouterLink, TranslatePipe],
   templateUrl: './about-team.component.html',
   styles: ``
 })
 export class AboutTeamComponent {
   teamData = {
-    "title": "Las personas detrás de nuestros resultados",
-    "subtitle": "Nuestro Equipo",
-    "description": "Cada integrante aporta conocimiento técnico y vocación de servicio para ofrecerte soluciones analíticas de primer nivel.",
+    "title": "views.aboutTeam.title",
+    "subtitle": "views.aboutTeam.subtitle",
+    "description": "views.aboutTeam.description",
     "team_members": [
       {
         "name": "MICP. Lucía Robles Garay",
-        "role": "Responsable de Laboratorio",
+        "role": "views.aboutTeam.roles.labManager",
         "image": "assets/img/team/ca-team-iner1.1.png",
         "social_links": {
           "email": "lrobles@gponutec.com",
@@ -24,7 +25,7 @@ export class AboutTeamComponent {
       },
       {
         "name": "QFB. Mónica Arreguín",
-        "role": "Responsable adjunto de Laboratorio",
+        "role": "views.aboutTeam.roles.deputyLabManager",
         "image": "assets/img/team/ca-team-iner1.2.png",
         "social_links": {
           "email": "marreguin@gponutec.com",
@@ -33,7 +34,7 @@ export class AboutTeamComponent {
       },
       {
         "name": "IBQ. Alejandra Ibarra Díaz",
-        "role": "Comercial Laboratorio",
+        "role": "views.aboutTeam.roles.commercialLab",
         "image": "assets/img/team/ca-team-iner1.3.png",
         "social_links": {
           "email": "aibarra@gponutec.com",
@@ -42,7 +43,7 @@ export class AboutTeamComponent {
       },
       {
         "name": "QFI. Marisol Vertiz Alcantara",
-        "role": "Comercial Laboratorio",
+        "role": "views.aboutTeam.roles.commercialLab",
         "image": "assets/img/team/ca-team-iner1.4.png",
         "social_links": {
           "email": "mvertiz@gponutec.com",

@@ -4,12 +4,13 @@ import { SingleServiceSidebarComponent } from "./component/single-service-sideba
 import { MoreServiceSingleComponent } from "./component/more-service-single/more-service-single.component";
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ServicesService } from '../../../services/services.service';
 import { ServiceDetail } from '../../../models/service.model';
 
 @Component({
   selector: 'app-service-single',
-  imports: [BreadcrumbComponent, SingleServiceSidebarComponent, MoreServiceSingleComponent, CommonModule],
+  imports: [BreadcrumbComponent, SingleServiceSidebarComponent, MoreServiceSingleComponent, CommonModule, TranslatePipe],
   templateUrl: './service-single.component.html',
   styles: ``
 })

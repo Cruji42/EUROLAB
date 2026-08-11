@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-about1',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslatePipe],
   templateUrl: './about1.component.html',
   styles: ``
 })
@@ -16,7 +17,7 @@ export class About1Component {
       imageClass: 'lar-img-1',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Análisis bromatológico: humedad, proteína, grasa, fibra y cenizas'
+      label: 'home.about1.items.bromatological'
     },
     {
       id: 2,
@@ -24,7 +25,7 @@ export class About1Component {
       imageClass: 'sm-img-1',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Detección de micotoxinas: aflatoxinas, zearalenona, ocratoxina y más'
+      label: 'home.about1.items.mycotoxins'
     },
     {
       id: 3,
@@ -32,7 +33,7 @@ export class About1Component {
       imageClass: 'sm-img-2',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'Microbiología Tipo 2: PCR, indicadores y reto microbiano'
+      label: 'home.about1.items.microbiology'
     },
     {
       id: 4,
@@ -40,7 +41,7 @@ export class About1Component {
       imageClass: 'lar-img-2',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,
-      label: 'NIRS: resultados en segundos sin preparación de muestra'
+      label: 'home.about1.items.nirs'
     }
   ];
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ServicesService } from '../../../../services/services.service';
 
 /** Fallback background images cycled by index when the API does not provide one */
@@ -21,7 +22,7 @@ interface ServiceDisplay {
 
 @Component({
   selector: 'app-service1',
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, TranslatePipe],
   templateUrl: './service1.component.html',
   styles: ``,
 })

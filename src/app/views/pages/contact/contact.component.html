@@ -1,4 +1,4 @@
-<app-breadcrumb [title]="'Contáctanos'" />
+<app-breadcrumb [title]="'views.contact.breadcrumbTitle' | translate" />
 
 <section class="ca-contact-inner pt-100 pb-70">
    <div class="container">
@@ -11,8 +11,8 @@
                      <span><img src="assets/img/icon/ca-map3.1.svg" alt=""></span>
                   </div>
                   <div class="ca-location-icbox-text">
-                     <h4 class="ca-title fnw-600 theme-black-3 pb-16">Nuestra ubicación</h4>
-                     <p>Av. del Marqués No. 32, Fracc. Industrial Bernardo Quintana, C.P. 76246, Querétaro, Qro.</p>
+                     <h4 class="ca-title fnw-600 theme-black-3 pb-16">{{ 'views.contact.locationTitle' | translate }}</h4>
+                     <p>{{ 'views.contact.address' | translate }}</p>
                   </div>
                </div>
             </div>
@@ -25,7 +25,7 @@
                      <span><img src="assets/img/icon/ca-ph3.2.svg" alt=""></span>
                   </div>
                   <div class="ca-location-icbox-text">
-                     <h4 class="ca-title fnw-600 theme-black-3 pb-16">Llámanos</h4>
+                     <h4 class="ca-title fnw-600 theme-black-3 pb-16">{{ 'views.contact.callUsTitle' | translate }}</h4>
                      <a href="tel:+0221234568806">(442) 196.0130 /</a> <br>
                      <a href="tel:+47122109878"> Fax: (442) 196.0139</a>
                   </div>
@@ -40,7 +40,7 @@
                      <span><img src="assets/img/icon/ca-envelop3.3.svg" alt=""></span>
                   </div>
                   <div class="ca-location-icbox-text">
-                     <h4 class="ca-title fnw-600 theme-black-3 pb-16">Escríbenos</h4>
+                     <h4 class="ca-title fnw-600 theme-black-3 pb-16">{{ 'views.contact.writeUsTitle' | translate }}</h4>
                      <a href="mailto:">laboratorio&#64;gponutec.com</a>                  
                   </div>
                </div>
@@ -61,26 +61,26 @@
    <div class="container">
       <div class="row">
          <div class="ca-con-rep-form cream-bg-3 text-center">
-            <h4 class="ca-title fnw-600 theme-black-3 pb-16">Envíanos un mensaje</h4>
-            <p class="pb-32">¿Tienes dudas sobre nuestros servicios o deseas una cotización? Escríbenos y te contactaremos a la brevedad.</p>
+            <h4 class="ca-title fnw-600 theme-black-3 pb-16">{{ 'views.contact.form.title' | translate }}</h4>
+            <p class="pb-32">{{ 'views.contact.form.subtitle' | translate }}</p>
             <div class="ca-cmt-from">
                <form action="#">
                   <div class="row">
                      <div class="col-lg-6 mb-20">
-                        <input type="text" placeholder="Nombre">
+                        <input type="text" [placeholder]="'views.contact.form.firstNamePlaceholder' | translate">
                      </div>
                      <div class="col-lg-6 mb-20">
-                        <input type="text" placeholder="Apellido">
+                        <input type="text" [placeholder]="'views.contact.form.lastNamePlaceholder' | translate">
                      </div>
                      <div class="col-lg-6 mb-20">
                         <input type="email" placeholder="Email">
                      </div>
                      <div class="col-lg-6 mb-20">
-                        <input type="text" placeholder="Empresa (opcional)">
+                        <input type="text" [placeholder]="'views.contact.form.companyPlaceholder' | translate">
                      </div>
                      <div class="col-lg-12 mb-20">
                         <select class="nice-select wide ca-select" style="display: block;">
-                           <option data-display="Servicio de interés" disabled selected>Seleccione servicio de interés</option>
+                           <option [attr.data-display]="'views.contact.form.serviceOfInterest' | translate" disabled selected>{{ 'views.contact.form.selectServicePlaceholder' | translate }}</option>
                            <option value="1">01</option>
                            <option value="2">02</option>
                            <option value="3">03</option>
@@ -96,7 +96,7 @@
                      <label for="saveinfo">Save the information's in this browser for next time use</label>
                   </div> -->
                   <div class="ca-blg-sen-btn text-start">
-                     <button type="submit" class="ca-btn-primary-3 theme-bg-3 text-white br-50"> Enviar <span><i
+                     <button type="submit" class="ca-btn-primary-3 theme-bg-3 text-white br-50"> {{ 'views.contact.form.sendButton' | translate }} <span><i
                               class="fa-solid fa-angle-right"></i></span></button>
                   </div>
                </form>

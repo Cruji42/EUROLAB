@@ -1,12 +1,12 @@
 <div class="dashboard-container">
-  <h2 class="section-title">Dashboard</h2>
-  
+  <h2 class="section-title">{{ 'admin.dashboard.title' | translate }}</h2>
+
   <div *ngIf="loading" class="loading-spinner">
     <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Cargando...</span>
+      <span class="visually-hidden">{{ 'admin.common.loading' | translate }}</span>
     </div>
   </div>
-  
+
   <div *ngIf="!loading" class="dashboard-content">
     <!-- Stats Cards -->
     <div class="row stats-cards">
@@ -18,12 +18,12 @@
             </div>
             <div class="stats-info">
               <h3>{{ serviceCount }}</h3>
-              <p>Servicios</p>
+              <p>{{ 'admin.dashboard.stats.services' | translate }}</p>
             </div>
           </div>
         </div>
       </div>
-      
+
       <div class="col-md-4">
         <div class="card stats-card">
           <div class="card-body">
@@ -32,12 +32,12 @@
             </div>
             <div class="stats-info">
               <h3>{{ newsCount }}</h3>
-              <p>Noticias</p>
+              <p>{{ 'admin.dashboard.stats.news' | translate }}</p>
             </div>
           </div>
         </div>
       </div>
-      
+
       <div class="col-md-4">
         <div class="card stats-card">
           <div class="card-body">
@@ -46,24 +46,24 @@
             </div>
             <div class="stats-info">
               <h3>{{ userCount }}</h3>
-              <p>Usuarios</p>
+              <p>{{ 'admin.dashboard.stats.users' | translate }}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- YouTube URL -->
     <div class="card mt-4">
       <div class="card-header">
-        <h5 class="mb-0"><i class="bi bi-youtube me-2 text-danger"></i>Video principal (YouTube)</h5>
+        <h5 class="mb-0"><i class="bi bi-youtube me-2 text-danger"></i>{{ 'admin.dashboard.youtube.title' | translate }}</h5>
       </div>
       <div class="card-body">
         <div class="d-flex gap-2 align-items-center">
           <input
             type="url"
             class="form-control"
-            placeholder="https://www.youtube.com/watch?v=..."
+            [attr.placeholder]="'admin.dashboard.youtube.placeholder' | translate"
             [(ngModel)]="youtubeUrl"
           />
           <button
@@ -72,35 +72,35 @@
             [disabled]="youtubeStatus === 'saving'"
           >
             <span *ngIf="youtubeStatus === 'saving'" class="spinner-border spinner-border-sm me-1"></span>
-            Guardar
+            {{ 'admin.common.save' | translate }}
           </button>
         </div>
-        <small *ngIf="youtubeStatus === 'saved'" class="text-success mt-1 d-block">URL actualizada correctamente.</small>
-        <small *ngIf="youtubeStatus === 'error'" class="text-danger mt-1 d-block">Error al guardar. Intenta de nuevo.</small>
+        <small *ngIf="youtubeStatus === 'saved'" class="text-success mt-1 d-block">{{ 'admin.dashboard.youtube.updated' | translate }}</small>
+        <small *ngIf="youtubeStatus === 'error'" class="text-danger mt-1 d-block">{{ 'admin.dashboard.youtube.error' | translate }}</small>
       </div>
     </div>
 
     <!-- Latest Services -->
     <div class="card mt-4">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Últimos Servicios</h5>
-        <a routerLink="/admin/servicios" class="btn btn-sm btn-outline-primary">Ver todos</a>
+        <h5 class="mb-0">{{ 'admin.dashboard.latestServices.title' | translate }}</h5>
+        <a routerLink="/admin/servicios" class="btn btn-sm btn-outline-primary">{{ 'admin.dashboard.latestServices.viewAll' | translate }}</a>
       </div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-hover">
             <thead>
               <tr>
-                <th>Nombre</th>
-                <th>Estado</th>
-                <th>Acciones</th>
+                <th>{{ 'admin.dashboard.latestServices.name' | translate }}</th>
+                <th>{{ 'admin.common.status' | translate }}</th>
+                <th>{{ 'admin.common.actions' | translate }}</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let service of latestServices">
                 <td>{{ service.name }}</td>
                 <td>
-                  <span class="badge bg-success">Activo</span>
+                  <span class="badge bg-success">{{ 'admin.common.active' | translate }}</span>
                 </td>
                 <td>
                   <a [routerLink]="['/admin/servicios', service.id]" class="btn btn-sm btn-outline-primary me-2">
@@ -109,37 +109,37 @@
                 </td>
               </tr>
               <tr *ngIf="latestServices.length === 0">
-                <td colspan="3" class="text-center">No hay servicios disponibles</td>
+                <td colspan="3" class="text-center">{{ 'admin.dashboard.latestServices.empty' | translate }}</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
-    
+
     <!-- Latest News -->
     <div class="card mt-4">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Últimas Noticias</h5>
-        <a routerLink="/admin/noticias" class="btn btn-sm btn-outline-primary">Ver todas</a>
+        <h5 class="mb-0">{{ 'admin.dashboard.latestNews.title' | translate }}</h5>
+        <a routerLink="/admin/noticias" class="btn btn-sm btn-outline-primary">{{ 'admin.dashboard.latestNews.viewAll' | translate }}</a>
       </div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-hover">
             <thead>
               <tr>
-                <th>Título</th>
-                <th>Categoría</th>
-                <th>Estado</th>
-                <th>Acciones</th>
+                <th>{{ 'admin.dashboard.latestNews.title_col' | translate }}</th>
+                <th>{{ 'admin.dashboard.latestNews.category' | translate }}</th>
+                <th>{{ 'admin.common.status' | translate }}</th>
+                <th>{{ 'admin.common.actions' | translate }}</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let news of latestNews">
                 <td>{{ news.title }}</td>
-                <td>{{ news.category?.name || 'Sin categoría' }}</td>
+                <td>{{ news.category?.name || ('admin.dashboard.latestNews.noCategory' | translate) }}</td>
                 <td>
-                  <span class="badge bg-success">Publicado</span>
+                  <span class="badge bg-success">{{ 'admin.dashboard.latestNews.published' | translate }}</span>
                 </td>
                 <td>
                   <a [routerLink]="['/admin/noticias', news.id]" class="btn btn-sm btn-outline-primary me-2">
@@ -148,7 +148,7 @@
                 </td>
               </tr>
               <tr *ngIf="latestNews.length === 0">
-                <td colspan="4" class="text-center">No hay noticias disponibles</td>
+                <td colspan="4" class="text-center">{{ 'admin.dashboard.latestNews.empty' | translate }}</td>
               </tr>
             </tbody>
           </table>

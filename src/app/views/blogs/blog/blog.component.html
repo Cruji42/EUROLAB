@@ -1,11 +1,11 @@
-<app-breadcrumb [title]="'Noticias'"/>
+<app-breadcrumb [title]="'views.blog.breadcrumbTitle' | translate"/>
 
 <div class="ca-blog-inner pt-100 pb-100">
   <div class="container">
     @if (isLoading) {
-      <p class="text-center">Cargando noticias...</p>
+      <p class="text-center">{{ 'views.blog.loading' | translate }}</p>
     } @else if (errorMessage) {
-      <p class="text-center text-danger">{{ errorMessage }}</p>
+      <p class="text-center text-danger">{{ errorMessage | translate }}</p>
     } @else {
       <div class="row">
         @for (item of posts; track item.id) {
@@ -24,7 +24,7 @@
                       <span><img src="assets/img/icon/user-1.1.svg" alt=""></span>
                     </div>
                     <div class="ca-meta-title">
-                      <span>{{ item.author_name || 'Laboratorio Euronutec' }}</span>
+                      <span>{{ item.author_name || ('views.blog.defaultAuthor' | translate) }}</span>
                     </div>
                   </a>
                   <a href="javascript:void(0);" class="ca-blog-meta ca-blog-meta-3">
@@ -32,7 +32,7 @@
                       <span><img src="assets/img/icon/tag-1.1.svg" alt=""></span>
                     </div>
                     <div class="ca-meta-title">
-                      <span>{{ item.category?.name || 'Noticias' }}</span>
+                      <span>{{ item.category?.name || ('views.blog.defaultCategory' | translate) }}</span>
                     </div>
                   </a>
                 </div>
@@ -42,7 +42,7 @@
                 <p class="pt-16 pb-18">{{ item.excerpt || '' }}</p>
                 <div class="blog-3-rearmore">
                   <a [routerLink]="['/blog-single', item.slug]" class="read-more3">
-                    Ver más <span><i class="fa-solid fa-angle-right"></i></span>
+                    {{ 'views.blog.readMore' | translate }} <span><i class="fa-solid fa-angle-right"></i></span>
                   </a>
                 </div>
               </div>

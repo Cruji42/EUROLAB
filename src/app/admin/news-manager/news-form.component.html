@@ -1,164 +1,164 @@
 <div class="news-form-container">
   <div class="header-actions">
     <h2 class="section-title">
-      {{ isEditMode ? 'Editar Noticia' : 'Nueva Noticia' }}
+      {{ (isEditMode ? 'admin.news.form.editTitle' : 'admin.news.form.newTitle') | translate }}
     </h2>
     <a routerLink="/admin/noticias" class="btn btn-outline-secondary">
       <i class="bi bi-arrow-left me-2"></i>
-      Volver
+      {{ 'admin.common.back' | translate }}
     </a>
   </div>
-  
+
   <div *ngIf="loading" class="loading-spinner">
     <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Cargando...</span>
+      <span class="visually-hidden">{{ 'admin.common.loading' | translate }}</span>
     </div>
   </div>
-  
+
   <div *ngIf="error" class="alert alert-danger">
     {{ error }}
   </div>
-  
+
   <form [formGroup]="newsForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
     <div class="card mb-4">
       <div class="card-header">
-        <h5 class="mb-0">Información Básica</h5>
+        <h5 class="mb-0">{{ 'admin.news.form.basicInfo' | translate }}</h5>
       </div>
       <div class="card-body">
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="title" class="form-label">Título *</label>
-            <input 
-              type="text" 
-              id="title" 
-              class="form-control" 
+            <label for="title" class="form-label">{{ 'admin.news.form.titleLabel' | translate }} *</label>
+            <input
+              type="text"
+              id="title"
+              class="form-control"
               formControlName="title"
               (blur)="generateSlug()"
               [ngClass]="{'is-invalid': getFormControl('title')?.invalid && getFormControl('title')?.touched}"
             >
             <div class="invalid-feedback" *ngIf="getFormControl('title')?.errors?.['required'] && getFormControl('title')?.touched">
-              El título es obligatorio
+              {{ 'admin.news.form.titleRequired' | translate }}
             </div>
             <div class="invalid-feedback" *ngIf="getFormControl('title')?.errors?.['maxlength'] && getFormControl('title')?.touched">
-              El título no debe exceder los 300 caracteres
+              {{ 'admin.news.form.titleMaxLength' | translate }}
             </div>
           </div>
-          
+
           <div class="col-md-6">
-            <label for="slug" class="form-label">Slug *</label>
-            <input 
-              type="text" 
-              id="slug" 
-              class="form-control" 
+            <label for="slug" class="form-label">{{ 'admin.news.form.slugLabel' | translate }} *</label>
+            <input
+              type="text"
+              id="slug"
+              class="form-control"
               formControlName="slug"
               [ngClass]="{'is-invalid': getFormControl('slug')?.invalid && getFormControl('slug')?.touched}"
             >
             <div class="invalid-feedback" *ngIf="getFormControl('slug')?.errors?.['required'] && getFormControl('slug')?.touched">
-              El slug es obligatorio
+              {{ 'admin.news.form.slugRequired' | translate }}
             </div>
             <div class="invalid-feedback" *ngIf="getFormControl('slug')?.errors?.['pattern'] && getFormControl('slug')?.touched">
-              El slug solo puede contener letras minúsculas, números y guiones
+              {{ 'admin.news.form.slugPattern' | translate }}
             </div>
-            <small class="form-text text-muted">Usado en la URL: /noticias/slug</small>
+            <small class="form-text text-muted">{{ 'admin.news.form.slugHint' | translate }}</small>
           </div>
         </div>
-        
+
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="category_id" class="form-label">Categoría</label>
+            <label for="category_id" class="form-label">{{ 'admin.news.form.categoryLabel' | translate }}</label>
             <select id="category_id" class="form-select" formControlName="category_id">
-              <option [ngValue]="null">Sin categoría</option>
+              <option [ngValue]="null">{{ 'admin.news.form.noCategory' | translate }}</option>
               <option *ngFor="let category of categories" [value]="category.id">
                 {{ category.name }}
               </option>
             </select>
           </div>
-          
+
           <div class="col-md-6">
-            <label class="form-label">Imagen de Portada</label>
+            <label class="form-label">{{ 'admin.news.form.coverImageLabel' | translate }}</label>
             <div class="upload-area">
               <label class="upload-label" [class.uploading]="uploadingCover">
                 <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
                        (change)="onCoverSelected($event)" style="display:none">
                 <ng-container *ngIf="!uploadingCover">
                   <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>
-                  <span>{{ coverPreview ? 'Cambiar imagen' : 'Seleccionar imagen' }}</span>
+                  <span>{{ (coverPreview ? 'admin.common.changeImage' : 'admin.common.selectImage') | translate }}</span>
                 </ng-container>
                 <ng-container *ngIf="uploadingCover">
                   <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                  <span class="ms-2">Subiendo...</span>
+                  <span class="ms-2">{{ 'admin.common.uploading' | translate }}</span>
                 </ng-container>
               </label>
             </div>
             <img *ngIf="coverPreview" [src]="coverPreview" class="img-preview mt-2">
           </div>
         </div>
-        
+
         <div class="mb-3">
-          <label for="excerpt" class="form-label">Extracto</label>
-          <textarea 
-            id="excerpt" 
-            class="form-control" 
-            rows="2" 
+          <label for="excerpt" class="form-label">{{ 'admin.news.form.excerptLabel' | translate }}</label>
+          <textarea
+            id="excerpt"
+            class="form-control"
+            rows="2"
             formControlName="excerpt"
             [ngClass]="{'is-invalid': getFormControl('excerpt')?.invalid && getFormControl('excerpt')?.touched}"
           ></textarea>
           <div class="invalid-feedback" *ngIf="getFormControl('excerpt')?.errors?.['maxlength'] && getFormControl('excerpt')?.touched">
-            El extracto no debe exceder los 500 caracteres
+            {{ 'admin.news.form.excerptMaxLength' | translate }}
           </div>
-          <small class="form-text text-muted">Breve descripción para mostrar en listados (máximo 500 caracteres)</small>
+          <small class="form-text text-muted">{{ 'admin.news.form.excerptHint' | translate }}</small>
         </div>
-        
+
         <div class="mb-3">
-          <label for="content" class="form-label">Contenido *</label>
-          <textarea 
-            id="content" 
-            class="form-control" 
-            rows="10" 
+          <label for="content" class="form-label">{{ 'admin.news.form.contentLabel' | translate }} *</label>
+          <textarea
+            id="content"
+            class="form-control"
+            rows="10"
             formControlName="content"
             [ngClass]="{'is-invalid': getFormControl('content')?.invalid && getFormControl('content')?.touched}"
           ></textarea>
           <div class="invalid-feedback" *ngIf="getFormControl('content')?.errors?.['required'] && getFormControl('content')?.touched">
-            El contenido es obligatorio
+            {{ 'admin.news.form.contentRequired' | translate }}
           </div>
-          <small class="form-text text-muted">Admite formato HTML</small>
+          <small class="form-text text-muted">{{ 'admin.news.form.contentHint' | translate }}</small>
         </div>
       </div>
     </div>
-    
+
     <div class="card mb-4">
       <div class="card-header">
-        <h5 class="mb-0">Información del Autor</h5>
+        <h5 class="mb-0">{{ 'admin.news.form.authorInfo' | translate }}</h5>
       </div>
       <div class="card-body">
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="author_name" class="form-label">Nombre del Autor</label>
-            <input 
-              type="text" 
-              id="author_name" 
-              class="form-control" 
+            <label for="author_name" class="form-label">{{ 'admin.news.form.authorNameLabel' | translate }}</label>
+            <input
+              type="text"
+              id="author_name"
+              class="form-control"
               formControlName="author_name"
               [ngClass]="{'is-invalid': getFormControl('author_name')?.invalid && getFormControl('author_name')?.touched}"
             >
             <div class="invalid-feedback" *ngIf="getFormControl('author_name')?.errors?.['maxlength'] && getFormControl('author_name')?.touched">
-              El nombre del autor no debe exceder los 150 caracteres
+              {{ 'admin.news.form.authorNameMaxLength' | translate }}
             </div>
           </div>
-          
+
           <div class="col-md-6">
-            <label class="form-label">Imagen del Autor</label>
+            <label class="form-label">{{ 'admin.news.form.authorImageLabel' | translate }}</label>
             <div class="upload-area">
               <label class="upload-label" [class.uploading]="uploadingAuthor">
                 <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
                        (change)="onAuthorSelected($event)" style="display:none">
                 <ng-container *ngIf="!uploadingAuthor">
                   <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>
-                  <span>{{ authorPreview ? 'Cambiar imagen' : 'Seleccionar imagen' }}</span>
+                  <span>{{ (authorPreview ? 'admin.common.changeImage' : 'admin.common.selectImage') | translate }}</span>
                 </ng-container>
                 <ng-container *ngIf="uploadingAuthor">
                   <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                  <span class="ms-2">Subiendo...</span>
+                  <span class="ms-2">{{ 'admin.common.uploading' | translate }}</span>
                 </ng-container>
               </label>
             </div>
@@ -167,94 +167,94 @@
         </div>
       </div>
     </div>
-    
+
     <div class="card mb-4">
       <div class="card-header">
-        <h5 class="mb-0">SEO</h5>
+        <h5 class="mb-0">{{ 'admin.news.form.seo' | translate }}</h5>
       </div>
       <div class="card-body">
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="meta_title" class="form-label">Meta Título</label>
-            <input 
-              type="text" 
-              id="meta_title" 
-              class="form-control" 
+            <label for="meta_title" class="form-label">{{ 'admin.news.form.metaTitleLabel' | translate }}</label>
+            <input
+              type="text"
+              id="meta_title"
+              class="form-control"
               formControlName="meta_title"
               [ngClass]="{'is-invalid': getFormControl('meta_title')?.invalid && getFormControl('meta_title')?.touched}"
             >
             <div class="invalid-feedback" *ngIf="getFormControl('meta_title')?.errors?.['maxlength'] && getFormControl('meta_title')?.touched">
-              El meta título no debe exceder los 160 caracteres
+              {{ 'admin.news.form.metaTitleMaxLength' | translate }}
             </div>
-            <small class="form-text text-muted">Máximo 160 caracteres</small>
+            <small class="form-text text-muted">{{ 'admin.news.form.metaTitleHint' | translate }}</small>
           </div>
-          
+
           <div class="col-md-6">
-            <label for="meta_description" class="form-label">Meta Descripción</label>
-            <textarea 
-              id="meta_description" 
-              class="form-control" 
-              rows="2" 
+            <label for="meta_description" class="form-label">{{ 'admin.news.form.metaDescriptionLabel' | translate }}</label>
+            <textarea
+              id="meta_description"
+              class="form-control"
+              rows="2"
               formControlName="meta_description"
               [ngClass]="{'is-invalid': getFormControl('meta_description')?.invalid && getFormControl('meta_description')?.touched}"
             ></textarea>
             <div class="invalid-feedback" *ngIf="getFormControl('meta_description')?.errors?.['maxlength'] && getFormControl('meta_description')?.touched">
-              La meta descripción no debe exceder los 320 caracteres
+              {{ 'admin.news.form.metaDescriptionMaxLength' | translate }}
             </div>
-            <small class="form-text text-muted">Máximo 320 caracteres</small>
+            <small class="form-text text-muted">{{ 'admin.news.form.metaDescriptionHint' | translate }}</small>
           </div>
         </div>
       </div>
     </div>
-    
+
     <div class="card mb-4">
       <div class="card-header">
-        <h5 class="mb-0">Publicación</h5>
+        <h5 class="mb-0">{{ 'admin.news.form.publication' | translate }}</h5>
       </div>
       <div class="card-body">
         <div class="row mb-3">
           <div class="col-md-6">
             <div class="form-check form-switch mb-3">
-              <input 
-                class="form-check-input" 
-                type="checkbox" 
-                id="is_published" 
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="is_published"
                 formControlName="is_published"
                 (change)="onPublishedChange()"
               >
-              <label class="form-check-label" for="is_published">Publicado</label>
+              <label class="form-check-label" for="is_published">{{ 'admin.news.form.publishedLabel' | translate }}</label>
             </div>
-            
+
             <div class="form-check form-switch">
               <input class="form-check-input" type="checkbox" id="is_featured" formControlName="is_featured">
-              <label class="form-check-label" for="is_featured">Destacado</label>
+              <label class="form-check-label" for="is_featured">{{ 'admin.news.form.featuredLabel' | translate }}</label>
             </div>
           </div>
-          
+
           <div class="col-md-6">
-            <label for="published_at" class="form-label">Fecha de Publicación</label>
-            <input 
-              type="date" 
-              id="published_at" 
-              class="form-control" 
+            <label for="published_at" class="form-label">{{ 'admin.news.form.publishedAtLabel' | translate }}</label>
+            <input
+              type="date"
+              id="published_at"
+              class="form-control"
               formControlName="published_at"
               [disabled]="!getFormControl('is_published')?.value"
             >
-            <small class="form-text text-muted">Solo disponible si la noticia está publicada</small>
+            <small class="form-text text-muted">{{ 'admin.news.form.publishedAtHint' | translate }}</small>
           </div>
         </div>
       </div>
     </div>
-    
+
     <div class="form-actions">
-      <button type="button" class="btn btn-secondary me-2" routerLink="/admin/noticias">Cancelar</button>
-      <button 
+      <button type="button" class="btn btn-secondary me-2" routerLink="/admin/noticias">{{ 'admin.common.cancel' | translate }}</button>
+      <button
         type="submit"
         class="ca-sec-primary-3"
         [disabled]="newsForm.invalid || submitting || uploadingCover || uploadingAuthor"
       >
         <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-        {{ isEditMode ? 'Actualizar' : 'Crear' }} Noticia
+        {{ (isEditMode ? 'admin.news.form.updateNews' : 'admin.news.form.createNews') | translate }}
       </button>
     </div>
   </form>

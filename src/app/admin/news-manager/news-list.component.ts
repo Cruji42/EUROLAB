@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AdminNewsService, NewsPost, NewsCategory } from '../services/admin-news.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { NewsDeleteModalComponent } from './news-delete-modal.component';
 
 @Component({
   selector: 'app-news-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe],
   templateUrl: './news-list.component.html',
   styleUrls: ['./news-list.component.scss']
 })
@@ -20,7 +21,8 @@ export class NewsListComponent implements OnInit {
   loading = true;
   searchTerm = '';
   selectedCategory: string | null = null;
-  
+  private translate = inject(TranslateService);
+
   constructor(
     private newsService: AdminNewsService,
     private modalService: NgbModal
@@ -107,6 +109,6 @@ export class NewsListComponent implements OnInit {
   }
   
   getStatusText(post: NewsPost): string {
-    return post.is_published ? 'Publicado' : 'Borrador';
+    return this.translate.instant(post.is_published ? 'admin.news.list.published' : 'admin.news.list.draft');
   }
 }

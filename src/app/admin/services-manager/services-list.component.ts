@@ -5,12 +5,13 @@ import { RouterLink } from '@angular/router';
 import { AdminServicesService } from '../services/admin-services.service';
 import { ServiceDetail } from '../../models/service.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ServiceDeleteModalComponent } from './service-delete-modal.component';
 
 @Component({
   selector: 'app-services-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe],
   templateUrl: './services-list.component.html',
   styleUrls: ['./services-list.component.scss']
 })

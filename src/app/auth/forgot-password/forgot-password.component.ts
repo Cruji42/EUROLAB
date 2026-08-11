@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule]
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslatePipe]
 })
 export class ForgotPasswordComponent implements OnInit {
   form!: FormGroup;
@@ -17,6 +18,8 @@ export class ForgotPasswordComponent implements OnInit {
   submitted = false;
   success = false;
   error = '';
+
+  private translate = inject(TranslateService);
 
   constructor(private fb: FormBuilder, private authService: AuthService) {}
 
@@ -41,7 +44,7 @@ export class ForgotPasswordComponent implements OnInit {
         this.loading = false;
       },
       error: err => {
-        this.error = err.message || 'No se pudo enviar el correo. Intenta de nuevo.';
+        this.error = err.message || this.translate.instant('auth.forgotPassword.errors.sendFailed');
         this.loading = false;
       }
     });

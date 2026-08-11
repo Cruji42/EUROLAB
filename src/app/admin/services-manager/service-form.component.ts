@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AdminServicesService, ServiceCreate, ServiceUpdate } from '../services/admin-services.service';
 import { ServiceDetail } from '../../models/service.model';
 
 @Component({
   selector: 'app-service-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslatePipe],
   templateUrl: './service-form.component.html',
   styleUrls: ['./service-form.component.scss']
 })
@@ -24,7 +25,8 @@ export class ServiceFormComponent implements OnInit {
   iconPreview: string | null = null;
   uploadingHero = false;
   uploadingIcon = false;
-  
+  private translate = inject(TranslateService);
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -78,7 +80,7 @@ export class ServiceFormComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        this.error = `Error al cargar el servicio: ${error.message}`;
+        this.error = this.translate.instant('admin.services.errors.loadFailed', { message: error.message });
         this.loading = false;
       }
     });
@@ -166,7 +168,7 @@ export class ServiceFormComponent implements OnInit {
     this.uploadingHero = true;
     this.servicesService.uploadImage(file, 'servicios').subscribe({
       next: (url) => { this.serviceForm.patchValue({ hero_image_url: url }); this.uploadingHero = false; },
-      error: (err) => { this.uploadingHero = false; this.error = err?.error?.detail ?? 'Error al subir imagen hero.'; }
+      error: (err) => { this.uploadingHero = false; this.error = err?.error?.detail ?? this.translate.instant('admin.services.errors.uploadHeroFailed'); }
     });
   }
 
@@ -179,7 +181,7 @@ export class ServiceFormComponent implements OnInit {
     this.uploadingIcon = true;
     this.servicesService.uploadImage(file, 'servicios').subscribe({
       next: (url) => { this.serviceForm.patchValue({ card_icon_url: url }); this.uploadingIcon = false; },
-      error: (err) => { this.uploadingIcon = false; this.error = err?.error?.detail ?? 'Error al subir icono.'; }
+      error: (err) => { this.uploadingIcon = false; this.error = err?.error?.detail ?? this.translate.instant('admin.services.errors.uploadIconFailed'); }
     });
   }
 
@@ -204,7 +206,7 @@ export class ServiceFormComponent implements OnInit {
         },
         error: (error) => {
           this.submitting = false;
-          this.error = `Error al actualizar el servicio: ${error.message}`;
+          this.error = this.translate.instant('admin.services.errors.updateFailed', { message: error.message });
           console.error('Error updating service', error);
         }
       });
@@ -217,7 +219,7 @@ export class ServiceFormComponent implements OnInit {
         },
         error: (error) => {
           this.submitting = false;
-          this.error = `Error al crear el servicio: ${error.message}`;
+          this.error = this.translate.instant('admin.services.errors.createFailed', { message: error.message });
           console.error('Error creating service', error);
         }
       });

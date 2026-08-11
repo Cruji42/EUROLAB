@@ -1,54 +1,54 @@
 <div class="sidebar">
   <div class="sidebar-header">
       <img src="assets/img/logo/laboratorio-euronutec-light.png" alt="">
-    <p>Panel Admin</p>
+    <p>{{ 'admin.layout.panelTitle' | translate }}</p>
   </div>
-  
+
   <div class="sidebar-menu">
     <ul>
       <li>
         <a routerLink="/admin/dashboard" routerLinkActive="active">
           <i class="bi bi-speedometer2"></i>
-          <span>Dashboard</span>
+          <span>{{ 'admin.layout.sidebar.dashboard' | translate }}</span>
         </a>
       </li>
       <li>
         <a routerLink="/admin/slider" routerLinkActive="active">
           <i class="bi bi-images"></i>
-          <span>Slider</span>
+          <span>{{ 'admin.layout.sidebar.slider' | translate }}</span>
         </a>
       </li>
       <li>
         <a routerLink="/admin/servicios" routerLinkActive="active">
           <i class="bi bi-speedometer"></i>
-          <span>Servicios</span>
+          <span>{{ 'admin.layout.sidebar.services' | translate }}</span>
         </a>
       </li>
       <li>
         <a routerLink="/admin/certificaciones" routerLinkActive="active">
           <i class="bi bi-patch-check"></i>
-          <span>Certificaciones</span>
+          <span>{{ 'admin.layout.sidebar.certifications' | translate }}</span>
         </a>
       </li>
       <li>
         <a routerLink="/admin/noticias" routerLinkActive="active">
           <i class="bi bi-newspaper"></i>
-          <span>Noticias</span>
+          <span>{{ 'admin.layout.sidebar.news' | translate }}</span>
         </a>
       </li>
       <li *ngIf="authService.isAdmin()">
         <a routerLink="/admin/usuarios" routerLinkActive="active">
           <i class="bi bi-people"></i>
-          <span>Usuarios</span>
+          <span>{{ 'admin.layout.sidebar.users' | translate }}</span>
         </a>
       </li>
     </ul>
   </div>
-  
+
   <div class="sidebar-footer">
     <a (click)="authService.logout()" class="logout-btn">
       <i class="bi bi-box-arrow-right"></i>
-      <span>Cerrar sesión</span>
+      <span>{{ 'admin.common.logout' | translate }}</span>
     </a>
   </div>
 </div>

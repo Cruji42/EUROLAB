@@ -2,37 +2,35 @@
    <div class="container">
       <div class="ca-blog-content-3 ca-sec-content-3 text-center mb-60 aos-init aos-animate" data-aos="zoom-out-down"
          data-aos-duration="1000">
-         <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">Contacto</h5>
-         <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap"> ¿Listo para asegurar la calidad de tus productos?</h2>
-         <p class="pt-16">Contáctanos y recibe una cotización personalizada. Nuestro equipo especializado te atenderá a la brevedad.</p>
+         <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">{{ 'home.contact1.subtitle' | translate }}</h5>
+         <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap"> {{ 'home.contact1.title' | translate }}</h2>
+         <p class="pt-16">{{ 'home.contact1.description' | translate }}</p>
       </div>
       <div class="row align-items-center">
          <div class="col-xl-6 mb-30">
             <div class="ca-contact-from w-bg ca-contact-from-3 aos-init aos-animate" data-aos="fade-right"
                data-aos-duration="1200">
                <div class="ca-contact-content-3">
-                  <h4 class="ca-contact-title-2 theme-black-2 fnw-600">Envianos un mensaje</h4>
-                  <p class="pt-16 pb-24">Compártenos los detalles de tu producto o requerimiento analítico y nuestro
-                     equipo evaluará la mejor alternativa de análisis para garantizar calidad, cumplimiento normativo y
-                     resultados confiables.</p>
+                  <h4 class="ca-contact-title-2 theme-black-2 fnw-600">{{ 'home.contact1.form.title' | translate }}</h4>
+                  <p class="pt-16 pb-24">{{ 'home.contact1.form.subtitle' | translate }}</p>
                </div>
                <form action="#">
                   <div class="row">
                      <div class="col-md-6 mb-20">
-                        <input type="text" placeholder="Nombre">
+                        <input type="text" [placeholder]="'views.contact.form.firstNamePlaceholder' | translate">
                      </div>
                      <div class="col-md-6 mb-20">
-                        <input type="text" placeholder="Apellido">
+                        <input type="text" [placeholder]="'views.contact.form.lastNamePlaceholder' | translate">
                      </div>
                      <div class="col-md-6 mb-20">
-                        <input type="tel" placeholder="Teléfono">
+                        <input type="tel" [placeholder]="'home.contact1.form.phonePlaceholder' | translate">
                      </div>
                      <div class="col-md-6 mb-20">
-                        <input type="email" placeholder="Correo Electrónico">
+                        <input type="email" [placeholder]="'home.contact1.form.emailPlaceholder' | translate">
                      </div>
                      <div class="col-md-12 mb-20">
                         <select class="nice-select wide ca-select">
-                           <option data-display="Service Type">Opciones</option>
+                           <option data-display="Service Type">{{ 'home.contact1.form.optionsPlaceholder' | translate }}</option>
                            <option value="1">01</option>
                            <option value="2">02</option>
                            <option value="3">03</option>
@@ -40,11 +38,11 @@
                         </select>
                      </div>
                      <div class="col-md-12 mb-20">
-                        <textarea name="message" id="message" placeholder="Mensaje"></textarea>
+                        <textarea name="message" id="message" [placeholder]="'home.contact1.form.messagePlaceholder' | translate"></textarea>
                      </div>
                      <div class="submit-btn">
                         <button class="ca-btn-primary-3 theme-bg-3 text-white br-50" type="submit" value="submit">
-                           Enviar Mensaje<span><i class="fa-solid fa-angle-right"></i></span></button>
+                           {{ 'home.contact1.form.sendButton' | translate }}<span><i class="fa-solid fa-angle-right"></i></span></button>
                      </div>
                   </div>
                </form>
@@ -59,8 +57,8 @@
                         <span><img src="assets/img/icon/ca-location3.1.svg" alt=""></span>
                      </div>
                      <div class="ca-location-icbox-text">
-                        <h4 class="ca-title fnw-600 theme-black-3 pb-12">Visítanos</h4>
-                        <p>Av. del Marqués 32, Parque Industrial Bernardo Quintana, 76246 Santiago de Querétaro, Qro.
+                        <h4 class="ca-title fnw-600 theme-black-3 pb-12">{{ 'home.contact1.visitUsTitle' | translate }}</h4>
+                        <p>{{ 'home.contact1.addressLine' | translate }}
                            <br> laboratorio&#64;gponutec.com
                         </p>
                      </div>
@@ -73,7 +71,7 @@
                         <span><img src="assets/img/icon/ca-location3.2.svg" alt=""></span>
                      </div>
                      <div class="ca-location-icbox-text">
-                        <h4 class="ca-title fnw-600 theme-black-3 pb-12">Llámanos</h4>
+                        <h4 class="ca-title fnw-600 theme-black-3 pb-12">{{ 'views.contact.callUsTitle' | translate }}</h4>
                         <a href="tel:4421960130">(442) 196.0130</a>
                      </div>
                   </div>
@@ -85,7 +83,7 @@
                         <span><img src="assets/img/icon/ca-location3.3.svg" alt=""></span>
                      </div>
                      <div class="ca-location-icbox-text">
-                        <h4 class="ca-title fnw-600 theme-black-3 pb-12">Enviar Correo</h4>
+                        <h4 class="ca-title fnw-600 theme-black-3 pb-12">{{ 'home.contact1.sendEmailTitle' | translate }}</h4>
                         <a href="mailto:laboratorio&#64;gponutec.com">laboratorio&#64;gponutec.com</a>
                      </div>
                   </div>

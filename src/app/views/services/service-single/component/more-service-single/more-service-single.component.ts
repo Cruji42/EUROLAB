@@ -1,12 +1,13 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ServicesService } from '../../../../../services/services.service';
 import { ServiceCard } from '../../../../../models/service.model';
 
 @Component({
   selector: 'app-more-service-single',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslatePipe],
   templateUrl: './more-service-single.component.html',
   styles: ``
 })

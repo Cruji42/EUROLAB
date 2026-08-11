@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BreadcrumbComponent } from '../../../components/breadcrumb/breadcrumb.component';
 import { CertificationsService } from '../../../services/certifications.service';
 import { CertificationCard } from '../../../models/certification.model';
 
 @Component({
   selector: 'app-certification-list',
-  imports: [CommonModule, RouterLink, DatePipe, BreadcrumbComponent],
+  imports: [CommonModule, RouterLink, DatePipe, BreadcrumbComponent, TranslatePipe],
   templateUrl: './certification-list.component.html',
   styles: ``
 })
@@ -25,7 +26,7 @@ export class CertificationListComponent implements OnInit {
         this.isLoading = false;
       },
       error: () => {
-        this.errorMessage = 'No se pudieron cargar las certificaciones.';
+        this.errorMessage = 'views.certificationList.loadError';
         this.isLoading = false;
       }
     });

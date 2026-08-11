@@ -1,6 +1,6 @@
 <div class="ca-more-section pb-70">
     <div class="container">
-        <h2 class="ca-more-title theme-black-3 fnw-600 text-center mb-60">Más Servicios</h2>
+        <h2 class="ca-more-title theme-black-3 fnw-600 text-center mb-60">More Services</h2>
         <div class="row">
             <!-- single service box -->
             @for (item of services | slice:0:3; track $index) {
@@ -17,7 +17,7 @@
                     <div class="ca-service-content ca-service-content-iner">
                         <h4 class="ca-title fnw-700 pb-16 pt-32"><a routerLink="/service-single">{{item.title}}</a></h4>
                         <p class="pb-24">{{item.description}}.</p>
-                        <a routerLink="/service-single" class="read-more">Ver más <span><i
+                        <a routerLink="/service-single" class="read-more">{{ 'views.blog.readMore' | translate }} <span><i
                                     class="fa-solid fa-angle-right"></i></span></a>
                     </div>
                 </div>

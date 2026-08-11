@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule]
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslatePipe]
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
@@ -17,6 +18,8 @@ export class LoginComponent implements OnInit {
   submitted = false;
   error = '';
   returnUrl: string = '/admin';
+
+  private translate = inject(TranslateService);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,7 +67,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate([this.returnUrl]);
       },
       error: error => {
-        this.error = error.message || 'Invalid credentials';
+        this.error = error.message || this.translate.instant('auth.login.errors.invalidCredentials');
         this.loading = false;
       }
     });

@@ -1,18 +1,21 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AdminSliderService } from '../services/admin-slider.service';
 import { BannerSlide, BannerSlidePayload } from '../../models/slider.model';
 
 @Component({
   selector: 'app-slider-manager',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModalModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModalModule, TranslatePipe],
   templateUrl: './slider-manager.component.html',
   styleUrls: ['./slider-manager.component.scss']
 })
 export class SliderManagerComponent implements OnInit {
+  private translate = inject(TranslateService);
+
   @ViewChild('slideModal') slideModal!: TemplateRef<any>;
   @ViewChild('deleteModal') deleteModal!: TemplateRef<any>;
 
@@ -59,7 +62,7 @@ export class SliderManagerComponent implements OnInit {
     this.loading = true;
     this.sliderService.getAll().subscribe({
       next: (slides) => { this.slides = slides; this.loading = false; },
-      error: () => { this.error = 'Error al cargar los slides.'; this.loading = false; }
+      error: () => { this.error = this.translate.instant('admin.slider.errors.loadFailed'); this.loading = false; }
     });
   }
 
@@ -104,7 +107,7 @@ export class SliderManagerComponent implements OnInit {
       },
       error: (err) => {
         this.uploading = false;
-        this.error = err?.error?.detail ?? 'Error al subir la imagen.';
+        this.error = err?.error?.detail ?? this.translate.instant('admin.slider.errors.uploadFailed');
       },
     });
   }
@@ -138,12 +141,12 @@ export class SliderManagerComponent implements OnInit {
       next: () => {
         this.submitting = false;
         this.modalRef?.close();
-        this.showSuccess(this.editingSlide ? 'Slide actualizado.' : 'Slide creado.');
+        this.showSuccess(this.translate.instant(this.editingSlide ? 'admin.slider.success.updated' : 'admin.slider.success.created'));
         this.loadSlides();
       },
       error: (err) => {
         this.submitting = false;
-        this.error = err?.error?.detail ?? 'Error al guardar el slide.';
+        this.error = err?.error?.detail ?? this.translate.instant('admin.slider.errors.saveFailed');
       }
     });
   }
@@ -153,12 +156,12 @@ export class SliderManagerComponent implements OnInit {
     this.sliderService.delete(this.slideToDelete.id).subscribe({
       next: () => {
         this.modalService.dismissAll();
-        this.showSuccess('Slide eliminado.');
+        this.showSuccess(this.translate.instant('admin.slider.success.deleted'));
         this.loadSlides();
       },
       error: () => {
         this.modalService.dismissAll();
-        this.error = 'Error al eliminar el slide.';
+        this.error = this.translate.instant('admin.slider.errors.deleteFailed');
       }
     });
   }

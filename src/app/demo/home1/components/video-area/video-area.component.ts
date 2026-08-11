@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CounterDirective } from '../../../../directives/counter.directive';
 import { SettingsService } from '../../../../services/settings.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-video-area',
-  imports: [CounterDirective],
+  imports: [CounterDirective, TranslatePipe],
   templateUrl: './video-area.component.html',
   styles: ``
 })

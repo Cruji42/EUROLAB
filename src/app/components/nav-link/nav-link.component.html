@@ -1,7 +1,7 @@
 <ul>
     @for (item of menu; track $index) {
     <li>
-      <a [routerLink]="item.link">{{ item.title }}
+      <a [routerLink]="item.link">{{ item.title | translate }}
         @if(item.icon){
         <span><i [class]="item.icon"></i></span>
         }
@@ -10,7 +10,7 @@
       <ul class="sub-menu">
         @for (subItem of item.subMenu; track $index) {
         <li>
-          <a [routerLink]="subItem.link">{{ subItem.title }}</a>
+          <a [routerLink]="subItem.link">{{ subItem.title | translate }}</a>
         </li>
     }
       </ul>

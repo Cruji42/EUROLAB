@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { ServicesListComponent } from './services-list.component';
 import { ServiceFormComponent } from './service-form.component';
 import { ServiceDeleteModalComponent } from './service-delete-modal.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forChild(routes),
+    TranslateModule,
     ServicesListComponent,
     ServiceFormComponent,
     ServiceDeleteModalComponent

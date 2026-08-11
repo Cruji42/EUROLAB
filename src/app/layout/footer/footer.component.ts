@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export interface FooterLink {
   text: string;
@@ -15,7 +16,7 @@ export interface FooterSection {
 }
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink,FormsModule,CommonModule,ReactiveFormsModule],
+  imports: [RouterLink,FormsModule,CommonModule,ReactiveFormsModule,TranslatePipe],
   templateUrl: './footer.component.html',
   styles: ``
 })
@@ -30,14 +31,14 @@ export class FooterComponent {
 
   footerSections = [
     {
-      title: 'Secciones',
+      title: 'footer.sections.title',
       widgetClass: 'widget-2',
       links: [
-        { text: 'Inicio', url: '/' },
-        { text: 'Nosotros', url: '/about' },
-        { text: 'Servicios', url: '/service' },
-        { text: 'Noticias', url: '/blog' },
-        { text: 'Contacto', url: '/contact' }
+        { text: 'nav.home', url: '/' },
+        { text: 'nav.about', url: '/about' },
+        { text: 'nav.services', url: '/service' },
+        { text: 'nav.news', url: '/blog' },
+        { text: 'nav.contact', url: '/contact' }
       ]
     },
     // {

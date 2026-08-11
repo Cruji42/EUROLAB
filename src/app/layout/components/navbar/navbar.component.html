@@ -7,7 +7,7 @@
          <div class="col-xl-3 col-lg col-md-6 col-6">
             <!-- ca-logo -->
             <div class="ca-logo">
-               <a routerLink="/index"><img [src]="logo" alt=""></a>
+               <a routerLink="/index"><img [src]="logo" [alt]="'nav.logoAlt' | translate"></a>
             </div>
          </div>
          <div class="col-xl-6 col-lg-7 d-none d-lg-block">
@@ -20,7 +20,8 @@
          </div>
          <div class="col-xl-3 col-lg col-md-6 col-6">
             <!-- ca-btn -->
-            <div class="ca-btn-header d-none d-lg-block text-end">
+            <div class="ca-btn-header d-none d-lg-block text-end d-flex align-items-center justify-content-end gap-2">
+               <app-language-switcher />
                <a [routerLink]="//{{buttonLink}}" [ngClass]="buttonClass">
                   {{ buttonText }} <span>
                      @if(showMobileMenu){
@@ -141,6 +142,10 @@
                <li><a href="javascript:void(0);"><i class="fa-brands fa-x-twitter"></i></a></li>
             </ul>
          </div>
+      </div>
+      <div class="ca-offcanvas-lang mb-40">
+         <h3 class="ca-offcanvas-sm-title">{{ 'nav.language' | translate }}</h3>
+         <app-language-switcher />
       </div>
    </div>
 </div>

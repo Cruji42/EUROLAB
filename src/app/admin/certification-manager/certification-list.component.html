@@ -1,9 +1,9 @@
 <div class="news-list-container">
   <div class="header-actions">
-    <h2 class="section-title">Gestión de Certificaciones</h2>
+    <h2 class="section-title">{{ 'admin.certifications.list.title' | translate }}</h2>
     <a routerLink="nueva" class="ca-sec-primary-3">
       <i class="bi bi-plus-circle me-2"></i>
-      Nueva Certificación
+      {{ 'admin.certifications.list.newCertification' | translate }}
     </a>
   </div>
 
@@ -17,7 +17,7 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="Buscar por título u organismo..."
+                [attr.placeholder]="'admin.certifications.list.searchPlaceholder' | translate"
                 [(ngModel)]="searchTerm"
                 (input)="search()"
               >
@@ -28,7 +28,7 @@
 
       <div *ngIf="loading" class="loading-spinner">
         <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Cargando...</span>
+          <span class="visually-hidden">{{ 'admin.common.loading' | translate }}</span>
         </div>
       </div>
 
@@ -36,14 +36,14 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Título</th>
-              <th>Organismo</th>
-              <th>Tipo</th>
-              <th>Estado</th>
-              <th>Destacada</th>
-              <th>Constancia</th>
-              <th>Acciones</th>
+              <th>{{ 'admin.certifications.list.table.id' | translate }}</th>
+              <th>{{ 'admin.certifications.list.table.title' | translate }}</th>
+              <th>{{ 'admin.certifications.list.table.issuingBody' | translate }}</th>
+              <th>{{ 'admin.certifications.list.table.type' | translate }}</th>
+              <th>{{ 'admin.common.status' | translate }}</th>
+              <th>{{ 'admin.certifications.list.table.featured' | translate }}</th>
+              <th>{{ 'admin.certifications.list.table.certificate' | translate }}</th>
+              <th>{{ 'admin.common.actions' | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -56,7 +56,7 @@
                 <span class="badge" [ngClass]="getStatusClass(cert)">{{ getStatusText(cert) }}</span>
               </td>
               <td>
-                <span class="badge bg-warning" *ngIf="cert.is_featured">Destacada</span>
+                <span class="badge bg-warning" *ngIf="cert.is_featured">{{ 'admin.certifications.list.featured' | translate }}</span>
                 <span *ngIf="!cert.is_featured">-</span>
               </td>
               <td>
@@ -77,7 +77,7 @@
               </td>
             </tr>
             <tr *ngIf="filtered.length === 0">
-              <td colspan="8" class="text-center">No se encontraron certificaciones</td>
+              <td colspan="8" class="text-center">{{ 'admin.certifications.list.empty' | translate }}</td>
             </tr>
           </tbody>
         </table>

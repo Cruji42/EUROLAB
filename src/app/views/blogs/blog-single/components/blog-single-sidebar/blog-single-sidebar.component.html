@@ -5,7 +5,7 @@
                 <div class="ca-project-content-area">
                     <div class="ca-pro-thumb-content ca-service-left-content">
                         <h2 class="ca-project-thumb-title theme-black-3 fnw-600 ca-text-cap">
-                            {{ post?.title || 'Detalle de noticia' }}
+                            {{ post?.title || ('views.blogSingle.defaultDetailTitle' | translate) }}
                         </h2>
                         <p class="pt-16 pb-32">{{ post?.excerpt || '' }}</p>
                         <div class="ca-servic-cat">
@@ -15,7 +15,7 @@
                                 </div>
                                 <div class="ca-servic-cat-item-content">
                                     <h3 class="ca-blog-cat-ttitle">
-                                        <a href="javascript:void(0);">{{ post?.author_name || 'Laboratorio Euronutec' }}</a>
+                                        <a href="javascript:void(0);">{{ post?.author_name || ('views.blog.defaultAuthor' | translate) }}</a>
                                     </h3>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="ca-servic-cat-item-content">
                                     <h3 class="ca-blog-cat-ttitle">
-                                        <a href="javascript:void(0);">{{ post?.category?.name || 'Noticias' }}</a>
+                                        <a href="javascript:void(0);">{{ post?.category?.name || ('views.blog.defaultCategory' | translate) }}</a>
                                     </h3>
                                 </div>
                             </div>

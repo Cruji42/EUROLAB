@@ -1,10 +1,9 @@
 <section class="ca-portfilo-2 pt-100 pb-70">
   <div class="container">
     <div class="ca-portfolio-content-3 ca-sec-content-3 text-center mb-60" data-aos="fade-up" data-aos-duration="800">
-      <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">ÁREAS DE TRABAJO</h5>
-      <h2 class="ca-section-title theme-black-3 fnw-600 pt-16">Áreas de análisis</h2>
-      <p class="pt-16"> Trabajamos con diferentes tipos de muestras provenientes de la industria alimentaria,<br>
-        agropecuaria y productos para consumo humano, adaptando nuestros métodos a cada requerimiento técnico.</p>
+      <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">{{ 'home.portfolio1.subtitle' | translate }}</h5>
+      <h2 class="ca-section-title theme-black-3 fnw-600 pt-16">{{ 'home.portfolio1.title' | translate }}</h2>
+      <p class="pt-16"> {{ 'home.portfolio1.description' | translate }}</p>
     </div>
 
     <div class="row">
@@ -17,7 +16,7 @@
               <span><img [src]="project.icon" alt=""></span>
             </a>
             <div class="ca-project-hover-item-content">
-              <h4 class="ca-project-hov-sub-title">{{ project.category }}</h4>
+              <h4 class="ca-project-hov-sub-title">{{ project.category | translate }}</h4>
               <h3 class="ca-project-hov-title"><a [href]="project.link">{{ project.title }}</a></h3>
               <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br> Quisque at ultricies ex.</p> -->
             </div>

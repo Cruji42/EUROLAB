@@ -9,7 +9,7 @@ export interface MenuItem {
   
 export const menu: MenuItem[] = [
     {
-      title: 'Inicio',
+      title: 'nav.home',
       link: '/index',
       // icon: 'fa-solid fa-angle-down',
       // subMenu: [
@@ -20,9 +20,9 @@ export const menu: MenuItem[] = [
       // ],
       // isOpen:false
     },
-    { title: 'Nosotros', link: '/about' },
+    { title: 'nav.about', link: '/about' },
     {
-      title: 'Servicios',
+      title: 'nav.services',
       link: '/service',
       // icon: 'fa-solid fa-angle-down',
       // subMenu: [
@@ -47,11 +47,11 @@ export const menu: MenuItem[] = [
     //   ]
     // },
     {
-      title: 'Certificaciones',
+      title: 'nav.certifications',
       link: '/certificaciones',
     },
     {
-      title: 'Noticias',
+      title: 'nav.news',
       link: '/blog',
       // icon: 'fa-solid fa-angle-down',
       // subMenu: [
@@ -63,7 +63,7 @@ export const menu: MenuItem[] = [
       // ],
       // isOpen:false
     },{
-      title:'Contacto',
+      title:'nav.contact',
       link:'/contact'
     }
     // ,

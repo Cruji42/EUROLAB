@@ -3,11 +3,13 @@ import { NavLinkComponent } from "../../../components/nav-link/nav-link.componen
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AlertComponent } from "../../../components/alert/alert.component";
+import { TranslatePipe } from '@ngx-translate/core';
+import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
 import { menu, MenuItem } from './data';
 
 @Component({
   selector: 'app-navbar',
-  imports: [NavLinkComponent, CommonModule, AlertComponent,RouterLink],
+  imports: [NavLinkComponent, CommonModule, AlertComponent, RouterLink, TranslatePipe, LanguageSwitcherComponent],
   templateUrl: './navbar.component.html',
   styles: ``
 })

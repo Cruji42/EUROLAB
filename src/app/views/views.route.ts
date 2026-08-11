@@ -26,122 +26,122 @@ export const VIEWS_ROUTES: Route[] = [
     {
         path: 'about',
         component: AboutComponent,
-        data: { title: 'Laboratorio EURONUTEC-About' },
+        data: { title: 'routes.titles.about' },
     },
     {
         path: 'service',
         component: ServicesComponent,
-        data: { title: 'Laboratorio EURONUTEC-Service' },
+        data: { title: 'routes.titles.service' },
     },
     {
         path: 'service-left',
         component: ServiceLeftComponent,
-        data: { title: 'Laboratorio EURONUTEC-Service Left' },
+        data: { title: 'routes.titles.serviceLeft' },
     },
     {
         path: 'service-right',
         component: ServiceRightComponent,
-        data: { title: 'Laboratorio EURONUTEC-Service Right' },
+        data: { title: 'routes.titles.serviceRight' },
     },
     {
         path: 'service-single',
         component: ServiceSingleComponent,
-        data: { title: 'Laboratorio EURONUTEC-Service Single' },
+        data: { title: 'routes.titles.serviceSingle' },
     },
     {
         path: 'service-single/:slug',
         component: ServiceSingleComponent,
-        data: { title: 'Laboratorio EURONUTEC-Service Single' },
+        data: { title: 'routes.titles.serviceSingle' },
     },
     {
         path: 'team',
         component: TeamComponent,
-        data: { title: 'Laboratorio EURONUTEC-Team' },
+        data: { title: 'routes.titles.team' },
     },
     {
         path: 'testimonial',
         component: TestimonialComponent,
-        data: { title: 'Laboratorio EURONUTEC-Testimonial' },
+        data: { title: 'routes.titles.testimonial' },
     },
     {
         path: 'faq',
         component: FaqComponent,
-        data: { title: 'Laboratorio EURONUTEC-Faq' },
+        data: { title: 'routes.titles.faq' },
     },
     {
         path: 'pricing',
         component: PricingPlanComponent,
-        data: { title: 'Laboratorio EURONUTEC-Pricing Plan' },
+        data: { title: 'routes.titles.pricing' },
     },
     {
         path: 'contact',
         component: ContactComponent,
-        data: { title: 'Laboratorio EURONUTEC-Contact' },
+        data: { title: 'routes.titles.contact' },
     },
     {
         path: '404',
         component: Error404Component,
-        data: { title: 'Laboratorio EURONUTEC-404' },
+        data: { title: 'routes.titles.notFound' },
     },
     {
         path: 'blog',
         component: BlogComponent,
-        data: { title: 'Laboratorio EURONUTEC-Blog' },
+        data: { title: 'routes.titles.blog' },
     },
     {
         path: 'blog-left',
         component: BlogLeftComponent,
-        data: { title: 'Laboratorio EURONUTEC-Blog Left' },
+        data: { title: 'routes.titles.blogLeft' },
     },
     {
         path: 'blog-right',
         component: BlogRightComponent,
-        data: { title: 'Laboratorio EURONUTEC-Blog Right' },
+        data: { title: 'routes.titles.blogRight' },
     },
     {
         path: 'blog-single',
         component: BlogSingleComponent,
-        data: { title: 'Laboratorio EURONUTEC-Blog Single' },
+        data: { title: 'routes.titles.blogSingle' },
     },
     {
         path: 'blog-single/:slug',
         component: BlogSingleComponent,
-        data: { title: 'Laboratorio EURONUTEC-Blog Single' },
+        data: { title: 'routes.titles.blogSingle' },
     },
     {
         path: 'projects',
         component: ProjectComponent,
-        data: { title: 'Laboratorio EURONUTEC-Projects' },
+        data: { title: 'routes.titles.projects' },
     },
     {
         path: 'project-left',
         component: ProjectLeftComponent,
-        data: { title: 'Laboratorio EURONUTEC-Project Left' },
+        data: { title: 'routes.titles.projectLeft' },
     },
     {
         path: 'project-right',
         component: ProjectRightComponent,
-        data: { title: 'Laboratorio EURONUTEC-Project Eight' },
+        data: { title: 'routes.titles.projectRight' },
     },
 
     {
         path: 'project-single',
         component: ProjectSingleComponent,
-        data: { title: 'Laboratorio EURONUTEC-Project Single' },
+        data: { title: 'routes.titles.projectSingle' },
     },
     {
         path: 'certificaciones',
         component: CertificationListComponent,
-        data: { title: 'Laboratorio EURONUTEC-Certificaciones' },
+        data: { title: 'routes.titles.certifications' },
     },
     {
         path: 'certificaciones/:slug',
         component: CertificationSingleComponent,
-        data: { title: 'Laboratorio EURONUTEC-Certificación' },
+        data: { title: 'routes.titles.certification' },
     },
     {
         path:'index',
         component:Home1Component,
-        data:{title:'Laboratorio EURONUTEC'}
+        data:{title:'routes.titles.home'}
     },
 ]

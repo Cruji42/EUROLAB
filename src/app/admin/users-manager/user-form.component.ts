@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AdminUsersService, AdminUser, AdminUserCreate, AdminUserUpdate } from '../services/admin-users.service';
 
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink, TranslatePipe],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })
@@ -19,7 +20,8 @@ export class UserFormComponent implements OnInit {
   submitting = false;
   error = '';
   showPassword = false;
-  
+  private translate = inject(TranslateService);
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -69,7 +71,7 @@ export class UserFormComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        this.error = `Error al cargar el usuario: ${error.message}`;
+        this.error = this.translate.instant('admin.users.errors.loadFailed', { message: error.message });
         this.loading = false;
         console.error('Error loading user', error);
       }
@@ -112,7 +114,7 @@ export class UserFormComponent implements OnInit {
         },
         error: (error) => {
           this.submitting = false;
-          this.error = `Error al actualizar el usuario: ${error.message}`;
+          this.error = this.translate.instant('admin.users.errors.updateFailed', { message: error.message });
           console.error('Error updating user', error);
         }
       });
@@ -125,7 +127,7 @@ export class UserFormComponent implements OnInit {
         },
         error: (error) => {
           this.submitting = false;
-          this.error = `Error al crear el usuario: ${error.message}`;
+          this.error = this.translate.instant('admin.users.errors.createFailed', { message: error.message });
           console.error('Error creating user', error);
         }
       });

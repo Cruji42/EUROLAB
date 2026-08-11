@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CertificationsService } from '../../../../services/certifications.service';
 import { CertificationCard } from '../../../../models/certification.model';
 
 @Component({
   selector: 'app-blog1',
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, TranslatePipe],
   templateUrl: './blog1.component.html',
   styles: ``
 })

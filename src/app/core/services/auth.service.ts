@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface LoginRequest {
   username: string;
@@ -29,6 +30,8 @@ export class AuthService {
   private readonly tokenKey = 'auth_token';
   private currentUserSubject = new BehaviorSubject<UserProfile | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
+
+  private translate = inject(TranslateService);
 
   constructor(private http: HttpClient, private router: Router) {
     this.loadStoredUser();
@@ -84,13 +87,13 @@ export class AuthService {
 
   requestPasswordReset(email: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/forgot-password`, { email }).pipe(
-      catchError(error => throwError(() => new Error(error.error?.detail || 'Error al enviar el correo')))
+      catchError(error => throwError(() => new Error(error.error?.detail || this.translate.instant('auth.forgotPassword.errors.sendFailed'))))
     );
   }
 
   resetPassword(token: string, newPassword: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/reset-password`, { token, new_password: newPassword }).pipe(
-      catchError(error => throwError(() => new Error(error.error?.detail || 'Error al restablecer la contraseña')))
+      catchError(error => throwError(() => new Error(error.error?.detail || this.translate.instant('auth.resetPassword.errors.resetFailed'))))
     );
   }
 

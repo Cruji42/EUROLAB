@@ -1,9 +1,9 @@
 <section class="ca-service-3 cream-bg-3 pt-100 pb-70">
     <div class="container">
       <div class="ca-portfolio-content-3 ca-sec-content-3 text-center mb-60" data-aos="fade-up" data-aos-duration="800">
-        <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">Nuestros Servicios</h5>
-        <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">Análisis especializados para tu industria</h2>
-        <p class="pt-16">Contamos con tecnología de vanguardia y personal especializado para brindarte resultados confiables y precisos.</p>
+        <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">{{ 'home.service1.subtitle' | translate }}</h5>
+        <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">{{ 'home.service1.title' | translate }}</h2>
+        <p class="pt-16">{{ 'home.service1.description' | translate }}</p>
       </div>
     </div>
     <!-- Expand gallery start -->
@@ -13,7 +13,7 @@
       @if (isLoading) {
         <div class="text-center py-5">
           <div class="spinner-border text-secondary" role="status">
-            <span class="visually-hidden">Cargando...</span>
+            <span class="visually-hidden">{{ 'views.services.loading' | translate }}</span>
           </div>
         </div>
       }
@@ -21,7 +21,7 @@
       <!-- Error state -->
       @if (hasError) {
         <div class="text-center py-4">
-          <p class="text-muted">No se pudieron cargar los servicios. Intenta más tarde.</p>
+          <p class="text-muted">{{ 'views.services.loadError' | translate }}</p>
         </div>
       }
 
@@ -52,7 +52,7 @@
 
     </div>
     <div class="container text-center">
-<a routerLink="/service" class="ca-btn-primary-3 theme-bg-3 text-white br-50">Conoce nuestros servicios<span><i class="fa-solid fa-angle-right"></i></span></a>
+<a routerLink="/service" class="ca-btn-primary-3 theme-bg-3 text-white br-50">{{ 'home.service1.knowMoreButton' | translate }}<span><i class="fa-solid fa-angle-right"></i></span></a>
     </div>
     
     <!-- Expand gallery end -->

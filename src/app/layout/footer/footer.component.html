@@ -12,14 +12,14 @@
                 <div class="col-lg-6 mb-30">
                     <div class="ca-cta-content">
                         <h2 class="ca-section-title cta-title-1 text-white fnw-700">
-                            ¿Necesitas revisar los resultados?
+                            {{ 'footer.cta.title' | translate }}
                         </h2>
                     </div>
                 </div>
                 <div class="col-lg-6 mb-30">
                     <div class="ca-btn-cta-3 text-end">
                         <a href="https://eurolab.gponutec.com:8082/login.aspx" target="_blank" class="ca-btn-primary-3 w-bg br-50">
-                            Visita EuroLab Online <span><i class="fa-solid fa-angle-right"></i></span>
+                            {{ 'footer.cta.button' | translate }} <span><i class="fa-solid fa-angle-right"></i></span>
                         </a>
                     </div>
                 </div>
@@ -39,10 +39,7 @@
                             </div>
                             <div class="ca-ft-content ca-ft-content-3 mb-24">
                                 <p class="pt-16">
-                                    Laboratorio especializado en análisis para la industria alimentaria, agropecuaria y
-                                    humana. Comprometidos con la calidad, la seguridad y la confianza.
-                                    <!-- Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. consectetur adipiscing elit . Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit.. -->
+                                    {{ 'footer.description' | translate }}
                                 </p>
                             </div>
                             <div class="ca-footer-social ca-footer-social-3">
@@ -59,12 +56,12 @@
                     @for (section of footerSections; track $index) {
                     <div class=" col-md-3 offset-1 mb-30">
                         <div class="ca-footer" [ngClass]="section.widgetClass">
-                            <h4 class="ca-title fnw-700 theme-black-3 pb-24">{{ section.title }}</h4>
+                            <h4 class="ca-title fnw-700 theme-black-3 pb-24">{{ section.title | translate }}</h4>
                             <div class="ca-footer-menu ca-footer-menu-3">
                                 <ul>
                                     @for (link of section.links; track $index) {
                                     <li>
-                                        <a [routerLink]="link.url">{{ link.text }}</a>
+                                        <a [routerLink]="link.url">{{ link.text | translate }}</a>
                                     </li>
                                     }
                                 </ul>
@@ -97,13 +94,13 @@
                         <div class="copy-right-border border-1"></div>
                     </div>
                     <div class="col-lg-6">
-                        <p class="copry-right-text pt-24">Copyright &COPY; 2026. All Rights Reserved</p>
+                        <p class="copry-right-text pt-24">{{ 'footer.copyright' | translate }}</p>
                     </div>
                     <div class="col-lg-6">
                         <div class="copy-right-menu pt-24">
                             <ul>
-                                <li><a routerLink="#">Términos y condiciones</a></li>
-                                <li><a routerLink="#">Políticas de privacidad</a></li>
+                                <li><a routerLink="#">{{ 'footer.terms' | translate }}</a></li>
+                                <li><a routerLink="#">{{ 'footer.privacy' | translate }}</a></li>
                             </ul>
                         </div>
                     </div>

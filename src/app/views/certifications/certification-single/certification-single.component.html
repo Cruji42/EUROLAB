@@ -1,11 +1,11 @@
-<app-breadcrumb [title]="cert?.title || 'Certificación'"/>
+<app-breadcrumb [title]="cert?.title || ('views.certificationSingle.defaultTitle' | translate)"/>
 
 <div class="ca-blog-details pt-100 pb-100">
   <div class="container">
     @if (isLoading) {
-      <p class="text-center">Cargando...</p>
+      <p class="text-center">{{ 'views.certificationSingle.loading' | translate }}</p>
     } @else if (errorMessage) {
-      <p class="text-center text-danger">{{ errorMessage }}</p>
+      <p class="text-center text-danger">{{ errorMessage | translate }}</p>
     } @else if (cert) {
       <div class="row justify-content-center">
         <div class="col-xl-8 col-lg-10">
@@ -45,12 +45,12 @@
             <div class="mb-20 d-flex gap-4 flex-wrap">
               @if (cert.issued_at) {
                 <span class="badge bg-success fs-6 fw-normal">
-                  Emitida: {{ cert.issued_at | date:'dd/MM/yyyy' }}
+                  {{ 'views.certificationSingle.issuedLabel' | translate }} {{ cert.issued_at | date:'dd/MM/yyyy' }}
                 </span>
               }
               @if (cert.expires_at) {
                 <span class="badge bg-warning text-dark fs-6 fw-normal">
-                  Vigente hasta: {{ cert.expires_at | date:'dd/MM/yyyy' }}
+                  {{ 'views.certificationSingle.validUntilLabel' | translate }} {{ cert.expires_at | date:'dd/MM/yyyy' }}
                 </span>
               }
             </div>
@@ -69,10 +69,10 @@
           <!-- Constancia de certificación -->
           @if (cert.certificate_file_url) {
             <div class="ca-cert-download mb-40 p-4 br-7" style="background:#f8f9fa; border: 1px solid #dee2e6;">
-              <h5 class="fnw-600 mb-10"><i class="fa-solid fa-certificate me-2 theme-color-3"></i>Constancia de Certificación</h5>
-              <p class="mb-15">Descarga la constancia oficial de esta certificación.</p>
+              <h5 class="fnw-600 mb-10"><i class="fa-solid fa-certificate me-2 theme-color-3"></i>{{ 'views.certificationSingle.certificateBox.title' | translate }}</h5>
+              <p class="mb-15">{{ 'views.certificationSingle.certificateBox.description' | translate }}</p>
               <a [href]="cert.certificate_file_url" target="_blank" rel="noopener" class="ca-sec-primary-3">
-                <i class="fa-solid fa-file-pdf me-2"></i>Descargar Constancia
+                <i class="fa-solid fa-file-pdf me-2"></i>{{ 'views.certificationSingle.certificateBox.downloadButton' | translate }}
               </a>
             </div>
           }
@@ -80,7 +80,7 @@
           <!-- Volver -->
           <div class="mt-40">
             <a routerLink="/certificaciones" class="read-more3">
-              <span><i class="fa-solid fa-angle-left me-1"></i></span> Volver a Certificaciones
+              <span><i class="fa-solid fa-angle-left me-1"></i></span> {{ 'views.certificationSingle.backButton' | translate }}
             </a>
           </div>
 

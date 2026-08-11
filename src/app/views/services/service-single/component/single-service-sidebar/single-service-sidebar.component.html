@@ -92,7 +92,7 @@
 
                    <!-- Detail Paragraph -->
                    @if (service.detail_paragraph) {
-                   <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 pt-30">{{ service.detail_title || 'Nuestros Servicios en Detalle' }}</h3>
+                   <h3 class="ca-thumb-title-2 theme-black-3 fnw-600 pt-30">{{ service.detail_title || ('views.serviceSingle.defaultDetailTitle' | translate) }}</h3>
                    <p class="pt-16" [innerHTML]="service.detail_paragraph"></p>
                    }
                 </div>

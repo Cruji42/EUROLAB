@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 import { UsersListComponent } from './users-list.component';
 import { UserFormComponent } from './user-form.component';
 import { UserDeleteModalComponent } from './user-delete-modal.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
+    TranslateModule,
     UsersListComponent,
     UserFormComponent,
     UserDeleteModalComponent,

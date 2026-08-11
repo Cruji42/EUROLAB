@@ -1,0 +1,745 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "certifications": "Certifications",
+    "news": "News",
+    "contact": "Contact",
+    "cta": "EuroLab Online",
+    "language": "Language",
+    "logoAlt": "EuroLab Logo"
+  },
+  "footer": {
+    "cta": {
+      "title": "Need to check your results?",
+      "button": "Visit EuroLab Online"
+    },
+    "description": "Laboratory specialized in analysis for the food, agricultural and human industries. Committed to quality, safety and trust.",
+    "sections": {
+      "title": "Sections"
+    },
+    "copyright": "Copyright &COPY; 2026. All Rights Reserved",
+    "terms": "Terms and Conditions",
+    "privacy": "Privacy Policy"
+  },
+  "routes": {
+    "titles": {
+      "admin": "EURONUTEC Laboratory - Admin",
+      "index02": "Cargon 02",
+      "index03": "Cargon 03",
+      "index04": "Cargon 04",
+      "about": "EURONUTEC Laboratory-About",
+      "service": "EURONUTEC Laboratory-Services",
+      "serviceLeft": "EURONUTEC Laboratory-Service Left",
+      "serviceRight": "EURONUTEC Laboratory-Service Right",
+      "serviceSingle": "EURONUTEC Laboratory-Service Detail",
+      "team": "EURONUTEC Laboratory-Team",
+      "testimonial": "EURONUTEC Laboratory-Testimonials",
+      "faq": "EURONUTEC Laboratory-FAQ",
+      "pricing": "EURONUTEC Laboratory-Pricing Plan",
+      "contact": "EURONUTEC Laboratory-Contact",
+      "notFound": "EURONUTEC Laboratory-404",
+      "blog": "EURONUTEC Laboratory-News",
+      "blogLeft": "EURONUTEC Laboratory-News Left",
+      "blogRight": "EURONUTEC Laboratory-News Right",
+      "blogSingle": "EURONUTEC Laboratory-News Detail",
+      "projects": "EURONUTEC Laboratory-Projects",
+      "projectLeft": "EURONUTEC Laboratory-Project Left",
+      "projectRight": "EURONUTEC Laboratory-Project Right",
+      "projectSingle": "EURONUTEC Laboratory-Project Detail",
+      "certifications": "EURONUTEC Laboratory-Certifications",
+      "certification": "EURONUTEC Laboratory-Certification",
+      "home": "EURONUTEC Laboratory"
+    }
+  },
+  "auth": {
+    "login": {
+      "logoAlt": "EuroLab Logo",
+      "title": "Admin Panel",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "email@example.com",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Enter a valid email",
+      "passwordLabel": "Password",
+      "passwordRequired": "Password is required",
+      "submit": "Sign in",
+      "forgotPasswordLink": "Forgot your password?",
+      "errors": {
+        "invalidCredentials": "Invalid credentials"
+      }
+    },
+    "forgotPassword": {
+      "logoAlt": "EuroLab Logo",
+      "title": "Recover password",
+      "instructions": "Enter your email and we'll send you a link to reset your password.",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "email@example.com",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Enter a valid email",
+      "submit": "Send link",
+      "successMessage": "Check your email. If an account exists for that email, you'll receive a link to reset your password.",
+      "backToLogin": "← Back to sign in",
+      "errors": {
+        "sendFailed": "Could not send the email. Please try again."
+      }
+    },
+    "resetPassword": {
+      "logoAlt": "EuroLab Logo",
+      "title": "New password",
+      "passwordLabel": "New password",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Minimum 8 characters",
+      "confirmPasswordLabel": "Confirm password",
+      "confirmPasswordRequired": "Confirm your password",
+      "passwordMismatch": "Passwords do not match",
+      "submit": "Reset password",
+      "successMessage": "Password reset successfully. You'll be redirected to sign in in a few seconds...",
+      "backToLogin": "← Back to sign in",
+      "errors": {
+        "invalidToken": "Invalid or expired recovery token.",
+        "resetFailed": "Could not reset the password. The link may have expired."
+      }
+    }
+  },
+  "admin": {
+    "common": {
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "edit": "Edit",
+      "create": "Create",
+      "update": "Update",
+      "back": "Back",
+      "loading": "Loading...",
+      "uploading": "Uploading...",
+      "confirmDeleteTitle": "Confirm deletion",
+      "cannotBeUndone": "This action cannot be undone.",
+      "active": "Active",
+      "inactive": "Inactive",
+      "status": "Status",
+      "actions": "Actions",
+      "selectImage": "Select image",
+      "changeImage": "Change image",
+      "required": "Required.",
+      "welcome": "Welcome,",
+      "logout": "Sign out"
+    },
+    "layout": {
+      "panelTitle": "Admin Panel",
+      "defaultUser": "User",
+      "sidebar": {
+        "dashboard": "Dashboard",
+        "slider": "Slider",
+        "services": "Services",
+        "certifications": "Certifications",
+        "news": "News",
+        "users": "Users"
+      }
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "stats": {
+        "services": "Services",
+        "news": "News",
+        "users": "Users"
+      },
+      "youtube": {
+        "title": "Main Video (YouTube)",
+        "placeholder": "https://www.youtube.com/watch?v=...",
+        "updated": "URL updated successfully.",
+        "error": "Error saving. Please try again."
+      },
+      "latestServices": {
+        "title": "Latest Services",
+        "viewAll": "View all",
+        "name": "Name",
+        "empty": "No services available"
+      },
+      "latestNews": {
+        "title": "Latest News",
+        "viewAll": "View all",
+        "title_col": "Title",
+        "category": "Category",
+        "noCategory": "No category",
+        "published": "Published",
+        "empty": "No news available"
+      }
+    },
+    "slider": {
+      "title": "Main Slider Management",
+      "newSlide": "New Slide",
+      "editSlide": "Edit Slide",
+      "table": {
+        "order": "Order",
+        "image": "Image",
+        "subtitle": "Subtitle",
+        "titleCol": "Title",
+        "noImage": "No image"
+      },
+      "empty": "No slides yet. Create the first one.",
+      "form": {
+        "imageLabel": "Image",
+        "imageHint": "JPG, PNG, WebP or GIF · max 5 MB",
+        "previewAlt": "Preview",
+        "subtitleLabel": "Subtitle / tag",
+        "subtitlePlaceholder": "Accredited by EMA · Approved by SADER",
+        "titleLabel": "Main title",
+        "titlePlaceholder": "Analyze. Decide. Optimize.",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "Brief description of the slide...",
+        "btnPrimaryTextLabel": "Primary button — text",
+        "btnPrimaryTextPlaceholder": "Discover our services",
+        "btnPrimaryLinkLabel": "Primary button — link",
+        "btnSecondaryTextLabel": "Secondary button — text",
+        "btnSecondaryTextPlaceholder": "Contact us",
+        "btnSecondaryLinkLabel": "Secondary button — link",
+        "orderLabel": "Order",
+        "activeLabel": "Active (visible on site)",
+        "createSlide": "Create slide",
+        "saveChanges": "Save changes"
+      },
+      "validation": {
+        "imageRequired": "Image is required.",
+        "subtitleRequired": "Subtitle is required.",
+        "titleRequired": "Title is required.",
+        "descriptionRequired": "Description is required."
+      },
+      "delete": {
+        "title": "Delete slide",
+        "confirm": "Are you sure you want to delete the slide {{title}}? This action cannot be undone."
+      },
+      "errors": {
+        "loadFailed": "Error loading slides.",
+        "uploadFailed": "Error uploading the image.",
+        "saveFailed": "Error saving the slide.",
+        "deleteFailed": "Error deleting the slide."
+      },
+      "success": {
+        "updated": "Slide updated.",
+        "created": "Slide created.",
+        "deleted": "Slide deleted."
+      }
+    },
+    "news": {
+      "list": {
+        "title": "News Management",
+        "newNews": "New Article",
+        "searchPlaceholder": "Search by title...",
+        "filterByCategory": "Filter by category:",
+        "all": "All",
+        "table": {
+          "id": "ID",
+          "title": "Title",
+          "category": "Category",
+          "noCategory": "No category",
+          "featured": "Featured",
+          "publishedDate": "Publish Date"
+        },
+        "published": "Published",
+        "draft": "Draft",
+        "empty": "No news found"
+      },
+      "form": {
+        "newTitle": "New Article",
+        "editTitle": "Edit Article",
+        "basicInfo": "Basic Information",
+        "titleLabel": "Title",
+        "titleRequired": "Title is required",
+        "titleMaxLength": "Title must not exceed 300 characters",
+        "slugLabel": "Slug",
+        "slugRequired": "Slug is required",
+        "slugPattern": "Slug can only contain lowercase letters, numbers and hyphens",
+        "slugHint": "Used in the URL: /noticias/slug",
+        "categoryLabel": "Category",
+        "noCategory": "No category",
+        "coverImageLabel": "Cover Image",
+        "excerptLabel": "Excerpt",
+        "excerptMaxLength": "Excerpt must not exceed 500 characters",
+        "excerptHint": "Short description shown in listings (maximum 500 characters)",
+        "contentLabel": "Content",
+        "contentRequired": "Content is required",
+        "contentHint": "Supports HTML format",
+        "authorInfo": "Author Information",
+        "authorNameLabel": "Author Name",
+        "authorNameMaxLength": "Author name must not exceed 150 characters",
+        "authorImageLabel": "Author Image",
+        "seo": "SEO",
+        "metaTitleLabel": "Meta Title",
+        "metaTitleMaxLength": "Meta title must not exceed 160 characters",
+        "metaTitleHint": "Maximum 160 characters",
+        "metaDescriptionLabel": "Meta Description",
+        "metaDescriptionMaxLength": "Meta description must not exceed 320 characters",
+        "metaDescriptionHint": "Maximum 320 characters",
+        "publication": "Publication",
+        "publishedLabel": "Published",
+        "featuredLabel": "Featured",
+        "publishedAtLabel": "Publish Date",
+        "publishedAtHint": "Only available if the article is published",
+        "updateNews": "Update Article",
+        "createNews": "Create Article"
+      },
+      "delete": {
+        "confirm": "Are you sure you want to delete the article {{title}}?"
+      },
+      "errors": {
+        "loadFailed": "Error loading the article: {{message}}",
+        "createFailed": "Error creating the article: {{message}}",
+        "updateFailed": "Error updating the article: {{message}}",
+        "deleteFailed": "Error deleting the article: {{message}}",
+        "uploadCoverFailed": "Error uploading cover image.",
+        "uploadAuthorFailed": "Error uploading author image."
+      }
+    },
+    "certifications": {
+      "list": {
+        "title": "Certifications Management",
+        "newCertification": "New Certification",
+        "searchPlaceholder": "Search by title or issuing body...",
+        "table": {
+          "id": "ID",
+          "title": "Title",
+          "issuingBody": "Issuing Body",
+          "type": "Type",
+          "featured": "Featured",
+          "certificate": "Certificate"
+        },
+        "featured": "Featured",
+        "active": "Active",
+        "inactive": "Inactive",
+        "empty": "No certifications found"
+      },
+      "form": {
+        "newTitle": "New Certification",
+        "editTitle": "Edit Certification",
+        "basicInfo": "Basic Information",
+        "titleLabel": "Title",
+        "titleRequired": "Title is required",
+        "slugLabel": "Slug",
+        "slugRequired": "Slug is required",
+        "slugPattern": "Only lowercase letters, numbers and hyphens",
+        "slugHint": "Used in the URL: /certificaciones/slug",
+        "issuingBodyLabel": "Issuing Body",
+        "issuingBodyPlaceholder": "E.g.: EMA, SADER, COFEPRIS",
+        "issuingBodyRequired": "Issuing body is required",
+        "certTypeLabel": "Certification Type",
+        "certTypePlaceholder": "E.g.: Accreditation, Approval, Certification",
+        "certTypeRequired": "Type is required",
+        "issuedAtLabel": "Issue Date",
+        "expiresAtLabel": "Expiration Date",
+        "excerptLabel": "Excerpt",
+        "excerptMaxLength": "Maximum 500 characters",
+        "excerptHint": "Short description for the listing (maximum 500 characters)",
+        "descriptionLabel": "Full Description",
+        "descriptionHint": "Supports HTML for the detail page",
+        "imageAndFile": "Image and Certificate",
+        "coverImageLabel": "Cover Image",
+        "certificateFileLabel": "Certification Document (PDF / image)",
+        "changeFile": "Change file",
+        "selectFile": "Select file",
+        "seo": "SEO",
+        "metaTitleLabel": "Meta Title",
+        "metaTitleHint": "Maximum 160 characters",
+        "metaDescriptionLabel": "Meta Description",
+        "metaDescriptionHint": "Maximum 320 characters",
+        "visibility": "Visibility",
+        "activeLabel": "Active (visible on site)",
+        "featuredLabel": "Featured (shown on home page)",
+        "updateCertification": "Update Certification",
+        "createCertification": "Create Certification"
+      },
+      "delete": {
+        "confirm": "Are you sure you want to delete the certification {{title}}?"
+      },
+      "errors": {
+        "loadFailed": "Error loading the certification: {{message}}",
+        "createFailed": "Error creating: {{message}}",
+        "updateFailed": "Error updating: {{message}}",
+        "deleteFailed": "Error deleting: {{message}}",
+        "uploadImageFailed": "Error uploading image.",
+        "uploadFileFailed": "Error uploading the file."
+      }
+    },
+    "services": {
+      "list": {
+        "title": "Services Management",
+        "newService": "New Service",
+        "searchPlaceholder": "Search by name...",
+        "table": {
+          "id": "ID",
+          "name": "Name",
+          "slug": "Slug",
+          "order": "Order"
+        },
+        "empty": "No services found"
+      },
+      "form": {
+        "newTitle": "New Service",
+        "editTitle": "Edit Service",
+        "basicInfo": "Basic Information",
+        "nameLabel": "Name",
+        "nameRequired": "Name is required",
+        "slugLabel": "Slug",
+        "slugRequired": "Slug is required",
+        "slugPattern": "Slug can only contain lowercase letters, numbers and hyphens",
+        "slugHint": "Used in the URL: /servicios/slug",
+        "breadcrumbLabel": "Breadcrumb Text",
+        "heroImageLabel": "Hero Image",
+        "mainContent": "Main Content",
+        "bodyP1Label": "Paragraph 1",
+        "bodyP1Required": "Paragraph 1 is required",
+        "bodyP2Label": "Paragraph 2",
+        "bodyP2Required": "Paragraph 2 is required",
+        "additionalSections": "Additional Sections",
+        "subTitleLabel": "Subtitle",
+        "subParagraphLabel": "Subtitle Paragraph",
+        "infoTitleLabel": "Info Title",
+        "infoParagraphLabel": "Info Paragraph",
+        "descTitleLabel": "Description Title",
+        "descParagraphLabel": "Description Paragraph",
+        "detailTitleLabel": "Detail Title",
+        "detailParagraphLabel": "Detail Paragraph",
+        "cardHome": "Home Card",
+        "cardHoverTextLabel": "Hover Text",
+        "cardIconLabel": "Card Icon",
+        "changeIcon": "Change icon",
+        "selectIcon": "Select icon",
+        "checks": "Checks",
+        "add": "Add",
+        "checkTextLabel": "Text",
+        "checkTextRequired": "Text is required",
+        "checkOrderLabel": "Order",
+        "noChecks": "No checks added",
+        "faqs": "FAQs",
+        "faqQuestionLabel": "Question",
+        "faqQuestionRequired": "Question is required",
+        "faqOrderLabel": "Order",
+        "faqAnswerLabel": "Answer",
+        "faqAnswerRequired": "Answer is required",
+        "noFaqs": "No FAQs added",
+        "seo": "SEO",
+        "metaTitleLabel": "Meta Title",
+        "metaTitleMaxLength": "Meta title must not exceed 160 characters",
+        "metaTitleHint": "Maximum 160 characters",
+        "metaDescriptionLabel": "Meta Description",
+        "metaDescriptionMaxLength": "Meta description must not exceed 320 characters",
+        "metaDescriptionHint": "Maximum 320 characters",
+        "configuration": "Configuration",
+        "activeLabel": "Active",
+        "orderLabel": "Order",
+        "updateService": "Update Service",
+        "createService": "Create Service"
+      },
+      "delete": {
+        "confirm": "Are you sure you want to delete the service {{name}}?"
+      },
+      "errors": {
+        "loadFailed": "Error loading the service: {{message}}",
+        "createFailed": "Error creating the service: {{message}}",
+        "updateFailed": "Error updating the service: {{message}}",
+        "deleteFailed": "Error deleting the service: {{message}}",
+        "uploadHeroFailed": "Error uploading hero image.",
+        "uploadIconFailed": "Error uploading icon."
+      }
+    },
+    "users": {
+      "list": {
+        "title": "Users Management",
+        "newUser": "New User",
+        "searchPlaceholder": "Search by name or email...",
+        "table": {
+          "id": "ID",
+          "name": "Name",
+          "email": "Email"
+        },
+        "noName": "No name",
+        "empty": "No users found"
+      },
+      "form": {
+        "newTitle": "New User",
+        "editTitle": "Edit User",
+        "userInfo": "User Information",
+        "emailLabel": "Email Address",
+        "emailRequired": "Email address is required",
+        "emailInvalid": "Enter a valid email address",
+        "fullNameLabel": "Full Name",
+        "changePasswordLabel": "Change password",
+        "passwordLabel": "Password",
+        "passwordRequired": "Password is required",
+        "passwordMinLength": "Password must be at least 8 characters",
+        "activeLabel": "Active user",
+        "updateUser": "Update User",
+        "createUser": "Create User"
+      },
+      "delete": {
+        "confirm": "Are you sure you want to delete the user {{email}}?"
+      },
+      "errors": {
+        "loadFailed": "Error loading the user: {{message}}",
+        "createFailed": "Error creating the user: {{message}}",
+        "updateFailed": "Error updating the user: {{message}}",
+        "deleteFailed": "Error deleting the user: {{message}}"
+      }
+    }
+  },
+  "views": {
+    "about": {
+      "breadcrumbTitle": "About Us"
+    },
+    "aboutPage": {
+      "accreditedBadge": "Accredited by EMA A.C. <br> and approved by SAGARPA and Cofepris",
+      "subtitle": "Who we are",
+      "title": "Our commitment: reliable analysis for safe decisions",
+      "description": "Laboratorio Euronutec is part of Grupo NUTEC, a leading company in the development of animal nutrition technologies with a world-class presence. We have cutting-edge, unique facilities in Mexico, designed to ensure the reliability of every analysis we perform.",
+      "checklist": {
+        "food": "Experts in food analysis and animal nutrition",
+        "nirs": "Leaders in NIRS technology in Mexico",
+        "biosecurity": "Type 2 Biosafety Laboratory",
+        "savings": "Results that generate savings in operating costs"
+      },
+      "calloutText": "Laboratorio Euronutec is part of Grupo NUTEC, a leading company in the development of animal nutrition technologies with a world-class presence.",
+      "discoverButton": "Discover"
+    },
+    "aboutTeam": {
+      "title": "The people behind our results",
+      "subtitle": "Our Team",
+      "description": "Each team member contributes technical knowledge and a service-oriented mindset to offer you top-tier analytical solutions.",
+      "roles": {
+        "labManager": "Laboratory Manager",
+        "deputyLabManager": "Deputy Laboratory Manager",
+        "commercialLab": "Laboratory Sales Representative"
+      }
+    },
+    "aboutValues": {
+      "subtitle": "Our values",
+      "title": "MISSION, VISION AND VALUES OF LABORATORIO EURONUTEC",
+      "description": "Our team works every day to ensure your products meet the highest standards of quality, safety and regulation.",
+      "passionateService": {
+        "title": "PASSIONATE SERVICE",
+        "item1": "Make people feel “unique”.",
+        "item2": "Anticipate and offer creative solutions.",
+        "item3": "Create memorable experiences.",
+        "item4": "Ensure the success of every project by communicating everything necessary.",
+        "item5": "Take care of the environment in everything you do.",
+        "item6": "Commit to your community."
+      },
+      "innovation": {
+        "title": "SURPASS INNOVATION",
+        "item1": "Make the impossible possible.",
+        "item2": "Read, study and train yourself all the time.",
+        "item3": "Learn from your mistakes.",
+        "item4": "Listen to and value everyone's ideas.",
+        "item5": "Constantly turn what is already good into something better.",
+        "item6": "Dare to fulfill your dreams and never give up."
+      },
+      "teamRespect": {
+        "title": "RESPECT AND APPRECIATION OF THE TEAM",
+        "item1": "Treat others the way they like to be treated.",
+        "item2": "Make others feel the importance of their work.",
+        "item3": "Celebrate your colleagues' achievements.",
+        "item4": "Smile and enjoy your work."
+      },
+      "excellence": {
+        "title": "COMMITMENT TO EXCELLENCE",
+        "item1": "Always deliver more than what is expected of you.",
+        "item2": "Fulfill your commitments to their fullest extent.",
+        "item3": "Confirm all information before acting.",
+        "item4": "Optimize resources in everything you do.",
+        "item5": "Strive to be and do “the best of the best”.",
+        "item6": "Make our company the most admired."
+      },
+      "viewServicesButton": "View services"
+    },
+    "aboutChoose": {
+      "subtitle": "Our team",
+      "title": "Experts dedicated to food quality and safety",
+      "description": "We have professionals specialized in chemistry, microbiology and animal nutrition, committed to delivering accurate and timely results. Our strength lies in technical expertise combined with cutting-edge technology.",
+      "qualifiedStaff": {
+        "title": "Highly qualified staff",
+        "description": "Chemists, microbiologists and engineers with experience in food analysis, animal nutrition and industrial quality control."
+      },
+      "internationalCollaboration": {
+        "title": "International collaboration",
+        "description": "We participate in interlaboratory rounds with AAFCO and Bipea, and collaborate with reference laboratories in Mexico and Europe."
+      }
+    },
+    "blog": {
+      "breadcrumbTitle": "News",
+      "loading": "Loading news...",
+      "loadError": "Could not load the news.",
+      "defaultAuthor": "Laboratorio Euronutec",
+      "defaultCategory": "News",
+      "readMore": "Read more"
+    },
+    "blogSingle": {
+      "loading": "Loading article...",
+      "notFound": "Article not found.",
+      "loadError": "Could not load the article.",
+      "defaultDetailTitle": "Article detail"
+    },
+    "certificationList": {
+      "breadcrumbTitle": "Certifications",
+      "loading": "Loading certifications...",
+      "loadError": "Could not load the certifications.",
+      "empty": "No certifications available."
+    },
+    "certificationSingle": {
+      "defaultTitle": "Certification",
+      "loading": "Loading...",
+      "notFound": "Certification not found.",
+      "loadError": "Could not load the certification.",
+      "issuedLabel": "Issued:",
+      "validUntilLabel": "Valid until:",
+      "certificateBox": {
+        "title": "Certification Document",
+        "description": "Download the official document for this certification.",
+        "downloadButton": "Download Document"
+      },
+      "backButton": "Back to Certifications"
+    },
+    "contact": {
+      "breadcrumbTitle": "Contact Us",
+      "locationTitle": "Our location",
+      "address": "Av. del Marqués No. 32, Fracc. Industrial Bernardo Quintana, C.P. 76246, Querétaro, Qro.",
+      "callUsTitle": "Call us",
+      "writeUsTitle": "Write to us",
+      "form": {
+        "title": "Send us a message",
+        "subtitle": "Have questions about our services or want a quote? Write to us and we'll get back to you promptly.",
+        "firstNamePlaceholder": "First name",
+        "lastNamePlaceholder": "Last name",
+        "companyPlaceholder": "Company (optional)",
+        "serviceOfInterest": "Service of interest",
+        "selectServicePlaceholder": "Select service of interest",
+        "sendButton": "Send"
+      }
+    },
+    "services": {
+      "breadcrumbTitle": "Our Services",
+      "loading": "Loading...",
+      "loadError": "Could not load the services. Please try again later."
+    },
+    "serviceSingle": {
+      "breadcrumbTitle": "Our Services",
+      "defaultSubtitle": "Service",
+      "loadError": "Could not load the service. Please try again later.",
+      "defaultDetailTitle": "Our Services in Detail",
+      "moreServicesTitle": "More Services",
+      "items": {
+        "detail": "Service Detail",
+        "specialized": "Our Specialized Services",
+        "highlights": "Service Highlights",
+        "detailed": "Our Services in Detail",
+        "whatWeOffer": "What we offer",
+        "qualityService": "Quality Service"
+      }
+    }
+  },
+  "home": {
+    "videoArea": {
+      "stat1": "Reduction in operating costs through ingredient quality control",
+      "stat2": "Of safety issues are detected in raw materials before processing",
+      "stat3": "Of our clients choose us for the speed and reliability of our results"
+    },
+    "about1": {
+      "subtitle": "Why choose us?",
+      "title": "Science, precision and commitment to your quality",
+      "description": "In the agricultural sector, the quality of food and raw materials directly impacts productivity, costs and animal health. Having reliable information allows for safer decisions and constant control at every stage of the process. We are part of Grupo NUTEC, world leaders in animal nutrition, collaborating with reference laboratories in Mexico and Europe.",
+      "items": {
+        "bromatological": "Bromatological analysis: moisture, protein, fat, fiber and ash",
+        "mycotoxins": "Mycotoxin detection: aflatoxins, zearalenone, ochratoxin and more",
+        "microbiology": "Type 2 Microbiology: PCR, indicators and microbial challenge",
+        "nirs": "NIRS: results in seconds without sample preparation"
+      },
+      "checklist": {
+        "consistency": "Maintain quality consistency and detect variations between batches",
+        "mycotoxins": "Detect invisible mycotoxins before they affect your production",
+        "digestibility": "Assess real protein digestibility to optimize ingredients",
+        "platform": "Access history, trends and sample tracking on the digital platform"
+      },
+      "calloutText": "Performing bromatological, mycotoxin and protein digestibility analyses is not just a recommended practice — it's a key tool to maintain quality and reduce risks in your agricultural production.",
+      "learnMoreButton": "Learn more"
+    },
+    "blog1": {
+      "subtitle": "Certifications",
+      "title": "Our approvals and certifications",
+      "description": "Backed by national and international bodies that guarantee the quality and reliability of our analyses."
+    },
+    "contact1": {
+      "subtitle": "Contact",
+      "title": "Ready to ensure the quality of your products?",
+      "description": "Contact us and receive a personalized quote. Our specialized team will assist you promptly.",
+      "form": {
+        "title": "Send us a message",
+        "subtitle": "Share the details of your product or analytical requirement and our team will evaluate the best analysis option to ensure quality, regulatory compliance and reliable results.",
+        "phonePlaceholder": "Phone",
+        "emailPlaceholder": "Email Address",
+        "optionsPlaceholder": "Options",
+        "messagePlaceholder": "Message",
+        "sendButton": "Send Message"
+      },
+      "visitUsTitle": "Visit us",
+      "sendEmailTitle": "Send Email",
+      "addressLine": "Av. del Marqués 32, Parque Industrial Bernardo Quintana, 76246 Santiago de Querétaro, Qro."
+    },
+    "portfolio1": {
+      "subtitle": "AREAS OF WORK",
+      "title": "Areas of analysis",
+      "description": "We work with different types of samples from the food, agricultural and human consumption product industries, adapting our methods to each technical requirement.",
+      "category": "Laboratory"
+    },
+    "service1": {
+      "subtitle": "Our Services",
+      "title": "Specialized analysis for your industry",
+      "description": "We have cutting-edge technology and specialized staff to provide you with reliable and accurate results.",
+      "knowMoreButton": "Discover our services"
+    },
+    "working1": {
+      "subtitle": "Why are we different?",
+      "title": "Trust, precision and cutting-edge technology",
+      "description": "Our laboratory has the accreditations and technology necessary to provide you with reliable and timely results.",
+      "items": {
+        "bromatological": {
+          "title": "Bromatological Analysis",
+          "description": "<li>Determines the nutritional composition of food and raw materials by evaluating: moisture, protein, fat, fiber and ash.</li><li> Detects variations between batches before they impact your process or generate economic losses.</li>"
+        },
+        "mycotoxins": {
+          "title": "Mycotoxins and Protein Digestibility",
+          "description": "<li>We detect aflatoxins, zearalenone, ochratoxin and more — even without visible signs.</li><li> Find out what percentage of protein the animal actually utilizes and optimize the efficiency of your ingredients.</li>"
+        },
+        "microbiology": {
+          "title": "Microbiology · Type 2 Laboratory",
+          "description": "<li>We are the only food laboratory in the region with Type 2 facilities. </li><li>We detect Salmonella and Listeria monocytogenes by PCR within hours and validate the real effectiveness of your sanitizers.</li>"
+        },
+        "indicators": {
+          "title": "Microbiological Indicators",
+          "description": "<li>Our \"Microbiological Traffic Light\" assesses risk factors in your production: Aerobic Mesophiles, Yeasts, Total Coliforms and Molds.</li><li>Detects hygiene failures early and prevents bacterial growth risks before they impact your finished product.</li>"
+        }
+      }
+    },
+    "about3": {
+      "title": "Fast, accurate and reliable NIRS analysis.",
+      "description": "We perform fast analyses of raw materials and balanced feed. We develop and validate specific models for your raw materials and feed, ensuring reliable results tailored to your operation.",
+      "counters": {
+        "resultsInSeconds": "Results in seconds",
+        "samplePreparation": "Sample preparation",
+        "availablePackages": "Available packages",
+        "specializedServices": "Specialized services"
+      },
+      "iconBoxes": {
+        "specialists": {
+          "title": "Specialists in the livestock sector",
+          "description": "Latest-generation NIRS technology with personalized technical support for your operation."
+        },
+        "fastResults": {
+          "title": "Fast and reliable results",
+          "description": "We optimize your existing calibrations to improve precision, repeatability and reliability in every analysis."
+        },
+        "analyze": {
+          "title": "Analyze. Decide. Optimize.",
+          "description": "Greater control and profitability for your operation. Request a demonstration of the Nireo equipment or personalized advice."
+        }
+      }
+    }
+  }
+}

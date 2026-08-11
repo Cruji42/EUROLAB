@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password');
@@ -18,7 +19,7 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule]
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslatePipe]
 })
 export class ResetPasswordComponent implements OnInit {
   form!: FormGroup;
@@ -27,6 +28,8 @@ export class ResetPasswordComponent implements OnInit {
   success = false;
   error = '';
   token = '';
+
+  private translate = inject(TranslateService);
 
   constructor(
     private fb: FormBuilder,
@@ -38,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit(): void {
     this.token = this.route.snapshot.queryParams['token'] || '';
     if (!this.token) {
-      this.error = 'Token de recuperación no válido o expirado.';
+      this.error = this.translate.instant('auth.resetPassword.errors.invalidToken');
     }
 
     this.form = this.fb.group({
@@ -63,7 +66,7 @@ export class ResetPasswordComponent implements OnInit {
         setTimeout(() => this.router.navigate(['/login']), 3000);
       },
       error: err => {
-        this.error = err.message || 'No se pudo restablecer la contraseña. El enlace puede haber expirado.';
+        this.error = err.message || this.translate.instant('auth.resetPassword.errors.resetFailed');
         this.loading = false;
       }
     });

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BreadcrumbComponent } from "../../../components/breadcrumb/breadcrumb.component";
 import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ServicesService } from '../../../services/services.service';
 import { ServiceCard } from '../../../models/service.model';
 
@@ -25,7 +26,7 @@ interface ServiceDisplay {
 
 @Component({
   selector: 'app-services',
-  imports: [BreadcrumbComponent, RouterLink, CommonModule],
+  imports: [BreadcrumbComponent, RouterLink, CommonModule, TranslatePipe],
   templateUrl: './services.component.html',
   styles: ``
 })

@@ -1,12 +1,12 @@
 <div class="news-list-container">
   <div class="header-actions">
-    <h2 class="section-title">Gestión de Noticias</h2>
+    <h2 class="section-title">{{ 'admin.news.list.title' | translate }}</h2>
     <a routerLink="nueva" class="ca-sec-primary-3">
       <i class="bi bi-plus-circle me-2"></i>
-      Nueva Noticia
+      {{ 'admin.news.list.newNews' | translate }}
     </a>
   </div>
-  
+
   <div class="card">
     <div class="card-body">
       <div class="filters mb-4">
@@ -16,32 +16,32 @@
               <span class="input-group-text">
                 <i class="bi bi-search"></i>
               </span>
-              <input 
-                type="text" 
-                class="form-control" 
-                placeholder="Buscar por título..." 
+              <input
+                type="text"
+                class="form-control"
+                [attr.placeholder]="'admin.news.list.searchPlaceholder' | translate"
                 [(ngModel)]="searchTerm"
                 (input)="search()"
               >
             </div>
           </div>
-          
+
           <div class="col-md-6">
             <div class="category-filter">
-              <label class="me-2">Filtrar por categoría:</label>
+              <label class="me-2">{{ 'admin.news.list.filterByCategory' | translate }}</label>
               <div class="btn-group" role="group">
-                <button 
-                  type="button" 
-                  class="btn" 
+                <button
+                  type="button"
+                  class="btn"
                   [ngClass]="{'btn-primary': selectedCategory === null, 'btn-outline-primary': selectedCategory !== null}"
                   (click)="filterByCategory(null)"
                 >
-                  Todas
+                  {{ 'admin.news.list.all' | translate }}
                 </button>
-                <button 
-                  *ngFor="let category of categories" 
-                  type="button" 
-                  class="btn" 
+                <button
+                  *ngFor="let category of categories"
+                  type="button"
+                  class="btn"
                   [ngClass]="{'btn-primary': selectedCategory === category.slug, 'btn-outline-primary': selectedCategory !== category.slug}"
                   (click)="filterByCategory(category.slug)"
                 >
@@ -52,38 +52,38 @@
           </div>
         </div>
       </div>
-      
+
       <div *ngIf="loading" class="loading-spinner">
         <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Cargando...</span>
+          <span class="visually-hidden">{{ 'admin.common.loading' | translate }}</span>
         </div>
       </div>
-      
+
       <div *ngIf="!loading" class="table-responsive">
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Título</th>
-              <th>Categoría</th>
-              <th>Estado</th>
-              <th>Destacada</th>
-              <th>Fecha Publicación</th>
-              <th>Acciones</th>
+              <th>{{ 'admin.news.list.table.id' | translate }}</th>
+              <th>{{ 'admin.news.list.table.title' | translate }}</th>
+              <th>{{ 'admin.news.list.table.category' | translate }}</th>
+              <th>{{ 'admin.common.status' | translate }}</th>
+              <th>{{ 'admin.news.list.table.featured' | translate }}</th>
+              <th>{{ 'admin.news.list.table.publishedDate' | translate }}</th>
+              <th>{{ 'admin.common.actions' | translate }}</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let post of filteredPosts">
               <td>{{ post.id }}</td>
               <td>{{ post.title }}</td>
-              <td>{{ post.category?.name || 'Sin categoría' }}</td>
+              <td>{{ post.category?.name || ('admin.news.list.table.noCategory' | translate) }}</td>
               <td>
                 <span class="badge" [ngClass]="getStatusBadgeClass(post)">
                   {{ getStatusText(post) }}
                 </span>
               </td>
               <td>
-                <span class="badge bg-warning" *ngIf="post.is_featured">Destacada</span>
+                <span class="badge bg-warning" *ngIf="post.is_featured">{{ 'admin.news.list.table.featured' | translate }}</span>
                 <span *ngIf="!post.is_featured">-</span>
               </td>
               <td>{{ post.published_at ? (post.published_at | date:'dd/MM/yyyy') : '-' }}</td>
@@ -99,7 +99,7 @@
               </td>
             </tr>
             <tr *ngIf="filteredPosts.length === 0">
-              <td colspan="7" class="text-center">No se encontraron noticias</td>
+              <td colspan="7" class="text-center">{{ 'admin.news.list.empty' | translate }}</td>
             </tr>
           </tbody>
         </table>
