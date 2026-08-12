@@ -4,44 +4,52 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
-export interface Certification {
-  id: number;
-  slug: string;
-  title: string;
-  issuing_body: string;
-  cert_type: string;
+export type TranslationLang = 'es' | 'en';
+
+export interface CertificationTranslation {
+  title?: string;
+  issuing_body?: string;
+  cert_type?: string;
   excerpt?: string;
   description?: string;
+  meta_title?: string;
+  meta_description?: string;
+}
+
+export interface CertificationAdmin {
+  id: number;
+  slug: string;
   cover_image_url?: string;
   certificate_file_url?: string;
   is_active: boolean;
   is_featured: boolean;
   issued_at?: string;
   expires_at?: string;
-  meta_title?: string;
-  meta_description?: string;
   created_at: string;
   updated_at: string;
+  translations: Record<TranslationLang, CertificationTranslation>;
 }
 
 export interface CertificationCreate {
   slug: string;
-  title: string;
-  issuing_body: string;
-  cert_type: string;
-  excerpt?: string;
-  description?: string;
   cover_image_url?: string;
   certificate_file_url?: string;
   is_active: boolean;
   is_featured: boolean;
   issued_at?: string;
   expires_at?: string;
-  meta_title?: string;
-  meta_description?: string;
+  translations: Partial<Record<TranslationLang, CertificationTranslation>>;
 }
 
-export interface CertificationUpdate extends Partial<CertificationCreate> {}
+export interface CertificationNonTranslatableUpdate {
+  slug?: string;
+  cover_image_url?: string;
+  certificate_file_url?: string;
+  is_active?: boolean;
+  is_featured?: boolean;
+  issued_at?: string;
+  expires_at?: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -52,24 +60,29 @@ export class AdminCertificationsService {
 
   constructor(private http: HttpClient) {}
 
-  getAllCertifications(skip = 0, limit = 50): Observable<Certification[]> {
-    return this.http.get<Certification[]>(`${this.apiUrl}/admin/all?skip=${skip}&limit=${limit}`)
+  getAllCertifications(skip = 0, limit = 50): Observable<CertificationAdmin[]> {
+    return this.http.get<CertificationAdmin[]>(`${this.apiUrl}/admin/all?skip=${skip}&limit=${limit}`)
       .pipe(catchError(err => throwError(() => new Error('Error fetching certifications: ' + err.message))));
   }
 
-  getCertificationBySlug(slug: string): Observable<Certification> {
-    return this.http.get<Certification>(`${this.apiUrl}/${slug}`)
+  getCertificationById(id: number): Observable<CertificationAdmin> {
+    return this.http.get<CertificationAdmin>(`${this.apiUrl}/admin/${id}`)
       .pipe(catchError(err => throwError(() => new Error('Error fetching certification: ' + err.message))));
   }
 
-  createCertification(data: CertificationCreate): Observable<Certification> {
-    return this.http.post<Certification>(`${this.apiUrl}/admin`, data)
+  createCertification(data: CertificationCreate): Observable<CertificationAdmin> {
+    return this.http.post<CertificationAdmin>(`${this.apiUrl}/admin`, data)
       .pipe(catchError(err => throwError(() => new Error('Error creating certification: ' + err.message))));
   }
 
-  updateCertification(id: number, data: CertificationUpdate): Observable<Certification> {
-    return this.http.put<Certification>(`${this.apiUrl}/admin/${id}`, data)
+  updateCertification(id: number, data: CertificationNonTranslatableUpdate): Observable<CertificationAdmin> {
+    return this.http.put<CertificationAdmin>(`${this.apiUrl}/admin/${id}`, data)
       .pipe(catchError(err => throwError(() => new Error('Error updating certification: ' + err.message))));
+  }
+
+  updateTranslation(id: number, lang: TranslationLang, data: CertificationTranslation): Observable<CertificationAdmin> {
+    return this.http.put<CertificationAdmin>(`${this.apiUrl}/admin/${id}/translations/${lang}`, data)
+      .pipe(catchError(err => throwError(() => new Error('Error updating certification translation: ' + err.message))));
   }
 
   deleteCertification(id: number): Observable<void> {

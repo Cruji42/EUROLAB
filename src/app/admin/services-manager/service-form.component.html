@@ -20,27 +20,43 @@
   </div>
 
   <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+
+    <app-translation-tabs [active]="activeLang" (activeChange)="onLangChange($event)"></app-translation-tabs>
+
     <div class="card mb-4">
       <div class="card-header">
         <h5 class="mb-0">{{ 'admin.services.form.basicInfo' | translate }}</h5>
       </div>
-      <div class="card-body">
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="name" class="form-label">{{ 'admin.services.form.nameLabel' | translate }} *</label>
-            <input
-              type="text"
-              id="name"
-              class="form-control"
-              formControlName="name"
-              (blur)="generateSlug()"
-              [ngClass]="{'is-invalid': getFormControl('name')?.invalid && getFormControl('name')?.touched}"
-            >
-            <div class="invalid-feedback" *ngIf="getFormControl('name')?.errors?.['required'] && getFormControl('name')?.touched">
-              {{ 'admin.services.form.nameRequired' | translate }}
+      <div class="card-body" [formGroup]="translations">
+        <ng-container [formGroupName]="activeLang">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="name" class="form-label">{{ 'admin.services.form.nameLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                formControlName="name"
+                (blur)="generateSlug()"
+                [ngClass]="{'is-invalid': tc('name')?.invalid && tc('name')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="tc('name')?.errors?.['required'] && tc('name')?.touched">
+                {{ 'admin.services.form.nameRequired' | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="breadcrumb" class="form-label">{{ 'admin.services.form.breadcrumbLabel' | translate }}</label>
+              <input type="text" id="breadcrumb" class="form-control" formControlName="breadcrumb">
             </div>
           </div>
+        </ng-container>
+      </div>
+    </div>
 
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row">
           <div class="col-md-6">
             <label for="slug" class="form-label">{{ 'admin.services.form.slugLabel' | translate }} *</label>
             <input
@@ -59,32 +75,29 @@
             <small class="form-text text-muted">{{ 'admin.services.form.slugHint' | translate }}</small>
           </div>
         </div>
+      </div>
+    </div>
 
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="breadcrumb" class="form-label">{{ 'admin.services.form.breadcrumbLabel' | translate }}</label>
-            <input type="text" id="breadcrumb" class="form-control" formControlName="breadcrumb">
-          </div>
-
-          <div class="col-md-6">
-            <label class="form-label">{{ 'admin.services.form.heroImageLabel' | translate }}</label>
-            <div class="upload-area">
-              <label class="upload-label" [class.uploading]="uploadingHero">
-                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
-                       (change)="onHeroSelected($event)" style="display:none">
-                <ng-container *ngIf="!uploadingHero">
-                  <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>
-                  <span>{{ (heroPreview ? 'admin.common.changeImage' : 'admin.common.selectImage') | translate }}</span>
-                </ng-container>
-                <ng-container *ngIf="uploadingHero">
-                  <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                  <span class="ms-2">{{ 'admin.common.uploading' | translate }}</span>
-                </ng-container>
-              </label>
-            </div>
-            <img *ngIf="heroPreview" [src]="heroPreview" class="img-preview mt-2">
-          </div>
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">{{ 'admin.services.form.heroImageLabel' | translate }}</h5>
+      </div>
+      <div class="card-body">
+        <div class="upload-area">
+          <label class="upload-label" [class.uploading]="uploadingHero">
+            <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                   (change)="onHeroSelected($event)" style="display:none">
+            <ng-container *ngIf="!uploadingHero">
+              <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>
+              <span>{{ (heroPreview ? 'admin.common.changeImage' : 'admin.common.selectImage') | translate }}</span>
+            </ng-container>
+            <ng-container *ngIf="uploadingHero">
+              <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+              <span class="ms-2">{{ 'admin.common.uploading' | translate }}</span>
+            </ng-container>
+          </label>
         </div>
+        <img *ngIf="heroPreview" [src]="heroPreview" class="img-preview mt-2">
       </div>
     </div>
 
@@ -92,34 +105,36 @@
       <div class="card-header">
         <h5 class="mb-0">{{ 'admin.services.form.mainContent' | translate }}</h5>
       </div>
-      <div class="card-body">
-        <div class="mb-3">
-          <label for="body_p1" class="form-label">{{ 'admin.services.form.bodyP1Label' | translate }} *</label>
-          <textarea
-            id="body_p1"
-            class="form-control"
-            rows="4"
-            formControlName="body_p1"
-            [ngClass]="{'is-invalid': getFormControl('body_p1')?.invalid && getFormControl('body_p1')?.touched}"
-          ></textarea>
-          <div class="invalid-feedback" *ngIf="getFormControl('body_p1')?.errors?.['required'] && getFormControl('body_p1')?.touched">
-            {{ 'admin.services.form.bodyP1Required' | translate }}
+      <div class="card-body" [formGroup]="translations">
+        <ng-container [formGroupName]="activeLang">
+          <div class="mb-3">
+            <label for="body_p1" class="form-label">{{ 'admin.services.form.bodyP1Label' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+            <textarea
+              id="body_p1"
+              class="form-control"
+              rows="4"
+              formControlName="body_p1"
+              [ngClass]="{'is-invalid': tc('body_p1')?.invalid && tc('body_p1')?.touched}"
+            ></textarea>
+            <div class="invalid-feedback" *ngIf="tc('body_p1')?.errors?.['required'] && tc('body_p1')?.touched">
+              {{ 'admin.services.form.bodyP1Required' | translate }}
+            </div>
           </div>
-        </div>
 
-        <div class="mb-3">
-          <label for="body_p2" class="form-label">{{ 'admin.services.form.bodyP2Label' | translate }} *</label>
-          <textarea
-            id="body_p2"
-            class="form-control"
-            rows="4"
-            formControlName="body_p2"
-            [ngClass]="{'is-invalid': getFormControl('body_p2')?.invalid && getFormControl('body_p2')?.touched}"
-          ></textarea>
-          <div class="invalid-feedback" *ngIf="getFormControl('body_p2')?.errors?.['required'] && getFormControl('body_p2')?.touched">
-            {{ 'admin.services.form.bodyP2Required' | translate }}
+          <div class="mb-3">
+            <label for="body_p2" class="form-label">{{ 'admin.services.form.bodyP2Label' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+            <textarea
+              id="body_p2"
+              class="form-control"
+              rows="4"
+              formControlName="body_p2"
+              [ngClass]="{'is-invalid': tc('body_p2')?.invalid && tc('body_p2')?.touched}"
+            ></textarea>
+            <div class="invalid-feedback" *ngIf="tc('body_p2')?.errors?.['required'] && tc('body_p2')?.touched">
+              {{ 'admin.services.form.bodyP2Required' | translate }}
+            </div>
           </div>
-        </div>
+        </ng-container>
       </div>
     </div>
 
@@ -127,54 +142,56 @@
       <div class="card-header">
         <h5 class="mb-0">{{ 'admin.services.form.additionalSections' | translate }}</h5>
       </div>
-      <div class="card-body">
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="sub_title" class="form-label">{{ 'admin.services.form.subTitleLabel' | translate }}</label>
-            <input type="text" id="sub_title" class="form-control" formControlName="sub_title">
+      <div class="card-body" [formGroup]="translations">
+        <ng-container [formGroupName]="activeLang">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="sub_title" class="form-label">{{ 'admin.services.form.subTitleLabel' | translate }}</label>
+              <input type="text" id="sub_title" class="form-control" formControlName="sub_title">
+            </div>
+
+            <div class="col-md-6">
+              <label for="sub_paragraph" class="form-label">{{ 'admin.services.form.subParagraphLabel' | translate }}</label>
+              <textarea id="sub_paragraph" class="form-control" rows="3" formControlName="sub_paragraph"></textarea>
+            </div>
           </div>
 
-          <div class="col-md-6">
-            <label for="sub_paragraph" class="form-label">{{ 'admin.services.form.subParagraphLabel' | translate }}</label>
-            <textarea id="sub_paragraph" class="form-control" rows="3" formControlName="sub_paragraph"></textarea>
-          </div>
-        </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="info_title" class="form-label">{{ 'admin.services.form.infoTitleLabel' | translate }}</label>
+              <input type="text" id="info_title" class="form-control" formControlName="info_title">
+            </div>
 
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="info_title" class="form-label">{{ 'admin.services.form.infoTitleLabel' | translate }}</label>
-            <input type="text" id="info_title" class="form-control" formControlName="info_title">
-          </div>
-
-          <div class="col-md-6">
-            <label for="info_paragraph" class="form-label">{{ 'admin.services.form.infoParagraphLabel' | translate }}</label>
-            <textarea id="info_paragraph" class="form-control" rows="3" formControlName="info_paragraph"></textarea>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="desc_title" class="form-label">{{ 'admin.services.form.descTitleLabel' | translate }}</label>
-            <input type="text" id="desc_title" class="form-control" formControlName="desc_title">
+            <div class="col-md-6">
+              <label for="info_paragraph" class="form-label">{{ 'admin.services.form.infoParagraphLabel' | translate }}</label>
+              <textarea id="info_paragraph" class="form-control" rows="3" formControlName="info_paragraph"></textarea>
+            </div>
           </div>
 
-          <div class="col-md-6">
-            <label for="desc_paragraph" class="form-label">{{ 'admin.services.form.descParagraphLabel' | translate }}</label>
-            <textarea id="desc_paragraph" class="form-control" rows="3" formControlName="desc_paragraph"></textarea>
-          </div>
-        </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="desc_title" class="form-label">{{ 'admin.services.form.descTitleLabel' | translate }}</label>
+              <input type="text" id="desc_title" class="form-control" formControlName="desc_title">
+            </div>
 
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="detail_title" class="form-label">{{ 'admin.services.form.detailTitleLabel' | translate }}</label>
-            <input type="text" id="detail_title" class="form-control" formControlName="detail_title">
+            <div class="col-md-6">
+              <label for="desc_paragraph" class="form-label">{{ 'admin.services.form.descParagraphLabel' | translate }}</label>
+              <textarea id="desc_paragraph" class="form-control" rows="3" formControlName="desc_paragraph"></textarea>
+            </div>
           </div>
 
-          <div class="col-md-6">
-            <label for="detail_paragraph" class="form-label">{{ 'admin.services.form.detailParagraphLabel' | translate }}</label>
-            <textarea id="detail_paragraph" class="form-control" rows="3" formControlName="detail_paragraph"></textarea>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="detail_title" class="form-label">{{ 'admin.services.form.detailTitleLabel' | translate }}</label>
+              <input type="text" id="detail_title" class="form-control" formControlName="detail_title">
+            </div>
+
+            <div class="col-md-6">
+              <label for="detail_paragraph" class="form-label">{{ 'admin.services.form.detailParagraphLabel' | translate }}</label>
+              <textarea id="detail_paragraph" class="form-control" rows="3" formControlName="detail_paragraph"></textarea>
+            </div>
           </div>
-        </div>
+        </ng-container>
       </div>
     </div>
 
@@ -183,8 +200,8 @@
         <h5 class="mb-0">{{ 'admin.services.form.cardHome' | translate }}</h5>
       </div>
       <div class="card-body">
-        <div class="row mb-3">
-          <div class="col-md-6">
+        <div class="row mb-3" [formGroup]="translations">
+          <div class="col-md-6" [formGroupName]="activeLang">
             <label for="card_hover_text" class="form-label">{{ 'admin.services.form.cardHoverTextLabel' | translate }}</label>
             <input type="text" id="card_hover_text" class="form-control" formControlName="card_hover_text">
           </div>
@@ -221,18 +238,20 @@
       <div class="card-body">
         <div formArrayName="checks">
           <div *ngFor="let check of checks.controls; let i = index" [formGroupName]="i" class="row mb-3 align-items-center">
-            <div class="col-md-5">
-              <label [for]="'check_label_' + i" class="form-label">{{ 'admin.services.form.checkTextLabel' | translate }} *</label>
-              <input
-                [id]="'check_label_' + i"
-                type="text"
-                class="form-control"
-                formControlName="label"
-                [ngClass]="{'is-invalid': check.get('label')?.invalid && check.get('label')?.touched}"
-              >
-              <div class="invalid-feedback" *ngIf="check.get('label')?.errors?.['required'] && check.get('label')?.touched">
-                {{ 'admin.services.form.checkTextRequired' | translate }}
-              </div>
+            <div class="col-md-5" [formGroup]="checkTranslations(i)">
+              <ng-container [formGroupName]="activeLang">
+                <label [for]="'check_label_' + i" class="form-label">{{ 'admin.services.form.checkTextLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+                <input
+                  [id]="'check_label_' + i"
+                  type="text"
+                  class="form-control"
+                  formControlName="label"
+                  [ngClass]="{'is-invalid': checkTranslations(i).get(activeLang + '.label')?.invalid && checkTranslations(i).get(activeLang + '.label')?.touched}"
+                >
+                <div class="invalid-feedback" *ngIf="checkTranslations(i).get(activeLang + '.label')?.errors?.['required'] && checkTranslations(i).get(activeLang + '.label')?.touched">
+                  {{ 'admin.services.form.checkTextRequired' | translate }}
+                </div>
+              </ng-container>
             </div>
 
             <div class="col-md-5">
@@ -264,41 +283,45 @@
       <div class="card-body">
         <div formArrayName="faqs">
           <div *ngFor="let faq of faqs.controls; let i = index" [formGroupName]="i" class="mb-4 border-bottom pb-3">
-            <div class="row mb-3">
-              <div class="col-md-10">
-                <label [for]="'faq_question_' + i" class="form-label">{{ 'admin.services.form.faqQuestionLabel' | translate }} *</label>
-                <input
-                  [id]="'faq_question_' + i"
-                  type="text"
-                  class="form-control"
-                  formControlName="question"
-                  [ngClass]="{'is-invalid': faq.get('question')?.invalid && faq.get('question')?.touched}"
-                >
-                <div class="invalid-feedback" *ngIf="faq.get('question')?.errors?.['required'] && faq.get('question')?.touched">
-                  {{ 'admin.services.form.faqQuestionRequired' | translate }}
+            <div class="row mb-3" [formGroup]="faqTranslations(i)">
+              <ng-container [formGroupName]="activeLang">
+                <div class="col-md-10">
+                  <label [for]="'faq_question_' + i" class="form-label">{{ 'admin.services.form.faqQuestionLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+                  <input
+                    [id]="'faq_question_' + i"
+                    type="text"
+                    class="form-control"
+                    formControlName="question"
+                    [ngClass]="{'is-invalid': faqTranslations(i).get(activeLang + '.question')?.invalid && faqTranslations(i).get(activeLang + '.question')?.touched}"
+                  >
+                  <div class="invalid-feedback" *ngIf="faqTranslations(i).get(activeLang + '.question')?.errors?.['required'] && faqTranslations(i).get(activeLang + '.question')?.touched">
+                    {{ 'admin.services.form.faqQuestionRequired' | translate }}
+                  </div>
                 </div>
-              </div>
+              </ng-container>
 
               <div class="col-md-2">
                 <label [for]="'faq_order_' + i" class="form-label">{{ 'admin.services.form.faqOrderLabel' | translate }}</label>
-                <input [id]="'faq_order_' + i" type="number" class="form-control" formControlName="sort_order">
+                <input [id]="'faq_order_' + i" type="number" class="form-control" [formControl]="getFaqOrderControl(i)">
               </div>
             </div>
 
-            <div class="row mb-3">
-              <div class="col-md-10">
-                <label [for]="'faq_answer_' + i" class="form-label">{{ 'admin.services.form.faqAnswerLabel' | translate }} *</label>
-                <textarea
-                  [id]="'faq_answer_' + i"
-                  class="form-control"
-                  rows="3"
-                  formControlName="answer"
-                  [ngClass]="{'is-invalid': faq.get('answer')?.invalid && faq.get('answer')?.touched}"
-                ></textarea>
-                <div class="invalid-feedback" *ngIf="faq.get('answer')?.errors?.['required'] && faq.get('answer')?.touched">
-                  {{ 'admin.services.form.faqAnswerRequired' | translate }}
+            <div class="row mb-3" [formGroup]="faqTranslations(i)">
+              <ng-container [formGroupName]="activeLang">
+                <div class="col-md-10">
+                  <label [for]="'faq_answer_' + i" class="form-label">{{ 'admin.services.form.faqAnswerLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+                  <textarea
+                    [id]="'faq_answer_' + i"
+                    class="form-control"
+                    rows="3"
+                    formControlName="answer"
+                    [ngClass]="{'is-invalid': faqTranslations(i).get(activeLang + '.answer')?.invalid && faqTranslations(i).get(activeLang + '.answer')?.touched}"
+                  ></textarea>
+                  <div class="invalid-feedback" *ngIf="faqTranslations(i).get(activeLang + '.answer')?.errors?.['required'] && faqTranslations(i).get(activeLang + '.answer')?.touched">
+                    {{ 'admin.services.form.faqAnswerRequired' | translate }}
+                  </div>
                 </div>
-              </div>
+              </ng-container>
 
               <div class="col-md-2 d-flex align-items-end">
                 <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeFaq(i)">
@@ -319,38 +342,40 @@
       <div class="card-header">
         <h5 class="mb-0">{{ 'admin.services.form.seo' | translate }}</h5>
       </div>
-      <div class="card-body">
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="meta_title" class="form-label">{{ 'admin.services.form.metaTitleLabel' | translate }}</label>
-            <input
-              type="text"
-              id="meta_title"
-              class="form-control"
-              formControlName="meta_title"
-              [ngClass]="{'is-invalid': getFormControl('meta_title')?.invalid && getFormControl('meta_title')?.touched}"
-            >
-            <div class="invalid-feedback" *ngIf="getFormControl('meta_title')?.errors?.['maxlength'] && getFormControl('meta_title')?.touched">
-              {{ 'admin.services.form.metaTitleMaxLength' | translate }}
+      <div class="card-body" [formGroup]="translations">
+        <ng-container [formGroupName]="activeLang">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="meta_title" class="form-label">{{ 'admin.services.form.metaTitleLabel' | translate }}</label>
+              <input
+                type="text"
+                id="meta_title"
+                class="form-control"
+                formControlName="meta_title"
+                [ngClass]="{'is-invalid': tc('meta_title')?.invalid && tc('meta_title')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="tc('meta_title')?.errors?.['maxlength'] && tc('meta_title')?.touched">
+                {{ 'admin.services.form.metaTitleMaxLength' | translate }}
+              </div>
+              <small class="form-text text-muted">{{ 'admin.services.form.metaTitleHint' | translate }}</small>
             </div>
-            <small class="form-text text-muted">{{ 'admin.services.form.metaTitleHint' | translate }}</small>
-          </div>
 
-          <div class="col-md-6">
-            <label for="meta_description" class="form-label">{{ 'admin.services.form.metaDescriptionLabel' | translate }}</label>
-            <textarea
-              id="meta_description"
-              class="form-control"
-              rows="2"
-              formControlName="meta_description"
-              [ngClass]="{'is-invalid': getFormControl('meta_description')?.invalid && getFormControl('meta_description')?.touched}"
-            ></textarea>
-            <div class="invalid-feedback" *ngIf="getFormControl('meta_description')?.errors?.['maxlength'] && getFormControl('meta_description')?.touched">
-              {{ 'admin.services.form.metaDescriptionMaxLength' | translate }}
+            <div class="col-md-6">
+              <label for="meta_description" class="form-label">{{ 'admin.services.form.metaDescriptionLabel' | translate }}</label>
+              <textarea
+                id="meta_description"
+                class="form-control"
+                rows="2"
+                formControlName="meta_description"
+                [ngClass]="{'is-invalid': tc('meta_description')?.invalid && tc('meta_description')?.touched}"
+              ></textarea>
+              <div class="invalid-feedback" *ngIf="tc('meta_description')?.errors?.['maxlength'] && tc('meta_description')?.touched">
+                {{ 'admin.services.form.metaDescriptionMaxLength' | translate }}
+              </div>
+              <small class="form-text text-muted">{{ 'admin.services.form.metaDescriptionHint' | translate }}</small>
             </div>
-            <small class="form-text text-muted">{{ 'admin.services.form.metaDescriptionHint' | translate }}</small>
           </div>
-        </div>
+        </ng-container>
       </div>
     </div>
 

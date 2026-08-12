@@ -1,14 +1,24 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { AdminNewsService, NewsPost, NewsCategory, NewsPostCreate, NewsPostUpdate } from '../services/admin-news.service';
+import {
+  AdminNewsService,
+  NewsPostAdmin,
+  NewsCategoryAdmin,
+  NewsTagAdmin,
+  NewsCheckAdmin,
+  NewsPostCreate,
+  NewsPostNonTranslatableUpdate,
+  NewsPostTranslation,
+} from '../services/admin-news.service';
+import { TranslationLang, TranslationTabsComponent } from '../../shared/components/translation-tabs/translation-tabs.component';
 
 @Component({
   selector: 'app-news-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslatePipe],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslatePipe, TranslationTabsComponent],
   templateUrl: './news-form.component.html',
   styleUrls: ['./news-form.component.scss']
 })
@@ -19,7 +29,11 @@ export class NewsFormComponent implements OnInit {
   loading = false;
   submitting = false;
   error = '';
-  categories: NewsCategory[] = [];
+  categories: NewsCategoryAdmin[] = [];
+  allTags: NewsTagAdmin[] = [];
+  allPosts: NewsPostAdmin[] = [];
+
+  activeLang: TranslationLang = 'es';
 
   coverPreview: string | null = null;
   authorPreview: string | null = null;
@@ -37,30 +51,74 @@ export class NewsFormComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.loadCategories();
+    this.loadTags();
+    this.loadAllPosts();
 
-    const slugParam = this.route.snapshot.paramMap.get('slug');
-    if (slugParam) {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
       this.isEditMode = true;
-      this.loadNews(slugParam);
+      this.newsId = Number(idParam);
+      this.loadNews(this.newsId);
     }
+  }
+
+  private buildTranslationGroup() {
+    return this.fb.group({
+      title: ['', [Validators.required, Validators.maxLength(300)]],
+      breadcrumb: [''],
+      section1_title: [''],
+      section1_paragraph: [''],
+      section2_title: [''],
+      section2_paragraph1: [''],
+      section2_paragraph2: [''],
+      section3_title: [''],
+      section3_paragraph1: [''],
+      section3_paragraph2: [''],
+      section4_title: [''],
+      section4_paragraph: [''],
+      blockquote: [''],
+      section5_title: [''],
+      section5_paragraph: [''],
+      excerpt: ['', Validators.maxLength(500)],
+      meta_title: ['', Validators.maxLength(160)],
+      meta_description: ['', Validators.maxLength(320)],
+    });
   }
 
   private initForm(): void {
     this.newsForm = this.fb.group({
-      title: ['', [Validators.required, Validators.maxLength(300)]],
       slug: ['', [Validators.required, Validators.maxLength(150), Validators.pattern(/^[a-z0-9-]+$/)]],
-      excerpt: ['', Validators.maxLength(500)],
-      content: ['', Validators.required],
       cover_image_url: [''],
       author_name: ['', Validators.maxLength(150)],
       author_image_url: [''],
       category_id: [null],
-      meta_title: ['', Validators.maxLength(160)],
-      meta_description: ['', Validators.maxLength(320)],
       is_published: [false],
       is_featured: [false],
-      published_at: [null]
+      published_at: [null],
+      translations: this.fb.group({
+        es: this.buildTranslationGroup(),
+        en: this.buildTranslationGroup(),
+      }),
+      checks: this.fb.array([]),
+      tag_ids: [[] as number[]],
+      related_post_ids: [[] as number[]],
     });
+
+    const en = this.translations.get('en');
+    en?.get('title')?.clearValidators();
+    en?.get('title')?.updateValueAndValidity();
+  }
+
+  get translations(): FormGroup {
+    return this.newsForm.get('translations') as FormGroup;
+  }
+
+  get checks(): FormArray {
+    return this.newsForm.get('checks') as FormArray;
+  }
+
+  onLangChange(lang: TranslationLang): void {
+    this.activeLang = lang;
   }
 
   private loadCategories(): void {
@@ -70,9 +128,23 @@ export class NewsFormComponent implements OnInit {
     });
   }
 
-  private loadNews(slug: string): void {
+  private loadTags(): void {
+    this.newsService.getTags().subscribe({
+      next: (tags) => { this.allTags = tags; },
+      error: () => {}
+    });
+  }
+
+  private loadAllPosts(): void {
+    this.newsService.getAllNews(0, 100).subscribe({
+      next: (posts) => { this.allPosts = posts; },
+      error: () => {}
+    });
+  }
+
+  private loadNews(id: number): void {
     this.loading = true;
-    this.newsService.getNewsBySlug(slug).subscribe({
+    this.newsService.getNewsById(id).subscribe({
       next: (news) => {
         this.newsId = news.id;
         this.patchFormValues(news);
@@ -85,28 +157,96 @@ export class NewsFormComponent implements OnInit {
     });
   }
 
-  private patchFormValues(news: NewsPost): void {
+  private patchFormValues(news: NewsPostAdmin): void {
     let publishedAt = null;
     if (news.published_at) {
       publishedAt = new Date(news.published_at).toISOString().split('T')[0];
     }
     this.newsForm.patchValue({
-      title: news.title,
       slug: news.slug,
-      excerpt: news.excerpt,
-      content: news.content,
       cover_image_url: news.cover_image_url,
       author_name: news.author_name,
       author_image_url: news.author_image_url,
-      category_id: news.category_id,
-      meta_title: news.meta_title,
-      meta_description: news.meta_description,
+      category_id: news.category_id ?? null,
       is_published: news.is_published,
       is_featured: news.is_featured,
-      published_at: publishedAt
+      published_at: publishedAt,
+      translations: {
+        es: news.translations.es,
+        en: news.translations.en,
+      },
+      tag_ids: news.tags.map(t => t.id),
+      related_post_ids: news.related_post_ids,
     });
     this.coverPreview = news.cover_image_url || null;
     this.authorPreview = news.author_image_url || null;
+
+    this.checks.clear();
+    news.checks.forEach(check => this.addCheck(check));
+  }
+
+  addCheck(existing?: NewsCheckAdmin): void {
+    this.checks.push(
+      this.fb.group({
+        sort_order: [existing?.sort_order ?? 0],
+        translations: this.fb.group({
+          es: this.fb.group({ label: [existing?.translations.es.label ?? '', Validators.required] }),
+          en: this.fb.group({ label: [existing?.translations.en.label ?? ''] }),
+        }),
+      })
+    );
+  }
+
+  removeCheck(index: number): void {
+    this.checks.removeAt(index);
+  }
+
+  checkTranslations(index: number): FormGroup {
+    return this.checks.at(index).get('translations') as FormGroup;
+  }
+
+  toggleTag(tagId: number): void {
+    const control = this.newsForm.get('tag_ids');
+    const current: number[] = control?.value ?? [];
+    const next = current.includes(tagId)
+      ? current.filter(id => id !== tagId)
+      : [...current, tagId];
+    control?.setValue(next);
+  }
+
+  isTagSelected(tagId: number): boolean {
+    const current: number[] = this.newsForm.get('tag_ids')?.value ?? [];
+    return current.includes(tagId);
+  }
+
+  toggleRelated(postId: number): void {
+    const control = this.newsForm.get('related_post_ids');
+    const current: number[] = control?.value ?? [];
+    const next = current.includes(postId)
+      ? current.filter(id => id !== postId)
+      : [...current, postId];
+    control?.setValue(next);
+  }
+
+  isRelatedSelected(postId: number): boolean {
+    const current: number[] = this.newsForm.get('related_post_ids')?.value ?? [];
+    return current.includes(postId);
+  }
+
+  tagName(tag: NewsTagAdmin): string {
+    return tag.translations.es.name || tag.translations.en.name || '';
+  }
+
+  categoryName(category: NewsCategoryAdmin): string {
+    return category.translations.es.name || category.translations.en.name || '';
+  }
+
+  postTitle(post: NewsPostAdmin): string {
+    return post.translations.es.title || post.translations.en.title || '';
+  }
+
+  otherPosts(): NewsPostAdmin[] {
+    return this.allPosts.filter(p => p.id !== this.newsId);
   }
 
   onCoverSelected(event: Event): void {
@@ -143,23 +283,42 @@ export class NewsFormComponent implements OnInit {
     }
     this.submitting = true;
     this.error = '';
-    const formData = { ...this.newsForm.value };
-    if (formData.published_at && formData.is_published) {
-      formData.published_at = new Date(formData.published_at).toISOString();
-    } else if (!formData.is_published) {
-      formData.published_at = null;
+
+    const { translations, ...nonTranslatable } = this.newsForm.value;
+    if (nonTranslatable.published_at && nonTranslatable.is_published) {
+      nonTranslatable.published_at = new Date(nonTranslatable.published_at).toISOString();
+    } else if (!nonTranslatable.is_published) {
+      nonTranslatable.published_at = null;
     }
+
     if (this.isEditMode && this.newsId) {
-      this.newsService.updateNews(this.newsId, formData as NewsPostUpdate).subscribe({
-        next: () => { this.submitting = false; this.router.navigate(['/admin/noticias']); },
-        error: (error) => { this.submitting = false; this.error = this.translate.instant('admin.news.errors.updateFailed', { message: error.message }); }
+      this.newsService.updateNews(this.newsId, nonTranslatable as NewsPostNonTranslatableUpdate).subscribe({
+        next: () => this.saveActiveTranslation(translations),
+        error: (error) => {
+          this.submitting = false;
+          this.error = this.translate.instant('admin.news.errors.updateFailed', { message: error.message });
+        }
       });
     } else {
-      this.newsService.createNews(formData as NewsPostCreate).subscribe({
+      this.newsService.createNews({ ...nonTranslatable, translations } as NewsPostCreate).subscribe({
         next: () => { this.submitting = false; this.router.navigate(['/admin/noticias']); },
-        error: (error) => { this.submitting = false; this.error = this.translate.instant('admin.news.errors.createFailed', { message: error.message }); }
+        error: (error) => {
+          this.submitting = false;
+          this.error = this.translate.instant('admin.news.errors.createFailed', { message: error.message });
+        }
       });
     }
+  }
+
+  private saveActiveTranslation(translations: Record<TranslationLang, NewsPostTranslation>): void {
+    if (!this.newsId) return;
+    this.newsService.updateTranslation(this.newsId, this.activeLang, translations[this.activeLang]).subscribe({
+      next: () => { this.submitting = false; this.router.navigate(['/admin/noticias']); },
+      error: (error) => {
+        this.submitting = false;
+        this.error = this.translate.instant('admin.news.errors.updateFailed', { message: error.message });
+      }
+    });
   }
 
   private markFormGroupTouched(formGroup: FormGroup): void {
@@ -173,8 +332,12 @@ export class NewsFormComponent implements OnInit {
     return this.newsForm.get(name);
   }
 
+  tc(name: string) {
+    return this.translations.get(`${this.activeLang}.${name}`);
+  }
+
   generateSlug(): void {
-    const title = this.newsForm.get('title');
+    const title = this.translations.get('es.title');
     const slug = this.newsForm.get('slug');
     if (title && slug && title.value && !slug.value) {
       slug.setValue(title.value.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-'));

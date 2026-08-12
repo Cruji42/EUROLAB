@@ -2,7 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { AdminCertificationsService, Certification } from '../services/admin-certifications.service';
+import { AdminCertificationsService, CertificationAdmin } from '../services/admin-certifications.service';
 
 @Component({
   selector: 'app-certification-delete-modal',
@@ -11,7 +11,7 @@ import { AdminCertificationsService, Certification } from '../services/admin-cer
   templateUrl: './certification-delete-modal.component.html'
 })
 export class CertificationDeleteModalComponent {
-  @Input() certification!: Certification;
+  @Input() certification!: CertificationAdmin;
   deleting = false;
   error = '';
   private translate = inject(TranslateService);

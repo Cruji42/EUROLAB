@@ -253,7 +253,8 @@ body, html {
 
 /* btn  3 */
 .ca-btn-primary-3 {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     font-weight: 700;
     padding: 10px 16px;
     font-size: 16px;

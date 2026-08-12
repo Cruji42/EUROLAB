@@ -6,6 +6,7 @@ import { routes } from './app.routes';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { langInterceptor } from './core/interceptors/lang.interceptor';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -51,7 +52,8 @@ export const appConfig: ApplicationConfig = {
               return throwError(() => error);
             })
           );
-        }
+        },
+        langInterceptor
       ])
     ),
     BrowserAnimationsModule,

@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { AdminSliderService } from '../services/admin-slider.service';
-import { BannerSlide, BannerSlidePayload } from '../../models/slider.model';
+import { AdminSliderService, BannerSlideAdmin, BannerSlideCreate, BannerSlideTranslation } from '../services/admin-slider.service';
+import { TranslationLang, TranslationTabsComponent } from '../../shared/components/translation-tabs/translation-tabs.component';
 
 @Component({
   selector: 'app-slider-manager',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModalModule, TranslatePipe],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgbModalModule, TranslatePipe, TranslationTabsComponent],
   templateUrl: './slider-manager.component.html',
   styleUrls: ['./slider-manager.component.scss']
 })
@@ -19,7 +19,7 @@ export class SliderManagerComponent implements OnInit {
   @ViewChild('slideModal') slideModal!: TemplateRef<any>;
   @ViewChild('deleteModal') deleteModal!: TemplateRef<any>;
 
-  slides: BannerSlide[] = [];
+  slides: BannerSlideAdmin[] = [];
   loading = true;
   submitting = false;
   uploading = false;
@@ -27,9 +27,11 @@ export class SliderManagerComponent implements OnInit {
   successMsg = '';
   imagePreview: string | null = null;
 
+  activeLang: TranslationLang = 'es';
+
   slideForm!: FormGroup;
-  editingSlide: BannerSlide | null = null;
-  slideToDelete: BannerSlide | null = null;
+  editingSlide: BannerSlideAdmin | null = null;
+  slideToDelete: BannerSlideAdmin | null = null;
   modalRef?: NgbModalRef;
 
   constructor(
@@ -43,19 +45,45 @@ export class SliderManagerComponent implements OnInit {
     this.loadSlides();
   }
 
+  private buildTranslationGroup() {
+    return this.fb.group({
+      subtitle:           ['', Validators.required],
+      title:              ['', Validators.required],
+      description:        ['', Validators.required],
+      btn_primary_text:   ['', Validators.required],
+      btn_secondary_text: [''],
+    });
+  }
+
   private initForm(): void {
     this.slideForm = this.fb.group({
       sort_order:         [0, Validators.required],
       is_active:          [true],
-      subtitle:           ['', Validators.required],
-      title:              ['', Validators.required],
-      description:        ['', Validators.required],
       image_url:          ['', Validators.required],
-      btn_primary_text:   ['', Validators.required],
       btn_primary_link:   ['/service', Validators.required],
-      btn_secondary_text: [''],
       btn_secondary_link: ['/contact'],
+      translations: this.fb.group({
+        es: this.buildTranslationGroup(),
+        en: this.buildTranslationGroup(),
+      }),
     });
+    const en = this.translations.get('en');
+    en?.get('subtitle')?.clearValidators();
+    en?.get('title')?.clearValidators();
+    en?.get('description')?.clearValidators();
+    en?.get('btn_primary_text')?.clearValidators();
+    en?.get('subtitle')?.updateValueAndValidity();
+    en?.get('title')?.updateValueAndValidity();
+    en?.get('description')?.updateValueAndValidity();
+    en?.get('btn_primary_text')?.updateValueAndValidity();
+  }
+
+  get translations(): FormGroup {
+    return this.slideForm.get('translations') as FormGroup;
+  }
+
+  onLangChange(lang: TranslationLang): void {
+    this.activeLang = lang;
   }
 
   loadSlides(): void {
@@ -70,6 +98,7 @@ export class SliderManagerComponent implements OnInit {
     this.editingSlide = null;
     this.error = '';
     this.imagePreview = null;
+    this.activeLang = 'es';
     this.slideForm.reset({
       sort_order: this.slides.length + 1,
       is_active: true,
@@ -79,13 +108,24 @@ export class SliderManagerComponent implements OnInit {
     this.modalRef = this.modalService.open(this.slideModal, { size: 'lg', backdrop: 'static' });
   }
 
-  openEdit(slide: BannerSlide): void {
+  openEdit(slide: BannerSlideAdmin): void {
     this.editingSlide = slide;
     this.error = '';
+    this.activeLang = 'es';
     this.imagePreview = slide.image_url
       ? this.resolvePreviewUrl(slide.image_url)
       : null;
-    this.slideForm.patchValue(slide);
+    this.slideForm.patchValue({
+      sort_order: slide.sort_order,
+      is_active: slide.is_active,
+      image_url: slide.image_url,
+      btn_primary_link: slide.btn_primary_link,
+      btn_secondary_link: slide.btn_secondary_link,
+      translations: {
+        es: slide.translations.es,
+        en: slide.translations.en,
+      },
+    });
     this.modalRef = this.modalService.open(this.slideModal, { size: 'lg', backdrop: 'static' });
   }
 
@@ -118,7 +158,7 @@ export class SliderManagerComponent implements OnInit {
     return `${apiBase}/${url}`;
   }
 
-  openDelete(slide: BannerSlide): void {
+  openDelete(slide: BannerSlideAdmin): void {
     this.slideToDelete = slide;
     this.modalService.open(this.deleteModal);
   }
@@ -131,24 +171,42 @@ export class SliderManagerComponent implements OnInit {
     }
     this.submitting = true;
     this.error = '';
-    const payload = this.slideForm.value as BannerSlidePayload;
+    const { translations, ...nonTranslatable } = this.slideForm.value;
 
-    const obs = this.editingSlide
-      ? this.sliderService.update(this.editingSlide.id, payload)
-      : this.sliderService.create(payload);
+    if (this.editingSlide) {
+      this.sliderService.update(this.editingSlide.id, nonTranslatable).subscribe({
+        next: () => this.saveActiveTranslation(this.editingSlide!.id, translations),
+        error: (err) => {
+          this.submitting = false;
+          this.error = err?.error?.detail ?? this.translate.instant('admin.slider.errors.saveFailed');
+        }
+      });
+    } else {
+      this.sliderService.create({ ...nonTranslatable, translations } as BannerSlideCreate).subscribe({
+        next: () => this.onSaved('admin.slider.success.created'),
+        error: (err) => {
+          this.submitting = false;
+          this.error = err?.error?.detail ?? this.translate.instant('admin.slider.errors.saveFailed');
+        }
+      });
+    }
+  }
 
-    obs.subscribe({
-      next: () => {
-        this.submitting = false;
-        this.modalRef?.close();
-        this.showSuccess(this.translate.instant(this.editingSlide ? 'admin.slider.success.updated' : 'admin.slider.success.created'));
-        this.loadSlides();
-      },
+  private saveActiveTranslation(slideId: number, translations: Record<TranslationLang, BannerSlideTranslation>): void {
+    this.sliderService.updateTranslation(slideId, this.activeLang, translations[this.activeLang]).subscribe({
+      next: () => this.onSaved('admin.slider.success.updated'),
       error: (err) => {
         this.submitting = false;
         this.error = err?.error?.detail ?? this.translate.instant('admin.slider.errors.saveFailed');
       }
     });
+  }
+
+  private onSaved(messageKey: string): void {
+    this.submitting = false;
+    this.modalRef?.close();
+    this.showSuccess(this.translate.instant(messageKey));
+    this.loadSlides();
   }
 
   confirmDelete(): void {
@@ -177,6 +235,15 @@ export class SliderManagerComponent implements OnInit {
 
   isInvalid(name: string): boolean {
     const c = this.field(name);
+    return !!(c && c.invalid && c.touched);
+  }
+
+  tc(name: string) {
+    return this.translations.get(`${this.activeLang}.${name}`);
+  }
+
+  isTcInvalid(name: string): boolean {
+    const c = this.tc(name);
     return !!(c && c.invalid && c.touched);
   }
 }

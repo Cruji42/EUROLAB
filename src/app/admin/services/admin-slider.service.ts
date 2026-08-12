@@ -3,7 +3,43 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { BannerSlide, BannerSlidePayload } from '../../models/slider.model';
+
+export type TranslationLang = 'es' | 'en';
+
+export interface BannerSlideTranslation {
+  subtitle: string;
+  title: string;
+  description: string;
+  btn_primary_text: string;
+  btn_secondary_text: string;
+}
+
+export interface BannerSlideAdmin {
+  id: number;
+  sort_order: number;
+  is_active: boolean;
+  image_url: string;
+  btn_primary_link: string;
+  btn_secondary_link: string;
+  translations: Record<TranslationLang, BannerSlideTranslation>;
+}
+
+export interface BannerSlideCreate {
+  sort_order: number;
+  is_active: boolean;
+  image_url: string;
+  btn_primary_link: string;
+  btn_secondary_link?: string;
+  translations: Partial<Record<TranslationLang, BannerSlideTranslation>>;
+}
+
+export interface BannerSlideNonTranslatableUpdate {
+  sort_order?: number;
+  is_active?: boolean;
+  image_url?: string;
+  btn_primary_link?: string;
+  btn_secondary_link?: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AdminSliderService {
@@ -12,16 +48,24 @@ export class AdminSliderService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<BannerSlide[]> {
-    return this.http.get<BannerSlide[]>(`${this.base}/admin`);
+  getAll(): Observable<BannerSlideAdmin[]> {
+    return this.http.get<BannerSlideAdmin[]>(`${this.base}/admin`);
   }
 
-  create(data: BannerSlidePayload): Observable<BannerSlide> {
-    return this.http.post<BannerSlide>(`${this.base}/admin`, data);
+  getById(id: number): Observable<BannerSlideAdmin> {
+    return this.http.get<BannerSlideAdmin>(`${this.base}/admin/${id}`);
   }
 
-  update(id: number, data: BannerSlidePayload): Observable<BannerSlide> {
-    return this.http.put<BannerSlide>(`${this.base}/admin/${id}`, data);
+  create(data: BannerSlideCreate): Observable<BannerSlideAdmin> {
+    return this.http.post<BannerSlideAdmin>(`${this.base}/admin`, data);
+  }
+
+  update(id: number, data: BannerSlideNonTranslatableUpdate): Observable<BannerSlideAdmin> {
+    return this.http.put<BannerSlideAdmin>(`${this.base}/admin/${id}`, data);
+  }
+
+  updateTranslation(id: number, lang: TranslationLang, data: BannerSlideTranslation): Observable<BannerSlideAdmin> {
+    return this.http.put<BannerSlideAdmin>(`${this.base}/admin/${id}/translations/${lang}`, data);
   }
 
   delete(id: number): Observable<void> {

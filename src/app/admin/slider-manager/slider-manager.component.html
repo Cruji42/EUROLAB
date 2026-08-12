@@ -41,8 +41,8 @@
                      class="slide-thumb" onerror="this.style.display='none'">
                 <span *ngIf="!slide.image_url" class="text-muted fst-italic">{{ 'admin.slider.table.noImage' | translate }}</span>
               </td>
-              <td>{{ slide.subtitle }}</td>
-              <td>{{ slide.title }}</td>
+              <td>{{ slide.translations.es.subtitle || slide.translations.en.subtitle }}</td>
+              <td>{{ slide.translations.es.title || slide.translations.en.title }}</td>
               <td>
                 <span class="badge" [class.bg-success]="slide.is_active" [class.bg-secondary]="!slide.is_active">
                   {{ (slide.is_active ? 'admin.common.active' : 'admin.common.inactive') | translate }}
@@ -111,52 +111,65 @@
           <img [src]="imagePreview" [attr.alt]="'admin.slider.form.previewAlt' | translate" class="img-preview">
         </div>
 
-        <!-- Subtitle -->
+        <!-- Contenido traducible -->
         <div class="col-12">
-          <label class="form-label fw-semibold">{{ 'admin.slider.form.subtitleLabel' | translate }} <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" formControlName="subtitle"
-                 [attr.placeholder]="'admin.slider.form.subtitlePlaceholder' | translate"
-                 [class.is-invalid]="isInvalid('subtitle')">
-          <div class="invalid-feedback">{{ 'admin.slider.validation.subtitleRequired' | translate }}</div>
+          <app-translation-tabs [active]="activeLang" (activeChange)="onLangChange($event)"></app-translation-tabs>
         </div>
 
-        <!-- Title -->
-        <div class="col-12">
-          <label class="form-label fw-semibold">{{ 'admin.slider.form.titleLabel' | translate }} <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" formControlName="title"
-                 [attr.placeholder]="'admin.slider.form.titlePlaceholder' | translate"
-                 [class.is-invalid]="isInvalid('title')">
-          <div class="invalid-feedback">{{ 'admin.slider.validation.titleRequired' | translate }}</div>
-        </div>
+        <ng-container [formGroup]="translations">
+          <ng-container [formGroupName]="activeLang">
 
-        <!-- Description -->
-        <div class="col-12">
-          <label class="form-label fw-semibold">{{ 'admin.slider.form.descriptionLabel' | translate }} <span class="text-danger">*</span></label>
-          <textarea class="form-control" formControlName="description" rows="3"
-                    [attr.placeholder]="'admin.slider.form.descriptionPlaceholder' | translate"
-                    [class.is-invalid]="isInvalid('description')"></textarea>
-          <div class="invalid-feedback">{{ 'admin.slider.validation.descriptionRequired' | translate }}</div>
-        </div>
+            <!-- Subtitle -->
+            <div class="col-12">
+              <label class="form-label fw-semibold">{{ 'admin.slider.form.subtitleLabel' | translate }} <span *ngIf="activeLang === 'es'" class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="subtitle"
+                     [attr.placeholder]="'admin.slider.form.subtitlePlaceholder' | translate"
+                     [class.is-invalid]="isTcInvalid('subtitle')">
+              <div class="invalid-feedback">{{ 'admin.slider.validation.subtitleRequired' | translate }}</div>
+            </div>
 
-        <!-- Buttons -->
-        <div class="col-md-6">
-          <label class="form-label fw-semibold">{{ 'admin.slider.form.btnPrimaryTextLabel' | translate }} <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" formControlName="btn_primary_text"
-                 [attr.placeholder]="'admin.slider.form.btnPrimaryTextPlaceholder' | translate"
-                 [class.is-invalid]="isInvalid('btn_primary_text')">
-          <div class="invalid-feedback">{{ 'admin.common.required' | translate }}</div>
-        </div>
+            <!-- Title -->
+            <div class="col-12">
+              <label class="form-label fw-semibold">{{ 'admin.slider.form.titleLabel' | translate }} <span *ngIf="activeLang === 'es'" class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="title"
+                     [attr.placeholder]="'admin.slider.form.titlePlaceholder' | translate"
+                     [class.is-invalid]="isTcInvalid('title')">
+              <div class="invalid-feedback">{{ 'admin.slider.validation.titleRequired' | translate }}</div>
+            </div>
+
+            <!-- Description -->
+            <div class="col-12">
+              <label class="form-label fw-semibold">{{ 'admin.slider.form.descriptionLabel' | translate }} <span *ngIf="activeLang === 'es'" class="text-danger">*</span></label>
+              <textarea class="form-control" formControlName="description" rows="3"
+                        [attr.placeholder]="'admin.slider.form.descriptionPlaceholder' | translate"
+                        [class.is-invalid]="isTcInvalid('description')"></textarea>
+              <div class="invalid-feedback">{{ 'admin.slider.validation.descriptionRequired' | translate }}</div>
+            </div>
+
+            <!-- Buttons text (traducible) -->
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">{{ 'admin.slider.form.btnPrimaryTextLabel' | translate }} <span *ngIf="activeLang === 'es'" class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="btn_primary_text"
+                     [attr.placeholder]="'admin.slider.form.btnPrimaryTextPlaceholder' | translate"
+                     [class.is-invalid]="isTcInvalid('btn_primary_text')">
+              <div class="invalid-feedback">{{ 'admin.common.required' | translate }}</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">{{ 'admin.slider.form.btnSecondaryTextLabel' | translate }}</label>
+              <input type="text" class="form-control" formControlName="btn_secondary_text"
+                     [attr.placeholder]="'admin.slider.form.btnSecondaryTextPlaceholder' | translate">
+            </div>
+
+          </ng-container>
+        </ng-container>
+
+        <!-- Buttons links (no traducibles) -->
         <div class="col-md-6">
           <label class="form-label fw-semibold">{{ 'admin.slider.form.btnPrimaryLinkLabel' | translate }} <span class="text-danger">*</span></label>
           <input type="text" class="form-control" formControlName="btn_primary_link"
                  placeholder="/service"
                  [class.is-invalid]="isInvalid('btn_primary_link')">
           <div class="invalid-feedback">{{ 'admin.common.required' | translate }}</div>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label fw-semibold">{{ 'admin.slider.form.btnSecondaryTextLabel' | translate }}</label>
-          <input type="text" class="form-control" formControlName="btn_secondary_text"
-                 [attr.placeholder]="'admin.slider.form.btnSecondaryTextPlaceholder' | translate">
         </div>
         <div class="col-md-6">
           <label class="form-label fw-semibold">{{ 'admin.slider.form.btnSecondaryLinkLabel' | translate }}</label>
@@ -198,7 +211,7 @@
     <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body">
-    <p>{{ 'admin.slider.delete.confirm' | translate: { title: slideToDelete?.title } }}</p>
+    <p>{{ 'admin.slider.delete.confirm' | translate: { title: (slideToDelete?.translations?.es?.title || slideToDelete?.translations?.en?.title) } }}</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss()">{{ 'admin.common.cancel' | translate }}</button>

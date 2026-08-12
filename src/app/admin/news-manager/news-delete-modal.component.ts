@@ -2,7 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { AdminNewsService, NewsPost } from '../services/admin-news.service';
+import { AdminNewsService, NewsPostAdmin } from '../services/admin-news.service';
 
 @Component({
   selector: 'app-news-delete-modal',
@@ -12,7 +12,7 @@ import { AdminNewsService, NewsPost } from '../services/admin-news.service';
   styleUrls: ['./news-delete-modal.component.scss']
 })
 export class NewsDeleteModalComponent {
-  @Input() post!: NewsPost;
+  @Input() post!: NewsPostAdmin;
   deleting = false;
   error = '';
   private translate = inject(TranslateService);

@@ -45,7 +45,7 @@
                   [ngClass]="{'btn-primary': selectedCategory === category.slug, 'btn-outline-primary': selectedCategory !== category.slug}"
                   (click)="filterByCategory(category.slug)"
                 >
-                  {{ category.name }}
+                  {{ categoryName(category) }}
                 </button>
               </div>
             </div>
@@ -75,8 +75,8 @@
           <tbody>
             <tr *ngFor="let post of filteredPosts">
               <td>{{ post.id }}</td>
-              <td>{{ post.title }}</td>
-              <td>{{ post.category?.name || ('admin.news.list.table.noCategory' | translate) }}</td>
+              <td>{{ title(post) }}</td>
+              <td>{{ post.category ? categoryName(post.category) : ('admin.news.list.table.noCategory' | translate) }}</td>
               <td>
                 <span class="badge" [ngClass]="getStatusBadgeClass(post)">
                   {{ getStatusText(post) }}
@@ -89,7 +89,7 @@
               <td>{{ post.published_at ? (post.published_at | date:'dd/MM/yyyy') : '-' }}</td>
               <td>
                 <div class="action-buttons">
-                  <a [routerLink]="[post.slug]" class="btn btn-sm btn-outline-primary me-2">
+                  <a [routerLink]="[post.id]" class="btn btn-sm btn-outline-primary me-2">
                     <i class="bi bi-pencil"></i>
                   </a>
                   <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(post)">

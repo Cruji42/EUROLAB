@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { AdminCertificationsService, Certification } from '../services/admin-certifications.service';
+import { AdminCertificationsService, CertificationAdmin } from '../services/admin-certifications.service';
 import { CertificationDeleteModalComponent } from './certification-delete-modal.component';
 
 @Component({
@@ -15,8 +15,8 @@ import { CertificationDeleteModalComponent } from './certification-delete-modal.
   styleUrls: ['./certification-list.component.scss']
 })
 export class CertificationListComponent implements OnInit {
-  certifications: Certification[] = [];
-  filtered: Certification[] = [];
+  certifications: CertificationAdmin[] = [];
+  filtered: CertificationAdmin[] = [];
   loading = true;
   searchTerm = '';
   private translate = inject(TranslateService);
@@ -41,11 +41,13 @@ export class CertificationListComponent implements OnInit {
   search(): void {
     const term = this.searchTerm.toLowerCase().trim();
     this.filtered = term
-      ? this.certifications.filter(c => c.title.toLowerCase().includes(term) || c.issuing_body.toLowerCase().includes(term))
+      ? this.certifications.filter(c =>
+          (c.translations.es.title ?? '').toLowerCase().includes(term) ||
+          (c.translations.es.issuing_body ?? '').toLowerCase().includes(term))
       : this.certifications;
   }
 
-  openDeleteModal(cert: Certification): void {
+  openDeleteModal(cert: CertificationAdmin): void {
     const ref = this.modalService.open(CertificationDeleteModalComponent);
     ref.componentInstance.certification = cert;
     ref.result.then(
@@ -54,11 +56,23 @@ export class CertificationListComponent implements OnInit {
     );
   }
 
-  getStatusClass(cert: Certification): string {
+  getStatusClass(cert: CertificationAdmin): string {
     return cert.is_active ? 'bg-success' : 'bg-secondary';
   }
 
-  getStatusText(cert: Certification): string {
+  getStatusText(cert: CertificationAdmin): string {
     return this.translate.instant(cert.is_active ? 'admin.certifications.list.active' : 'admin.certifications.list.inactive');
+  }
+
+  title(cert: CertificationAdmin): string {
+    return cert.translations.es.title || cert.translations.en.title || '';
+  }
+
+  issuingBody(cert: CertificationAdmin): string {
+    return cert.translations.es.issuing_body || cert.translations.en.issuing_body || '';
+  }
+
+  certType(cert: CertificationAdmin): string {
+    return cert.translations.es.cert_type || cert.translations.en.cert_type || '';
   }
 }

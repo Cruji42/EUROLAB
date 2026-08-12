@@ -4,7 +4,7 @@
 </div>
 
 <div class="modal-body">
-  <p>{{ 'admin.news.delete.confirm' | translate: { title: post.title } }}</p>
+  <p>{{ 'admin.news.delete.confirm' | translate: { title: (post.translations.es.title || post.translations.en.title) } }}</p>
   <p class="text-danger">{{ 'admin.common.cannotBeUndone' | translate }}</p>
 
   <div *ngIf="error" class="alert alert-danger mt-3">

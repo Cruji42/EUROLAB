@@ -49,9 +49,9 @@
           <tbody>
             <tr *ngFor="let cert of filtered">
               <td>{{ cert.id }}</td>
-              <td>{{ cert.title }}</td>
-              <td>{{ cert.issuing_body }}</td>
-              <td>{{ cert.cert_type }}</td>
+              <td>{{ title(cert) }}</td>
+              <td>{{ issuingBody(cert) }}</td>
+              <td>{{ certType(cert) }}</td>
               <td>
                 <span class="badge" [ngClass]="getStatusClass(cert)">{{ getStatusText(cert) }}</span>
               </td>
@@ -67,7 +67,7 @@
               </td>
               <td>
                 <div class="action-buttons">
-                  <a [routerLink]="[cert.slug]" class="btn btn-sm btn-outline-primary me-2">
+                  <a [routerLink]="[cert.id]" class="btn btn-sm btn-outline-primary me-2">
                     <i class="bi bi-pencil"></i>
                   </a>
                   <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(cert)">

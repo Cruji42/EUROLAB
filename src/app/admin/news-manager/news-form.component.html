@@ -20,56 +20,61 @@
   </div>
 
   <form [formGroup]="newsForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+
+    <app-translation-tabs [active]="activeLang" (activeChange)="onLangChange($event)"></app-translation-tabs>
+
+    <!-- Encabezado / traducible -->
     <div class="card mb-4">
       <div class="card-header">
         <h5 class="mb-0">{{ 'admin.news.form.basicInfo' | translate }}</h5>
       </div>
+      <div class="card-body" [formGroup]="translations">
+        <ng-container [formGroupName]="activeLang">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="title" class="form-label">{{ 'admin.news.form.titleLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+              <input
+                type="text"
+                id="title"
+                class="form-control"
+                formControlName="title"
+                (blur)="generateSlug()"
+                [ngClass]="{'is-invalid': tc('title')?.invalid && tc('title')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="tc('title')?.errors?.['required'] && tc('title')?.touched">
+                {{ 'admin.news.form.titleRequired' | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="breadcrumb" class="form-label">{{ 'admin.news.form.breadcrumbLabel' | translate }}</label>
+              <input type="text" id="breadcrumb" class="form-control" formControlName="breadcrumb">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="excerpt" class="form-label">{{ 'admin.news.form.excerptLabel' | translate }}</label>
+            <textarea id="excerpt" class="form-control" rows="2" formControlName="excerpt"
+              [ngClass]="{'is-invalid': tc('excerpt')?.invalid && tc('excerpt')?.touched}"></textarea>
+            <div class="invalid-feedback" *ngIf="tc('excerpt')?.errors?.['maxlength'] && tc('excerpt')?.touched">
+              {{ 'admin.news.form.excerptMaxLength' | translate }}
+            </div>
+            <small class="form-text text-muted">{{ 'admin.news.form.excerptHint' | translate }}</small>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Categoría / imagen de portada (no traducible) -->
+    <div class="card mb-4">
       <div class="card-body">
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="title" class="form-label">{{ 'admin.news.form.titleLabel' | translate }} *</label>
-            <input
-              type="text"
-              id="title"
-              class="form-control"
-              formControlName="title"
-              (blur)="generateSlug()"
-              [ngClass]="{'is-invalid': getFormControl('title')?.invalid && getFormControl('title')?.touched}"
-            >
-            <div class="invalid-feedback" *ngIf="getFormControl('title')?.errors?.['required'] && getFormControl('title')?.touched">
-              {{ 'admin.news.form.titleRequired' | translate }}
-            </div>
-            <div class="invalid-feedback" *ngIf="getFormControl('title')?.errors?.['maxlength'] && getFormControl('title')?.touched">
-              {{ 'admin.news.form.titleMaxLength' | translate }}
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <label for="slug" class="form-label">{{ 'admin.news.form.slugLabel' | translate }} *</label>
-            <input
-              type="text"
-              id="slug"
-              class="form-control"
-              formControlName="slug"
-              [ngClass]="{'is-invalid': getFormControl('slug')?.invalid && getFormControl('slug')?.touched}"
-            >
-            <div class="invalid-feedback" *ngIf="getFormControl('slug')?.errors?.['required'] && getFormControl('slug')?.touched">
-              {{ 'admin.news.form.slugRequired' | translate }}
-            </div>
-            <div class="invalid-feedback" *ngIf="getFormControl('slug')?.errors?.['pattern'] && getFormControl('slug')?.touched">
-              {{ 'admin.news.form.slugPattern' | translate }}
-            </div>
-            <small class="form-text text-muted">{{ 'admin.news.form.slugHint' | translate }}</small>
-          </div>
-        </div>
-
         <div class="row mb-3">
           <div class="col-md-6">
             <label for="category_id" class="form-label">{{ 'admin.news.form.categoryLabel' | translate }}</label>
             <select id="category_id" class="form-select" formControlName="category_id">
               <option [ngValue]="null">{{ 'admin.news.form.noCategory' | translate }}</option>
               <option *ngFor="let category of categories" [value]="category.id">
-                {{ category.name }}
+                {{ categoryName(category) }}
               </option>
             </select>
           </div>
@@ -94,38 +99,203 @@
           </div>
         </div>
 
-        <div class="mb-3">
-          <label for="excerpt" class="form-label">{{ 'admin.news.form.excerptLabel' | translate }}</label>
-          <textarea
-            id="excerpt"
-            class="form-control"
-            rows="2"
-            formControlName="excerpt"
-            [ngClass]="{'is-invalid': getFormControl('excerpt')?.invalid && getFormControl('excerpt')?.touched}"
-          ></textarea>
-          <div class="invalid-feedback" *ngIf="getFormControl('excerpt')?.errors?.['maxlength'] && getFormControl('excerpt')?.touched">
-            {{ 'admin.news.form.excerptMaxLength' | translate }}
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="slug" class="form-label">{{ 'admin.news.form.slugLabel' | translate }} *</label>
+            <input
+              type="text"
+              id="slug"
+              class="form-control"
+              formControlName="slug"
+              [ngClass]="{'is-invalid': getFormControl('slug')?.invalid && getFormControl('slug')?.touched}"
+            >
+            <div class="invalid-feedback" *ngIf="getFormControl('slug')?.errors?.['required'] && getFormControl('slug')?.touched">
+              {{ 'admin.news.form.slugRequired' | translate }}
+            </div>
+            <div class="invalid-feedback" *ngIf="getFormControl('slug')?.errors?.['pattern'] && getFormControl('slug')?.touched">
+              {{ 'admin.news.form.slugPattern' | translate }}
+            </div>
+            <small class="form-text text-muted">{{ 'admin.news.form.slugHint' | translate }}</small>
           </div>
-          <small class="form-text text-muted">{{ 'admin.news.form.excerptHint' | translate }}</small>
-        </div>
-
-        <div class="mb-3">
-          <label for="content" class="form-label">{{ 'admin.news.form.contentLabel' | translate }} *</label>
-          <textarea
-            id="content"
-            class="form-control"
-            rows="10"
-            formControlName="content"
-            [ngClass]="{'is-invalid': getFormControl('content')?.invalid && getFormControl('content')?.touched}"
-          ></textarea>
-          <div class="invalid-feedback" *ngIf="getFormControl('content')?.errors?.['required'] && getFormControl('content')?.touched">
-            {{ 'admin.news.form.contentRequired' | translate }}
-          </div>
-          <small class="form-text text-muted">{{ 'admin.news.form.contentHint' | translate }}</small>
         </div>
       </div>
     </div>
 
+    <!-- Secciones del artículo (traducibles) -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">{{ 'admin.news.form.section1' | translate }}</h5>
+      </div>
+      <div class="card-body" [formGroup]="translations">
+        <ng-container [formGroupName]="activeLang">
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
+            <input type="text" class="form-control" formControlName="section1_title">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraphLabel' | translate }}</label>
+            <textarea class="form-control" rows="4" formControlName="section1_paragraph"></textarea>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">{{ 'admin.news.form.section2' | translate }}</h5>
+      </div>
+      <div class="card-body" [formGroup]="translations">
+        <ng-container [formGroupName]="activeLang">
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
+            <input type="text" class="form-control" formControlName="section2_title">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraph1Label' | translate }}</label>
+            <textarea class="form-control" rows="3" formControlName="section2_paragraph1"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraph2Label' | translate }}</label>
+            <textarea class="form-control" rows="3" formControlName="section2_paragraph2"></textarea>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">{{ 'admin.news.form.section3' | translate }}</h5>
+      </div>
+      <div class="card-body" [formGroup]="translations">
+        <ng-container [formGroupName]="activeLang">
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
+            <input type="text" class="form-control" formControlName="section3_title">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraph1Label' | translate }}</label>
+            <textarea class="form-control" rows="3" formControlName="section3_paragraph1"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraph2Label' | translate }}</label>
+            <textarea class="form-control" rows="3" formControlName="section3_paragraph2"></textarea>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">{{ 'admin.news.form.section4' | translate }}</h5>
+      </div>
+      <div class="card-body" [formGroup]="translations">
+        <ng-container [formGroupName]="activeLang">
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
+            <input type="text" class="form-control" formControlName="section4_title">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraphLabel' | translate }}</label>
+            <textarea class="form-control" rows="3" formControlName="section4_paragraph"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.blockquoteLabel' | translate }}</label>
+            <textarea class="form-control" rows="2" formControlName="blockquote"></textarea>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Checks (traducibles por item) -->
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">{{ 'admin.news.form.checks' | translate }}</h5>
+        <button type="button" class="btn btn-sm btn-primary" (click)="addCheck()">
+          <i class="bi bi-plus-circle me-1"></i> {{ 'admin.services.form.add' | translate }}
+        </button>
+      </div>
+      <div class="card-body">
+        <div formArrayName="checks">
+          <div *ngFor="let check of checks.controls; let i = index" [formGroupName]="i" class="row mb-3 align-items-center">
+            <div class="col-md-9" [formGroup]="checkTranslations(i)">
+              <ng-container [formGroupName]="activeLang">
+                <label class="form-label">{{ 'admin.news.form.checkTextLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+                <input type="text" class="form-control" formControlName="label"
+                  [ngClass]="{'is-invalid': checkTranslations(i).get(activeLang + '.label')?.invalid && checkTranslations(i).get(activeLang + '.label')?.touched}">
+              </ng-container>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">{{ 'admin.services.form.checkOrderLabel' | translate }}</label>
+              <input type="number" class="form-control" formControlName="sort_order">
+            </div>
+            <div class="col-md-1 d-flex align-items-end">
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeCheck(i)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+          <div *ngIf="checks.length === 0" class="text-center py-3">
+            <p class="text-muted">{{ 'admin.services.form.noChecks' | translate }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">{{ 'admin.news.form.section5' | translate }}</h5>
+      </div>
+      <div class="card-body" [formGroup]="translations">
+        <ng-container [formGroupName]="activeLang">
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
+            <input type="text" class="form-control" formControlName="section5_title">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraphLabel' | translate }}</label>
+            <textarea class="form-control" rows="3" formControlName="section5_paragraph"></textarea>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">{{ 'admin.news.form.tags' | translate }}</h5>
+      </div>
+      <div class="card-body">
+        <div class="d-flex flex-wrap gap-2">
+          <button type="button" *ngFor="let tag of allTags"
+                  class="btn btn-sm"
+                  [ngClass]="isTagSelected(tag.id) ? 'btn-primary' : 'btn-outline-primary'"
+                  (click)="toggleTag(tag.id)">
+            {{ tagName(tag) }}
+          </button>
+          <span *ngIf="allTags.length === 0" class="text-muted">{{ 'admin.news.form.noTags' | translate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Noticias relacionadas -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">{{ 'admin.news.form.relatedPosts' | translate }}</h5>
+      </div>
+      <div class="card-body">
+        <div class="d-flex flex-wrap gap-2">
+          <button type="button" *ngFor="let post of otherPosts()"
+                  class="btn btn-sm"
+                  [ngClass]="isRelatedSelected(post.id) ? 'btn-primary' : 'btn-outline-primary'"
+                  (click)="toggleRelated(post.id)">
+            {{ postTitle(post) }}
+          </button>
+          <span *ngIf="otherPosts().length === 0" class="text-muted">{{ 'admin.news.form.noRelatedPosts' | translate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Autor -->
     <div class="card mb-4">
       <div class="card-header">
         <h5 class="mb-0">{{ 'admin.news.form.authorInfo' | translate }}</h5>
@@ -168,45 +338,49 @@
       </div>
     </div>
 
+    <!-- SEO (traducible) -->
     <div class="card mb-4">
       <div class="card-header">
         <h5 class="mb-0">{{ 'admin.news.form.seo' | translate }}</h5>
       </div>
-      <div class="card-body">
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="meta_title" class="form-label">{{ 'admin.news.form.metaTitleLabel' | translate }}</label>
-            <input
-              type="text"
-              id="meta_title"
-              class="form-control"
-              formControlName="meta_title"
-              [ngClass]="{'is-invalid': getFormControl('meta_title')?.invalid && getFormControl('meta_title')?.touched}"
-            >
-            <div class="invalid-feedback" *ngIf="getFormControl('meta_title')?.errors?.['maxlength'] && getFormControl('meta_title')?.touched">
-              {{ 'admin.news.form.metaTitleMaxLength' | translate }}
+      <div class="card-body" [formGroup]="translations">
+        <ng-container [formGroupName]="activeLang">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="meta_title" class="form-label">{{ 'admin.news.form.metaTitleLabel' | translate }}</label>
+              <input
+                type="text"
+                id="meta_title"
+                class="form-control"
+                formControlName="meta_title"
+                [ngClass]="{'is-invalid': tc('meta_title')?.invalid && tc('meta_title')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="tc('meta_title')?.errors?.['maxlength'] && tc('meta_title')?.touched">
+                {{ 'admin.news.form.metaTitleMaxLength' | translate }}
+              </div>
+              <small class="form-text text-muted">{{ 'admin.news.form.metaTitleHint' | translate }}</small>
             </div>
-            <small class="form-text text-muted">{{ 'admin.news.form.metaTitleHint' | translate }}</small>
-          </div>
 
-          <div class="col-md-6">
-            <label for="meta_description" class="form-label">{{ 'admin.news.form.metaDescriptionLabel' | translate }}</label>
-            <textarea
-              id="meta_description"
-              class="form-control"
-              rows="2"
-              formControlName="meta_description"
-              [ngClass]="{'is-invalid': getFormControl('meta_description')?.invalid && getFormControl('meta_description')?.touched}"
-            ></textarea>
-            <div class="invalid-feedback" *ngIf="getFormControl('meta_description')?.errors?.['maxlength'] && getFormControl('meta_description')?.touched">
-              {{ 'admin.news.form.metaDescriptionMaxLength' | translate }}
+            <div class="col-md-6">
+              <label for="meta_description" class="form-label">{{ 'admin.news.form.metaDescriptionLabel' | translate }}</label>
+              <textarea
+                id="meta_description"
+                class="form-control"
+                rows="2"
+                formControlName="meta_description"
+                [ngClass]="{'is-invalid': tc('meta_description')?.invalid && tc('meta_description')?.touched}"
+              ></textarea>
+              <div class="invalid-feedback" *ngIf="tc('meta_description')?.errors?.['maxlength'] && tc('meta_description')?.touched">
+                {{ 'admin.news.form.metaDescriptionMaxLength' | translate }}
+              </div>
+              <small class="form-text text-muted">{{ 'admin.news.form.metaDescriptionHint' | translate }}</small>
             </div>
-            <small class="form-text text-muted">{{ 'admin.news.form.metaDescriptionHint' | translate }}</small>
           </div>
-        </div>
+        </ng-container>
       </div>
     </div>
 
+    <!-- Publicación (no traducible) -->
     <div class="card mb-4">
       <div class="card-header">
         <h5 class="mb-0">{{ 'admin.news.form.publication' | translate }}</h5>

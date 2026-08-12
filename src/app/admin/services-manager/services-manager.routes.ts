@@ -10,7 +10,7 @@ export const SERVICES_MANAGER_ROUTES: Routes = [
     children: [
       { path: '', component: ServicesListComponent },
       { path: 'nuevo', component: ServiceFormComponent },
-      { path: ':slug', component: ServiceFormComponent }
+      { path: ':id', component: ServiceFormComponent }
     ]
   }
 ];

@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AdminServicesService } from '../services/admin-services.service';
-import { ServiceDetail } from '../../models/service.model';
+import { AdminServicesService, ServiceAdmin } from '../services/admin-services.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ServiceDeleteModalComponent } from './service-delete-modal.component';
@@ -16,20 +15,20 @@ import { ServiceDeleteModalComponent } from './service-delete-modal.component';
   styleUrls: ['./services-list.component.scss']
 })
 export class ServicesListComponent implements OnInit {
-  services: ServiceDetail[] = [];
-  filteredServices: ServiceDetail[] = [];
+  services: ServiceAdmin[] = [];
+  filteredServices: ServiceAdmin[] = [];
   loading = true;
   searchTerm = '';
-  
+
   constructor(
     private servicesService: AdminServicesService,
     private modalService: NgbModal
   ) {}
-  
+
   ngOnInit(): void {
     this.loadServices();
   }
-  
+
   loadServices(): void {
     this.loading = true;
     this.servicesService.getAllServices().subscribe({
@@ -44,23 +43,23 @@ export class ServicesListComponent implements OnInit {
       }
     });
   }
-  
+
   search(): void {
     if (!this.searchTerm.trim()) {
       this.filteredServices = this.services;
       return;
     }
-    
+
     const term = this.searchTerm.toLowerCase().trim();
-    this.filteredServices = this.services.filter(service => 
-      service.name.toLowerCase().includes(term)
+    this.filteredServices = this.services.filter(service =>
+      this.name(service).toLowerCase().includes(term)
     );
   }
-  
-  openDeleteModal(service: ServiceDetail): void {
+
+  openDeleteModal(service: ServiceAdmin): void {
     const modalRef = this.modalService.open(ServiceDeleteModalComponent);
     modalRef.componentInstance.service = service;
-    
+
     modalRef.result.then(
       (result) => {
         if (result === 'deleted') {
@@ -69,5 +68,9 @@ export class ServicesListComponent implements OnInit {
       },
       () => {} // Dismissed
     );
+  }
+
+  name(service: ServiceAdmin): string {
+    return service.translations.es.name || service.translations.en.name || '';
   }
 }

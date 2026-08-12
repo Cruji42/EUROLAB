@@ -10,7 +10,7 @@ export const CERTIFICATION_MANAGER_ROUTES: Routes = [
     children: [
       { path: '', component: CertificationListComponent },
       { path: 'nueva', component: CertificationFormComponent },
-      { path: ':slug', component: CertificationFormComponent }
+      { path: ':id', component: CertificationFormComponent }
     ]
   }
 ];

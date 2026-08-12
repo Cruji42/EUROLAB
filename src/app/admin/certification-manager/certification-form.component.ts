@@ -5,15 +5,17 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import {
   AdminCertificationsService,
-  Certification,
+  CertificationAdmin,
   CertificationCreate,
-  CertificationUpdate
+  CertificationNonTranslatableUpdate,
+  CertificationTranslation
 } from '../services/admin-certifications.service';
+import { TranslationLang, TranslationTabsComponent } from '../../shared/components/translation-tabs/translation-tabs.component';
 
 @Component({
   selector: 'app-certification-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslatePipe],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslatePipe, TranslationTabsComponent],
   templateUrl: './certification-form.component.html',
   styleUrls: ['./certification-form.component.scss']
 })
@@ -24,6 +26,8 @@ export class CertificationFormComponent implements OnInit {
   loading = false;
   submitting = false;
   error = '';
+
+  activeLang: TranslationLang = 'es';
 
   coverPreview: string | null = null;
   uploadingCover = false;
@@ -41,35 +45,61 @@ export class CertificationFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    const slug = this.route.snapshot.paramMap.get('slug');
-    if (slug) {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
       this.isEditMode = true;
-      this.loadCertification(slug);
+      this.certId = Number(id);
+      this.loadCertification(this.certId);
     }
   }
 
-  private initForm(): void {
-    this.certForm = this.fb.group({
+  private buildTranslationGroup() {
+    return this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(300)]],
-      slug: ['', [Validators.required, Validators.maxLength(150), Validators.pattern(/^[a-z0-9-]+$/)]],
       issuing_body: ['', [Validators.required, Validators.maxLength(200)]],
       cert_type: ['', [Validators.required, Validators.maxLength(100)]],
       excerpt: ['', Validators.maxLength(500)],
       description: [''],
+      meta_title: ['', Validators.maxLength(160)],
+      meta_description: ['', Validators.maxLength(320)],
+    });
+  }
+
+  private initForm(): void {
+    this.certForm = this.fb.group({
+      slug: ['', [Validators.required, Validators.maxLength(150), Validators.pattern(/^[a-z0-9-]+$/)]],
       cover_image_url: [''],
       certificate_file_url: [''],
       is_active: [true],
       is_featured: [false],
       issued_at: [null],
       expires_at: [null],
-      meta_title: ['', Validators.maxLength(160)],
-      meta_description: ['', Validators.maxLength(320)],
+      translations: this.fb.group({
+        es: this.buildTranslationGroup(),
+        en: this.buildTranslationGroup(),
+      }),
     });
+    // El inglés no es obligatorio: se traduce después desde el admin.
+    const en = this.translations.get('en');
+    en?.get('title')?.clearValidators();
+    en?.get('issuing_body')?.clearValidators();
+    en?.get('cert_type')?.clearValidators();
+    en?.get('title')?.updateValueAndValidity();
+    en?.get('issuing_body')?.updateValueAndValidity();
+    en?.get('cert_type')?.updateValueAndValidity();
   }
 
-  private loadCertification(slug: string): void {
+  get translations(): FormGroup {
+    return this.certForm.get('translations') as FormGroup;
+  }
+
+  onLangChange(lang: TranslationLang): void {
+    this.activeLang = lang;
+  }
+
+  private loadCertification(id: number): void {
     this.loading = true;
-    this.certService.getCertificationBySlug(slug).subscribe({
+    this.certService.getCertificationById(id).subscribe({
       next: (cert) => {
         this.certId = cert.id;
         this.patchForm(cert);
@@ -82,22 +112,19 @@ export class CertificationFormComponent implements OnInit {
     });
   }
 
-  private patchForm(cert: Certification): void {
+  private patchForm(cert: CertificationAdmin): void {
     this.certForm.patchValue({
-      title: cert.title,
       slug: cert.slug,
-      issuing_body: cert.issuing_body,
-      cert_type: cert.cert_type,
-      excerpt: cert.excerpt,
-      description: cert.description,
       cover_image_url: cert.cover_image_url,
       certificate_file_url: cert.certificate_file_url,
       is_active: cert.is_active,
       is_featured: cert.is_featured,
       issued_at: cert.issued_at ? new Date(cert.issued_at).toISOString().split('T')[0] : null,
       expires_at: cert.expires_at ? new Date(cert.expires_at).toISOString().split('T')[0] : null,
-      meta_title: cert.meta_title,
-      meta_description: cert.meta_description,
+      translations: {
+        es: cert.translations.es,
+        en: cert.translations.en,
+      },
     });
     this.coverPreview = cert.cover_image_url || null;
     if (cert.certificate_file_url) {
@@ -136,7 +163,7 @@ export class CertificationFormComponent implements OnInit {
   }
 
   generateSlug(): void {
-    const title = this.certForm.get('title');
+    const title = this.translations.get('es.title');
     const slug = this.certForm.get('slug');
     if (title?.value && !slug?.value) {
       slug?.setValue(title.value.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-'));
@@ -146,27 +173,37 @@ export class CertificationFormComponent implements OnInit {
   onSubmit(): void {
     if (this.uploadingCover || this.uploadingFile) return;
     if (this.certForm.invalid) {
-      Object.values(this.certForm.controls).forEach(c => c.markAsTouched());
+      this.certForm.markAllAsTouched();
       return;
     }
     this.submitting = true;
     this.error = '';
-    const formData = { ...this.certForm.value };
-    if (formData.issued_at) formData.issued_at = new Date(formData.issued_at).toISOString();
-    if (formData.expires_at) formData.expires_at = new Date(formData.expires_at).toISOString();
+
+    const { translations, ...nonTranslatable } = this.certForm.value;
+    if (nonTranslatable.issued_at) nonTranslatable.issued_at = new Date(nonTranslatable.issued_at).toISOString();
+    if (nonTranslatable.expires_at) nonTranslatable.expires_at = new Date(nonTranslatable.expires_at).toISOString();
 
     if (this.isEditMode && this.certId) {
-      this.certService.updateCertification(this.certId, formData as CertificationUpdate).subscribe({
-        next: () => { this.submitting = false; this.router.navigate(['/admin/certificaciones']); },
+      this.certService.updateCertification(this.certId, nonTranslatable as CertificationNonTranslatableUpdate).subscribe({
+        next: () => this.saveActiveTranslation(translations),
         error: (err) => { this.submitting = false; this.error = this.translate.instant('admin.certifications.errors.updateFailed', { message: err.message }); }
       });
     } else {
-      this.certService.createCertification(formData as CertificationCreate).subscribe({
+      this.certService.createCertification({ ...nonTranslatable, translations } as CertificationCreate).subscribe({
         next: () => { this.submitting = false; this.router.navigate(['/admin/certificaciones']); },
         error: (err) => { this.submitting = false; this.error = this.translate.instant('admin.certifications.errors.createFailed', { message: err.message }); }
       });
     }
   }
 
+  private saveActiveTranslation(translations: { es: CertificationTranslation; en: CertificationTranslation }): void {
+    if (!this.certId) return;
+    this.certService.updateTranslation(this.certId, this.activeLang, translations[this.activeLang]).subscribe({
+      next: () => { this.submitting = false; this.router.navigate(['/admin/certificaciones']); },
+      error: (err) => { this.submitting = false; this.error = this.translate.instant('admin.certifications.errors.updateFailed', { message: err.message }); }
+    });
+  }
+
   fc(name: string) { return this.certForm.get(name); }
+  tc(name: string) { return this.translations.get(`${this.activeLang}.${name}`); }
 }

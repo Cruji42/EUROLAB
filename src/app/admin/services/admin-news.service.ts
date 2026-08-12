@@ -4,67 +4,128 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
-export interface NewsCategory {
+export type TranslationLang = 'es' | 'en';
+
+// ── Category ─────────────────────────────────────────────────
+
+export interface NewsCategoryTranslation {
+  name?: string;
+}
+
+export interface NewsCategoryAdmin {
   id: number;
-  name: string;
   slug: string;
+  translations: Record<TranslationLang, NewsCategoryTranslation>;
 }
 
 export interface NewsCategoryCreate {
-  name: string;
   slug: string;
+  translations: Partial<Record<TranslationLang, NewsCategoryTranslation>>;
 }
 
-export interface NewsPost {
+// ── Tag ──────────────────────────────────────────────────────
+
+export interface NewsTagTranslation {
+  name?: string;
+}
+
+export interface NewsTagAdmin {
   id: number;
   slug: string;
-  title: string;
+  translations: Record<TranslationLang, NewsTagTranslation>;
+}
+
+export interface NewsTagCreate {
+  slug: string;
+  translations: Partial<Record<TranslationLang, NewsTagTranslation>>;
+}
+
+// ── Check ────────────────────────────────────────────────────
+
+export interface NewsCheckTranslation {
+  label?: string;
+}
+
+export interface NewsCheckAdmin {
+  id: number;
+  sort_order: number;
+  translations: Record<TranslationLang, NewsCheckTranslation>;
+}
+
+export interface NewsCheckCreate {
+  sort_order: number;
+  translations: Partial<Record<TranslationLang, NewsCheckTranslation>>;
+}
+
+// ── Post ─────────────────────────────────────────────────────
+
+export interface NewsPostTranslation {
+  title?: string;
+  breadcrumb?: string;
+  section1_title?: string;
+  section1_paragraph?: string;
+  section2_title?: string;
+  section2_paragraph1?: string;
+  section2_paragraph2?: string;
+  section3_title?: string;
+  section3_paragraph1?: string;
+  section3_paragraph2?: string;
+  section4_title?: string;
+  section4_paragraph?: string;
+  blockquote?: string;
+  section5_title?: string;
+  section5_paragraph?: string;
   excerpt?: string;
-  content: string;
-  cover_image_url?: string;
-  author_name?: string;
-  author_image_url?: string;
-  category_id?: number;
-  category?: NewsCategory;
   meta_title?: string;
   meta_description?: string;
+}
+
+export interface NewsPostAdmin {
+  id: number;
+  slug: string;
+  author_name?: string;
+  author_image_url?: string;
+  cover_image_url?: string;
+  category_id?: number;
+  category?: NewsCategoryAdmin;
+  checks: NewsCheckAdmin[];
+  tags: NewsTagAdmin[];
+  related_post_ids: number[];
   is_published: boolean;
   is_featured: boolean;
   published_at?: string;
   created_at: string;
   updated_at: string;
+  translations: Record<TranslationLang, NewsPostTranslation>;
 }
 
 export interface NewsPostCreate {
   slug: string;
-  title: string;
-  excerpt?: string;
-  content: string;
-  cover_image_url?: string;
   author_name?: string;
   author_image_url?: string;
+  cover_image_url?: string;
   category_id?: number;
-  meta_title?: string;
-  meta_description?: string;
   is_published: boolean;
   is_featured: boolean;
   published_at?: string;
+  translations: Partial<Record<TranslationLang, NewsPostTranslation>>;
+  checks: NewsCheckCreate[];
+  tag_ids: number[];
+  related_post_ids: number[];
 }
 
-export interface NewsPostUpdate {
+export interface NewsPostNonTranslatableUpdate {
   slug?: string;
-  title?: string;
-  excerpt?: string;
-  content?: string;
-  cover_image_url?: string;
   author_name?: string;
   author_image_url?: string;
+  cover_image_url?: string;
   category_id?: number;
-  meta_title?: string;
-  meta_description?: string;
   is_published?: boolean;
   is_featured?: boolean;
   published_at?: string;
+  checks?: NewsCheckCreate[];
+  tag_ids?: number[];
+  related_post_ids?: number[];
 }
 
 @Injectable({
@@ -76,15 +137,15 @@ export class AdminNewsService {
 
   constructor(private http: HttpClient) {}
 
-  getAllNews(skip: number = 0, limit: number = 50): Observable<NewsPost[]> {
-    return this.http.get<NewsPost[]>(`${this.apiUrl}/admin/all?skip=${skip}&limit=${limit}`)
+  getAllNews(skip: number = 0, limit: number = 50): Observable<NewsPostAdmin[]> {
+    return this.http.get<NewsPostAdmin[]>(`${this.apiUrl}/admin/all?skip=${skip}&limit=${limit}`)
       .pipe(
         catchError(error => throwError(() => new Error('Error fetching news: ' + error.message)))
       );
   }
 
-  getNewsBySlug(slug: string): Observable<NewsPost> {
-    return this.http.get<NewsPost>(`${this.apiUrl}/${slug}`)
+  getNewsById(id: number): Observable<NewsPostAdmin> {
+    return this.http.get<NewsPostAdmin>(`${this.apiUrl}/admin/${id}`)
       .pipe(
         catchError(error => throwError(() => new Error('Error fetching news post: ' + error.message)))
       );
@@ -98,17 +159,24 @@ export class AdminNewsService {
       .pipe(map(r => r.url));
   }
 
-  createNews(news: NewsPostCreate): Observable<NewsPost> {
-    return this.http.post<NewsPost>(`${this.apiUrl}/admin`, news)
+  createNews(news: NewsPostCreate): Observable<NewsPostAdmin> {
+    return this.http.post<NewsPostAdmin>(`${this.apiUrl}/admin`, news)
       .pipe(
         catchError(error => throwError(() => new Error('Error creating news post: ' + error.message)))
       );
   }
 
-  updateNews(id: number, news: NewsPostUpdate): Observable<NewsPost> {
-    return this.http.put<NewsPost>(`${this.apiUrl}/admin/${id}`, news)
+  updateNews(id: number, news: NewsPostNonTranslatableUpdate): Observable<NewsPostAdmin> {
+    return this.http.put<NewsPostAdmin>(`${this.apiUrl}/admin/${id}`, news)
       .pipe(
         catchError(error => throwError(() => new Error('Error updating news post: ' + error.message)))
+      );
+  }
+
+  updateTranslation(id: number, lang: TranslationLang, data: NewsPostTranslation): Observable<NewsPostAdmin> {
+    return this.http.put<NewsPostAdmin>(`${this.apiUrl}/admin/${id}/translations/${lang}`, data)
+      .pipe(
+        catchError(error => throwError(() => new Error('Error updating news translation: ' + error.message)))
       );
   }
 
@@ -119,17 +187,31 @@ export class AdminNewsService {
       );
   }
 
-  getCategories(): Observable<NewsCategory[]> {
-    return this.http.get<NewsCategory[]>(`${this.apiUrl}/categorias`)
+  getCategories(): Observable<NewsCategoryAdmin[]> {
+    return this.http.get<NewsCategoryAdmin[]>(`${this.apiUrl}/categorias`)
       .pipe(
         catchError(error => throwError(() => new Error('Error fetching categories: ' + error.message)))
       );
   }
 
-  createCategory(category: NewsCategoryCreate): Observable<NewsCategory> {
-    return this.http.post<NewsCategory>(`${this.apiUrl}/admin/categorias`, category)
+  createCategory(category: NewsCategoryCreate): Observable<NewsCategoryAdmin> {
+    return this.http.post<NewsCategoryAdmin>(`${this.apiUrl}/admin/categorias`, category)
       .pipe(
         catchError(error => throwError(() => new Error('Error creating category: ' + error.message)))
+      );
+  }
+
+  getTags(): Observable<NewsTagAdmin[]> {
+    return this.http.get<NewsTagAdmin[]>(`${this.apiUrl}/tags`)
+      .pipe(
+        catchError(error => throwError(() => new Error('Error fetching tags: ' + error.message)))
+      );
+  }
+
+  createTag(tag: NewsTagCreate): Observable<NewsTagAdmin> {
+    return this.http.post<NewsTagAdmin>(`${this.apiUrl}/admin/tags`, tag)
+      .pipe(
+        catchError(error => throwError(() => new Error('Error creating tag: ' + error.message)))
       );
   }
 }

@@ -2,8 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { AdminServicesService } from '../services/admin-services.service';
-import { ServiceDetail } from '../../models/service.model';
+import { AdminServicesService, ServiceAdmin } from '../services/admin-services.service';
 
 @Component({
   selector: 'app-service-delete-modal',
@@ -13,7 +12,7 @@ import { ServiceDetail } from '../../models/service.model';
   styleUrls: ['./service-delete-modal.component.scss']
 })
 export class ServiceDeleteModalComponent {
-  @Input() service!: ServiceDetail;
+  @Input() service!: ServiceAdmin;
   deleting = false;
   error = '';
   private translate = inject(TranslateService);
