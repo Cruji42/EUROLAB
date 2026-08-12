@@ -611,8 +611,7 @@
         "firstNamePlaceholder": "First name",
         "lastNamePlaceholder": "Last name",
         "companyPlaceholder": "Company (optional)",
-        "serviceOfInterest": "Service of interest",
-        "selectServicePlaceholder": "Select service of interest",
+        "contactReasonPlaceholder": "Reason for contact",
         "sendButton": "Send"
       }
     },
@@ -676,7 +675,6 @@
         "subtitle": "Share the details of your product or analytical requirement and our team will evaluate the best analysis option to ensure quality, regulatory compliance and reliable results.",
         "phonePlaceholder": "Phone",
         "emailPlaceholder": "Email Address",
-        "optionsPlaceholder": "Options",
         "messagePlaceholder": "Message",
         "sendButton": "Send Message"
       },

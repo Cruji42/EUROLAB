@@ -182,8 +182,7 @@
         "firstNamePlaceholder": "Nombre",
         "lastNamePlaceholder": "Apellido",
         "companyPlaceholder": "Empresa (opcional)",
-        "serviceOfInterest": "Servicio de interés",
-        "selectServicePlaceholder": "Seleccione servicio de interés",
+        "contactReasonPlaceholder": "Motivo de contacto",
         "sendButton": "Enviar"
       }
     },
@@ -247,7 +246,6 @@
         "subtitle": "Compártenos los detalles de tu producto o requerimiento analítico y nuestro equipo evaluará la mejor alternativa de análisis para garantizar calidad, cumplimiento normativo y resultados confiables.",
         "phonePlaceholder": "Teléfono",
         "emailPlaceholder": "Correo Electrónico",
-        "optionsPlaceholder": "Opciones",
         "messagePlaceholder": "Mensaje",
         "sendButton": "Enviar Mensaje"
       },

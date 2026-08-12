@@ -5425,6 +5425,41 @@ iframe.ca-map {
     transition: .3s;
 }
 
+/* uniform certification cards: equal image height + equal card height regardless of text length */
+.ca-blog-box-3 {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.ca-blog-box-3 .ca-team-img {
+    height: 240px;
+}
+.ca-blog-box-3 .ca-team-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.ca-blog-box-3 .ca-blog-box-content-3 {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.ca-blog-box-3 .ca-blog-title-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+.ca-blog-box-3 .ca-blog-box-content-3 > p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+.ca-blog-box-3 .blog-3-rearmore {
+    margin-top: auto;
+}
+
 
 /* ============================================
                     BLOG Style 4
@@ -6843,6 +6878,41 @@ button.ca-btn-primary.ca-btn-primary-2 span {
 .ca-blg-box-3:hover .read-more3{
     color: #fff;
     transition: .3s;
+}
+
+/* uniform news cards: equal image height + equal card height regardless of text length */
+.ca-blg-box-3 {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.ca-blg-box-3 .ca-team-img {
+    height: 240px;
+}
+.ca-blg-box-3 .ca-team-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.ca-blg-box-3 .ca-blog-box-content-3 {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.ca-blg-box-3 .ca-blog-title-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+.ca-blg-box-3 .ca-blog-box-content-3 > p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+.ca-blg-box-3 .blog-3-rearmore {
+    margin-top: auto;
 }
 
 /* contact inner  */
