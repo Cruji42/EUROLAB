@@ -18,6 +18,12 @@ export interface NewsCategoryAdmin {
   translations: Record<TranslationLang, NewsCategoryTranslation>;
 }
 
+export interface NewsCategorySimple {
+  id: number;
+  slug: string;
+  name: string;
+}
+
 export interface NewsCategoryCreate {
   slug: string;
   translations: Partial<Record<TranslationLang, NewsCategoryTranslation>>;
@@ -33,6 +39,12 @@ export interface NewsTagAdmin {
   id: number;
   slug: string;
   translations: Record<TranslationLang, NewsTagTranslation>;
+}
+
+export interface NewsTagSimple {
+  id: number;
+  slug: string;
+  name: string;
 }
 
 export interface NewsTagCreate {
@@ -187,8 +199,8 @@ export class AdminNewsService {
       );
   }
 
-  getCategories(): Observable<NewsCategoryAdmin[]> {
-    return this.http.get<NewsCategoryAdmin[]>(`${this.apiUrl}/categorias`)
+  getCategories(): Observable<NewsCategorySimple[]> {
+    return this.http.get<NewsCategorySimple[]>(`${this.apiUrl}/categorias`)
       .pipe(
         catchError(error => throwError(() => new Error('Error fetching categories: ' + error.message)))
       );
@@ -201,8 +213,8 @@ export class AdminNewsService {
       );
   }
 
-  getTags(): Observable<NewsTagAdmin[]> {
-    return this.http.get<NewsTagAdmin[]>(`${this.apiUrl}/tags`)
+  getTags(): Observable<NewsTagSimple[]> {
+    return this.http.get<NewsTagSimple[]>(`${this.apiUrl}/tags`)
       .pipe(
         catchError(error => throwError(() => new Error('Error fetching tags: ' + error.message)))
       );

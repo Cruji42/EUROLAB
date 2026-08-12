@@ -34,28 +34,16 @@ const ACTION_CONTACT_FORM: ChatAction = {
   value: '/contact'
 };
 
-const ACTION_SOLICITUD_ANALISIS: ChatAction = {
-  type: 'download',
-  label: 'Descargar Solicitud de Análisis',
-  value: 'assets/docs/solicitud-analisis.pdf'
-};
-
-const ACTION_SOLICITUD_CREDITO: ChatAction = {
-  type: 'download',
-  label: 'Descargar Solicitud de Crédito / Alta de Cliente',
-  value: 'assets/docs/solicitud-credito.pdf'
-};
-
-const ACTION_CADENA_CUSTODIA: ChatAction = {
-  type: 'download',
-  label: 'Descargar Cadena de Custodia',
-  value: 'assets/docs/cadena-custodia.pdf'
+const ACTION_EUROLAB: ChatAction = {
+  type: 'external',
+  label: 'Ir a EUROLAB',
+  value: 'https://eurolab.gponutec.com:8082/'
 };
 
 const ACTION_CATALOGO: ChatAction = {
   type: 'download',
   label: 'Descargar Catálogo de Servicios',
-  value: 'assets/docs/catalogo-servicios.pdf'
+  value: 'assets/docs/catalogo-servicios-2026.pdf'
 };
 
 const ACTION_WHATSAPP: ChatAction = {
@@ -196,11 +184,11 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       name: 'muestra_lista',
       keywords: ['ya tengo mi muestra', 'tengo mi muestra', 'muestra lista', 'ya la tengo lista', 'sí ya tengo', 'si ya tengo', 'está lista', 'esta lista', 'lista para enviar', 'muestra preparada', 'preparada', 'sí, ya tengo', 'si, ya tengo', 'ya tengo'],
       responses: [
-        '¡Perfecto! Para que tu muestra llegue en las mejores condiciones y podamos procesarla sin contratiempos, sigue estas indicaciones:\n\n1. **Identifícala** claramente (nombre del producto, lote, fecha)\n2. Usa **envases limpios y herméticos** adecuados para el tipo de muestra\n3. Mantén la **temperatura correcta** durante el envío: refrigerada (2–8 °C), congelada (–18 °C) o temperatura ambiente según el análisis\n4. Si es para análisis microbiológico, **bolsa estéril obligatoria**\n5. Adjunta la **Solicitud de Análisis** completamente llena\n\nDescarga el formato aquí y contáctanos para coordinar la recepción:',
-        '¡Excelente! Antes de enviar asegúrate de: identificar bien la muestra (nombre, lote, fecha), usar el envase adecuado, mantener la cadena de frío si aplica, e incluir la Solicitud de Análisis. Para microbiológicos es obligatoria la bolsa estéril. Descarga el formato y nos coordinas el envío:'
+        '¡Perfecto! Para que tu muestra llegue en las mejores condiciones y podamos procesarla sin contratiempos, sigue estas indicaciones:\n\n1. **Identifícala** claramente (nombre del producto, lote, fecha)\n2. Usa **envases limpios y herméticos** adecuados para el tipo de muestra\n3. Mantén la **temperatura correcta** durante el envío: refrigerada (2–8 °C), congelada (–18 °C) o temperatura ambiente según el análisis\n4. Si es para análisis microbiológico, **bolsa estéril obligatoria**\n\nRegistra tu solicitud y da seguimiento a través de nuestro portal EUROLAB:',
+        '¡Excelente! Antes de enviar asegúrate de: identificar bien la muestra (nombre, lote, fecha), usar el envase adecuado, mantener la cadena de frío si aplica. Para microbiológicos es obligatoria la bolsa estéril. Registra tu solicitud en EUROLAB y nos coordinas el envío:'
       ],
       suggestions: ['Ver tiempos de entrega', 'Seguimiento de mi muestra', 'Hablar con especialista'],
-      actions: [ACTION_SOLICITUD_ANALISIS, ACTION_CADENA_CUSTODIA, ACTION_CONTACT_FORM]
+      actions: [ACTION_EUROLAB, ACTION_CONTACT_FORM]
     },
     {
       name: 'estatus_seguimiento',
@@ -237,11 +225,11 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       name: 'alta_cliente',
       keywords: ['alta', 'nuevo cliente', 'registrar', 'contratar', 'cómo me registro', 'como me registro', 'quiero ser cliente', 'laboratorio externo', 'proveedor', 'constancia fiscal', 'situación fiscal'],
       responses: [
-        'Para darte de alta como cliente necesitamos tres documentos:\n\n1. **Constancia de Situación Fiscal** (actualizada)\n2. **Comprobante de Domicilio** (no mayor a 3 meses)\n3. **Solicitud de Crédito/Servicio** (descárgala aquí)\n\nPuedes enviarnos los documentos a través del formulario de contacto o directamente con tu ejecutivo.',
-        'El proceso de alta es muy sencillo. Solo necesitamos tu constancia fiscal, comprobante de domicilio y nuestra solicitud de servicio. Descarga el formato y contáctanos.'
+        'Para darte de alta como cliente y registrar tus solicitudes de análisis, todo el proceso se realiza a través de nuestro portal **EUROLAB**. Ahí podrás crear tu cuenta, cargar tus documentos y dar seguimiento a tus servicios.',
+        'El proceso de alta es muy sencillo a través de nuestro portal EUROLAB. Regístrate ahí y un ejecutivo te dará seguimiento.'
       ],
       suggestions: ['Catálogo de precios', 'Ubicación del laboratorio'],
-      actions: [ACTION_SOLICITUD_CREDITO, ACTION_CONTACT_FORM]
+      actions: [ACTION_EUROLAB, ACTION_CONTACT_FORM]
     },
     {
       name: 'catalogo_precios',
@@ -291,31 +279,31 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
         'leche', 'carne', 'pescado', 'huevo', 'lácteo', 'lacteo', 'ingrediente', 'mi muestra es', 'tengo una muestra', 'quiero analizar', 'voy a enviar'
       ],
       responses: [
-        '¡Perfecto! Para que tu muestra llegue en óptimas condiciones y podamos procesarla sin contratiempos:\n\n1. **Identifícala** claramente: nombre del producto, lote y fecha\n2. Usa **envases limpios y herméticos** adecuados al tipo de muestra\n3. Mantén la **temperatura correcta** durante el envío: refrigerada (2–8 °C), congelada (–18 °C) o temperatura ambiente según el análisis\n4. Si es microbiológico, **bolsa estéril obligatoria**\n5. Adjunta la **Solicitud de Análisis** completamente llena\n\nDescarga el formato aquí y contáctanos para coordinar la recepción:',
-        '¡Excelente, podemos trabajar con esa muestra! Para enviarla correctamente: identifícala bien (nombre, lote, fecha), usa el envase adecuado, conserva la cadena de frío si aplica, y adjunta la Solicitud de Análisis. Para microbiológicos siempre en bolsa estéril.\n\nAquí tienes los formatos y nuestros datos de contacto:'
+        '¡Perfecto! Para que tu muestra llegue en óptimas condiciones y podamos procesarla sin contratiempos:\n\n1. **Identifícala** claramente: nombre del producto, lote y fecha\n2. Usa **envases limpios y herméticos** adecuados al tipo de muestra\n3. Mantén la **temperatura correcta** durante el envío: refrigerada (2–8 °C), congelada (–18 °C) o temperatura ambiente según el análisis\n4. Si es microbiológico, **bolsa estéril obligatoria**\n\nRegistra tu solicitud a través de nuestro portal EUROLAB y contáctanos para coordinar la recepción:',
+        '¡Excelente, podemos trabajar con esa muestra! Para enviarla correctamente: identifícala bien (nombre, lote, fecha), usa el envase adecuado, conserva la cadena de frío si aplica. Para microbiológicos siempre en bolsa estéril.\n\nRegistra tu solicitud en nuestro portal EUROLAB:'
       ],
       suggestions: ['Ver tiempos de entrega', 'Servicio urgente', 'Hablar con especialista'],
-      actions: [ACTION_SOLICITUD_ANALISIS, ACTION_CADENA_CUSTODIA, ACTION_CONTACT_FORM]
+      actions: [ACTION_EUROLAB, ACTION_CONTACT_FORM]
     },
     {
       name: 'como_enviar',
       keywords: ['cómo envío', 'como envio', 'enviar muestra', 'mandar muestra', 'empacar', 'empaque', 'refrigerar', 'congelar', 'paquetería', 'envío', 'envio', 'requisitos de muestra', 'cuánta muestra', 'cuanta muestra'],
       responses: [
-        'Para enviar tus muestras correctamente:\n\n1. **Identifícalas** claramente (nombre, lote, fecha)\n2. **Envases limpios y adecuados** para cada tipo de muestra\n3. **Temperatura correcta:** refrigeradas (2-8°C), congeladas (-18°C) o temperatura ambiente según el análisis\n4. Para microbiológicos: **bolsa estéril** es obligatoria\n5. Incluir la **Solicitud de Análisis** (descárgala aquí)\n\n¿Quieres que te enviemos información adicional por correo?',
-        'El cuidado en el envío es crucial para resultados confiables. Lo más importante: identificación clara, envase adecuado, temperatura correcta y solicitud de servicio adjunta. Para microbiología siempre en bolsa estéril.'
+        'Para enviar tus muestras correctamente:\n\n1. **Identifícalas** claramente (nombre, lote, fecha)\n2. **Envases limpios y adecuados** para cada tipo de muestra\n3. **Temperatura correcta:** refrigeradas (2-8°C), congeladas (-18°C) o temperatura ambiente según el análisis\n4. Para microbiológicos: **bolsa estéril** es obligatoria\n\nRegistra tu solicitud a través de nuestro portal EUROLAB. ¿Quieres que te enviemos información adicional por correo?',
+        'El cuidado en el envío es crucial para resultados confiables. Lo más importante: identificación clara, envase adecuado y temperatura correcta. Para microbiología siempre en bolsa estéril. Registra tu solicitud en el portal EUROLAB.'
       ],
       suggestions: ['Tipo de análisis', 'Tiempos de entrega', 'Contactar asesor'],
-      actions: [ACTION_SOLICITUD_ANALISIS, ACTION_CADENA_CUSTODIA, ACTION_CONTACT_FORM]
+      actions: [ACTION_EUROLAB, ACTION_CONTACT_FORM]
     },
     {
       name: 'solicitar_formatos',
       keywords: ['formato', 'formatos', 'solicitud de servicio', 'formulario', 'descargar', 'descarga', 'documento', 'solicitar formato', 'solicitud análisis', 'solicitud credito'],
       responses: [
-        'Claro, aquí tienes los formatos disponibles para descargar:',
-        'Con gusto. Estos son los documentos que puedes descargar directamente:'
+        'Claro, el registro de solicitudes y la documentación se manejan a través de nuestro portal EUROLAB. También puedes descargar nuestro catálogo de servicios:',
+        'Con gusto. Ingresa a nuestro portal EUROLAB para registrar tu solicitud, y aquí puedes descargar el catálogo de servicios:'
       ],
       suggestions: ['Cómo enviar muestras', 'Alta de cliente', 'Contactar asesor'],
-      actions: [ACTION_CATALOGO, ACTION_SOLICITUD_ANALISIS, ACTION_SOLICITUD_CREDITO, ACTION_CADENA_CUSTODIA]
+      actions: [ACTION_CATALOGO, ACTION_EUROLAB]
     },
     {
       name: 'normas_metodos',
@@ -395,7 +383,7 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
         'Si una muestra llega en condiciones que no cumplen los requisitos, te notificamos de inmediato. Podemos rechazarla para que envíes una nueva, o procesarla bajo condiciones especiales previa autorización tuya. Siempre te consultamos antes.',
       ],
       suggestions: ['Cómo enviar correctamente', 'Contactar soporte', 'Tiempos de entrega'],
-      actions: [ACTION_SOLICITUD_ANALISIS]
+      actions: [ACTION_EUROLAB]
     },
     {
       name: 'gracias',

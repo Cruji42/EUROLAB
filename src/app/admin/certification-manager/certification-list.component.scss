@@ -24,8 +24,19 @@
 }
 
 .filters {
-  .input-group-text { background-color: #fff; border-right: none; }
-  .form-control { border-left: none; &:focus { box-shadow: none; } }
+  .input-group {
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    overflow: hidden;
+  }
+  .input-group-text {
+    background-color: #fff;
+    border: none;
+  }
+  .form-control {
+    border: none;
+    &:focus { box-shadow: none; }
+  }
 }
 
 .table {

@@ -8,7 +8,9 @@
     "contact": "Contacto",
     "cta": "EuroLab Online",
     "language": "Idioma",
-    "logoAlt": "Logo EuroLab"
+    "logoAlt": "Logo EuroLab",
+    "contactInfoTitle": "Información de contacto",
+    "followUsTitle": "Síguenos"
   },
   "footer": {
     "cta": {

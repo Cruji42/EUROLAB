@@ -28,6 +28,12 @@ export class NavbarComponent {
 menuItems = menu
   isMenuOpen = false;
 
+  socialLinks = [
+    { icon: 'fa-brands fa-instagram', url: 'https://www.instagram.com/lab_euronutec' },
+    { icon: 'fa-brands fa-facebook-f', url: 'https://www.facebook.com/LaboratorioEuronutec' },
+    { icon: 'fa-brands fa-linkedin-in', url: 'https://mx.linkedin.com/in/laboratorio-euronutec-b4ba9621b' }
+  ];
+
   toggleSubMenu(item: MenuItem, event?: Event): void {
     if (event) {
       event.stopPropagation();  // Prevents click from propagating to the parent <a>

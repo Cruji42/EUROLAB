@@ -6,8 +6,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import {
   AdminNewsService,
   NewsPostAdmin,
-  NewsCategoryAdmin,
-  NewsTagAdmin,
+  NewsCategorySimple,
+  NewsTagSimple,
   NewsCheckAdmin,
   NewsPostCreate,
   NewsPostNonTranslatableUpdate,
@@ -29,8 +29,8 @@ export class NewsFormComponent implements OnInit {
   loading = false;
   submitting = false;
   error = '';
-  categories: NewsCategoryAdmin[] = [];
-  allTags: NewsTagAdmin[] = [];
+  categories: NewsCategorySimple[] = [];
+  allTags: NewsTagSimple[] = [];
   allPosts: NewsPostAdmin[] = [];
 
   activeLang: TranslationLang = 'es';
@@ -233,12 +233,12 @@ export class NewsFormComponent implements OnInit {
     return current.includes(postId);
   }
 
-  tagName(tag: NewsTagAdmin): string {
-    return tag.translations.es.name || tag.translations.en.name || '';
+  tagName(tag: NewsTagSimple): string {
+    return tag.name;
   }
 
-  categoryName(category: NewsCategoryAdmin): string {
-    return category.translations.es.name || category.translations.en.name || '';
+  categoryName(category: NewsCategorySimple): string {
+    return category.name;
   }
 
   postTitle(post: NewsPostAdmin): string {

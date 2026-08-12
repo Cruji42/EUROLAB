@@ -33,33 +33,37 @@
 }
 
 .filters {
+  .input-group {
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    overflow: hidden;
+  }
+
   .input-group-text {
     background-color: #fff;
-    border-right: none;
+    border: none;
   }
-  
+
   .form-control {
-    border-left: none;
-    
+    border: none;
     &:focus {
       box-shadow: none;
     }
   }
-  
+
   .category-filter {
     display: flex;
     align-items: center;
-    
+
     label {
       font-weight: 500;
       color: #495057;
+      white-space: nowrap;
     }
-    
-    .btn-group {
-      .btn {
-        font-size: 0.9rem;
-        padding: 0.375rem 0.75rem;
-      }
+
+    .form-select {
+      width: auto;
+      min-width: 200px;
     }
   }
 }
@@ -99,18 +103,13 @@
     .category-filter {
       flex-direction: column;
       align-items: flex-start;
-      
+
       label {
         margin-bottom: 10px;
       }
-      
-      .btn-group {
-        display: flex;
-        flex-wrap: wrap;
-        
-        .btn {
-          margin-bottom: 5px;
-        }
+
+      .form-select {
+        width: 100%;
       }
     }
   }

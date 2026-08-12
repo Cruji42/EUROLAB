@@ -98,9 +98,11 @@
             </thead>
             <tbody>
               <tr *ngFor="let service of latestServices">
-                <td>{{ service.name }}</td>
+                <td>{{ serviceName(service) }}</td>
                 <td>
-                  <span class="badge bg-success">{{ 'admin.common.active' | translate }}</span>
+                  <span class="badge" [ngClass]="service.is_active ? 'bg-success' : 'bg-secondary'">
+                    {{ (service.is_active ? 'admin.common.active' : 'admin.common.inactive') | translate }}
+                  </span>
                 </td>
                 <td>
                   <a [routerLink]="['/admin/servicios', service.id]" class="btn btn-sm btn-outline-primary me-2">
@@ -136,10 +138,12 @@
             </thead>
             <tbody>
               <tr *ngFor="let news of latestNews">
-                <td>{{ news.title }}</td>
-                <td>{{ news.category?.name || ('admin.dashboard.latestNews.noCategory' | translate) }}</td>
+                <td>{{ newsTitle(news) }}</td>
+                <td>{{ newsCategoryName(news) || ('admin.dashboard.latestNews.noCategory' | translate) }}</td>
                 <td>
-                  <span class="badge bg-success">{{ 'admin.dashboard.latestNews.published' | translate }}</span>
+                  <span class="badge" [ngClass]="news.is_published ? 'bg-success' : 'bg-secondary'">
+                    {{ (news.is_published ? 'admin.dashboard.latestNews.published' : 'admin.news.list.draft') | translate }}
+                  </span>
                 </td>
                 <td>
                   <a [routerLink]="['/admin/noticias', news.id]" class="btn btn-sm btn-outline-primary me-2">

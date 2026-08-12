@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AdminNewsService, NewsPostAdmin, NewsCategoryAdmin } from '../services/admin-news.service';
+import { AdminNewsService, NewsPostAdmin, NewsCategoryAdmin, NewsCategorySimple } from '../services/admin-news.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { NewsDeleteModalComponent } from './news-delete-modal.component';
@@ -17,7 +17,7 @@ import { NewsDeleteModalComponent } from './news-delete-modal.component';
 export class NewsListComponent implements OnInit {
   newsPosts: NewsPostAdmin[] = [];
   filteredPosts: NewsPostAdmin[] = [];
-  categories: NewsCategoryAdmin[] = [];
+  categories: NewsCategorySimple[] = [];
   loading = true;
   searchTerm = '';
   selectedCategory: string | null = null;
@@ -117,5 +117,9 @@ export class NewsListComponent implements OnInit {
 
   categoryName(category: NewsCategoryAdmin): string {
     return category.translations.es.name || category.translations.en.name || '';
+  }
+
+  filterCategoryName(category: NewsCategorySimple): string {
+    return category.name;
   }
 }

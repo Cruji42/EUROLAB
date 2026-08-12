@@ -28,26 +28,18 @@
 
           <div class="col-md-6">
             <div class="category-filter">
-              <label class="me-2">{{ 'admin.news.list.filterByCategory' | translate }}</label>
-              <div class="btn-group" role="group">
-                <button
-                  type="button"
-                  class="btn"
-                  [ngClass]="{'btn-primary': selectedCategory === null, 'btn-outline-primary': selectedCategory !== null}"
-                  (click)="filterByCategory(null)"
-                >
-                  {{ 'admin.news.list.all' | translate }}
-                </button>
-                <button
-                  *ngFor="let category of categories"
-                  type="button"
-                  class="btn"
-                  [ngClass]="{'btn-primary': selectedCategory === category.slug, 'btn-outline-primary': selectedCategory !== category.slug}"
-                  (click)="filterByCategory(category.slug)"
-                >
-                  {{ categoryName(category) }}
-                </button>
-              </div>
+              <label class="me-2" for="categoryFilterSelect">{{ 'admin.news.list.filterByCategory' | translate }}</label>
+              <select
+                id="categoryFilterSelect"
+                class="form-select"
+                [ngModel]="selectedCategory"
+                (ngModelChange)="filterByCategory($event)"
+              >
+                <option [ngValue]="null">{{ 'admin.news.list.all' | translate }}</option>
+                <option *ngFor="let category of categories" [ngValue]="category.slug">
+                  {{ filterCategoryName(category) }}
+                </option>
+              </select>
             </div>
           </div>
         </div>

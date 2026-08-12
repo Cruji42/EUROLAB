@@ -64,17 +64,17 @@
             <ul>
                @for (item of menuItems; track $index) {
                <li >
-                 <a href="javascript:void(0);" (click)="toggleSubMenu(item)">
-                   {{ item.title }}
+                 <a [routerLink]="item.subMenu ? null : item.link" (click)="item.subMenu ? toggleSubMenu(item) : closeMenu()">
+                   {{ item.title | translate }}
                    <span *ngIf="item.icon"><i [class]="item.icon"></i></span>
                  </a>
-             
+
                  <!-- Submenu -->
                   @if (item.subMenu && item.isOpen) {
                  <ul class="sub-menu"  [ngStyle]="{ 'display': item.isOpen ? 'block' : 'none' }">
                   @for (subItem of item.subMenu; track $index) {
                    <li>
-                     <a [href]="subItem.link">{{ subItem.title }}</a>
+                     <a [routerLink]="subItem.link" (click)="closeMenu()">{{ subItem.title | translate }}</a>
                    </li>
                   }
                  </ul>
@@ -91,10 +91,10 @@
              </ul></nav>
       </div>
       <div class="ca-offcanvas-contact mb-40">
-         <a href="https://eurolab.gponutec.com:8082/login.aspx" target="_blank" class="ca-btn-primary-3 theme-bg-3 text-white br-50">EuroLab Online <span><i class="fa-solid fa-angle-right"></i></span></a>
+         <a href="https://eurolab.gponutec.com:8082/login.aspx" target="_blank" class="ca-btn-primary-3 theme-bg-3 text-white br-50">{{ 'nav.cta' | translate }} <span><i class="fa-solid fa-angle-right"></i></span></a>
       </div>
       <div class="ca-offcanvas-contact-info mb-40">
-         <h3 class="ca-offcanvas-sm-title">Contact Info</h3>
+         <h3 class="ca-offcanvas-sm-title">{{ 'nav.contactInfoTitle' | translate }}</h3>
           <!-- single item -->
           <div class="ca-sm-single-item-4 ca-sm-single-item-1 mb-20">
             <div class="icon">
@@ -103,8 +103,7 @@
                </span>
             </div>
             <div class="ca-sm-single-item-4-content">
-               <p><a href="javascript:void(0);">55 Street, 2nd block, 3rd Floor
-                  Melbourne, Australia</a></p>
+               <p><a href="javascript:void(0);">{{ 'views.contact.address' | translate }}</a></p>
             </div>
          </div>
 
@@ -116,7 +115,7 @@
                </span>
             </div>
             <div class="ca-sm-single-item-4-content">
-               <p><a href="tel:+0221234568806">+022 (123) 456 88 06</a></p>
+               <p><a href="tel:+14461335884">(446) 133-5884</a></p>
             </div>
          </div>
 
@@ -128,18 +127,17 @@
                </span>
             </div>
             <div class="ca-sm-single-item-4-content">
-               <p><a href="mailto:infocargon@gmail.com">infocargon&#64;gmail.com</a></p>
+               <p><a href="mailto:eurolab@gponutec.com">eurolab&#64;gponutec.com</a></p>
             </div>
          </div>
       </div>
       <div class="ca-offcanvas-social mb-40">
-         <h3 class="ca-offcanvas-sm-title">Follow Us</h3>
+         <h3 class="ca-offcanvas-sm-title">{{ 'nav.followUsTitle' | translate }}</h3>
          <div class="ca-footer-social ca-footer-social-3">
             <ul>
-               <li><a href="javascript:void(0);"><i class="fa-brands fa-instagram"></i></a></li>
-               <li><a href="javascript:void(0);"><i class="fa-brands fa-facebook-f"></i></a></li>
-               <li><a href="javascript:void(0);"><i class="fa-brands fa-linkedin-in"></i></a></li>
-               <li><a href="javascript:void(0);"><i class="fa-brands fa-x-twitter"></i></a></li>
+               @for (social of socialLinks; track $index) {
+               <li><a [href]="social.url" target="_blank"><i [class]="social.icon"></i></a></li>
+               }
             </ul>
          </div>
       </div>
