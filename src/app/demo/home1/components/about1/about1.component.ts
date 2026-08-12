@@ -29,7 +29,7 @@ export class About1Component {
     },
     {
       id: 3,
-      image: 'assets/img/about/ca-sm-about-3.2.png',
+      image: 'assets/img/about/ca-sm-about-3.3.png',
       imageClass: 'sm-img-2',
       icon: 'assets/img/icon/ca-delivery3.1.svg',
       count: 11,

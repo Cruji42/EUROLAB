@@ -67,7 +67,7 @@ const ACTION_WHATSAPP: ChatAction = {
 const ACTION_EMAIL: ChatAction = {
   type: 'email',
   label: 'Enviar correo al laboratorio',
-  value: 'mailto:laboratorio@gponutec.com'
+  value: 'mailto:eurolab@gponutec.com'
 };
 
 @Component({
