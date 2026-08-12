@@ -78,8 +78,8 @@
       "subtitle": "Nuestro Equipo",
       "description": "Cada integrante aporta conocimiento técnico y vocación de servicio para ofrecerte soluciones analíticas de primer nivel.",
       "roles": {
-        "labManager": "Responsable de Laboratorio",
-        "deputyLabManager": "Responsable adjunto de Laboratorio",
+        "labManager": "Gerente de Laboratorio",
+        "deputyLabManager": "Responsable de Laboratorio",
         "commercialLab": "Comercial Laboratorio"
       }
     },

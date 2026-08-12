@@ -9,70 +9,87 @@
          <div class="col-lg-6 mb-30">
             <div class="ca-value-content3">
                <div class="ca-about-content-3 ca-sec-content-3">
-                  <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">{{ 'views.aboutValues.subtitle' | translate }}</h5>
-                  <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">{{ 'views.aboutValues.title' | translate }}</h2>
+                  <h5 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">{{
+                     'views.aboutValues.subtitle' | translate }}</h5>
+                  <h2 class="ca-section-title theme-black-3 fnw-600 pt-16 ca-text-cap">{{ 'views.aboutValues.title' |
+                     translate }}</h2>
                   <p class="pt-16 pb-40">{{ 'views.aboutValues.description' | translate }}</p>
-               </div>
-               <div class="row">
-                  <div class="col-lg-6 col-md-6 mb-20">
-                     <div class="ca-value-cbox w-bg br-7">
-                        <h3 class="ca-counter-title theme-black-3 fnw-300 pb-16">{{ 'views.aboutValues.passionateService.title' | translate }}</h3>
-                        <!-- <span class="v-text">Acreditaciones EMA vigentes</span> -->
-                        <ul>
-                           <li><span class="v-text">• {{ 'views.aboutValues.passionateService.item1' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.passionateService.item2' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.passionateService.item3' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.passionateService.item4' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.passionateService.item5' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.passionateService.item6' | translate }}</span></li>
-                        </ul>
-                     </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 mb-20">
-                     <div class="ca-value-cbox w-bg  br-7">
-                        <h3 class="ca-counter-title fnw-300 pb-16">{{ 'views.aboutValues.innovation.title' | translate }}</h3>
-                        <ul>
-                           <li><span class="v-text">• {{ 'views.aboutValues.innovation.item1' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.innovation.item2' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.innovation.item3' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.innovation.item4' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.innovation.item5' | translate }}</span>
-                           </li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.innovation.item6' | translate }}</span></li>
-                        </ul>
-                     </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 mb-20">
-                     <div class="ca-value-cbox w-bg br-7">
-                        <h3 class="ca-counter-title theme-black-3 fnw-300 pb-16">{{ 'views.aboutValues.teamRespect.title' | translate }}</h3>
-                        <ul>
-                           <li><span class="v-text">• {{ 'views.aboutValues.teamRespect.item1' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.teamRespect.item2' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.teamRespect.item3' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.teamRespect.item4' | translate }}</span></li>
-                        </ul>
-                     </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 mb-20">
-                     <div class="ca-value-cbox w-bg br-7">
-                        <h3 class="ca-counter-title theme-black-3 fnw-300 pb-16">{{ 'views.aboutValues.excellence.title' | translate }}</h3>
-                        <ul>
-                           <li><span class="v-text">• {{ 'views.aboutValues.excellence.item1' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.excellence.item2' | translate }}</span>
-                           </li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.excellence.item3' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.excellence.item4' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.excellence.item5' | translate }}</span></li>
-                           <li><span class="v-text">• {{ 'views.aboutValues.excellence.item6' | translate }}</span></li>
-                        </ul>
-                     </div>
-                  </div>
-               </div>
-               <div class="ca-about-3-btn">
-                  <a routerLink="/service" class="ca-btn-primary-3 theme-bg-3 text-white br-50 mt-12">{{ 'views.aboutValues.viewServicesButton' | translate }}<span><i class="fa-solid fa-angle-right"></i></span></a>
                </div>
             </div>
          </div>
       </div>
+
+      <!-- Cards ahora en fila independiente, debajo de ambas columnas -->
+      <div class="row ca-value-cards-row">
+         <div class="col-lg-3 col-md-6 mb-20">
+            <div class="ca-value-cbox w-bg br-7">
+               <div class="ca-value-cbox-icon">
+                  <img src="assets/img/about/icono_servicio.png" alt="Servicio apasionado">
+               </div>
+               <h4 class="ca-counter-title theme-black-3 fnw-300 pb-16">{{ 'views.aboutValues.passionateService.title' |
+                  translate }}</h4>
+               <ul>
+                  <li><span class="v-text">• {{ 'views.aboutValues.passionateService.item1' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.passionateService.item2' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.passionateService.item3' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.passionateService.item4' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.passionateService.item5' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.passionateService.item6' | translate }}</span></li>
+               </ul>
+            </div>
+         </div>
+         <div class="col-lg-3 col-md-6 mb-20">
+            <div class="ca-value-cbox w-bg br-7">
+               <div class="ca-value-cbox-icon">
+                  <img src="assets/img/about/icono_supera.png" alt="Supera innovación">
+               </div>
+               <h4 class="ca-counter-title fnw-300 pb-16">{{ 'views.aboutValues.innovation.title' | translate }}</h4>
+               <ul>
+                  <li><span class="v-text">• {{ 'views.aboutValues.innovation.item1' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.innovation.item2' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.innovation.item3' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.innovation.item4' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.innovation.item5' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.innovation.item6' | translate }}</span></li>
+               </ul>
+            </div>
+         </div>
+         <div class="col-lg-3 col-md-6 mb-20">
+            <div class="ca-value-cbox w-bg br-7">
+               <div class="ca-value-cbox-icon">
+                  <img src="assets/img/about/icono_respeto.png" alt="Respeto y valoración de equipo">
+               </div>
+               <h4 class="ca-counter-title theme-black-3 fnw-300 pb-16">{{ 'views.aboutValues.teamRespect.title' |
+                  translate }}</h4>
+               <ul>
+                  <li><span class="v-text">• {{ 'views.aboutValues.teamRespect.item1' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.teamRespect.item2' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.teamRespect.item3' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.teamRespect.item4' | translate }}</span></li>
+               </ul>
+            </div>
+         </div>
+         <div class="col-lg-3 col-md-6 mb-20">
+            <div class="ca-value-cbox w-bg br-7">
+               <div class="ca-value-cbox-icon">
+                  <img src="assets/img/about/icono_compromiso.png" alt="Compromiso con la excelencia">
+               </div>
+               <h4 class="ca-counter-title theme-black-3 fnw-300 pb-16">{{ 'views.aboutValues.excellence.title' |
+                  translate }}</h4>
+               <ul>
+                  <li><span class="v-text">• {{ 'views.aboutValues.excellence.item1' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.excellence.item2' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.excellence.item3' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.excellence.item4' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.excellence.item5' | translate }}</span></li>
+                  <li><span class="v-text">• {{ 'views.aboutValues.excellence.item6' | translate }}</span></li>
+               </ul>
+            </div>
+         </div>
+      </div>
+
+      <!-- <div class="ca-about-3-btn text-center mt-30">
+         <a routerLink="/service" class="ca-btn-primary-3 theme-bg-3 text-white br-50 mt-12">{{ 'views.aboutValues.viewServicesButton' | translate }}<span><i class="fa-solid fa-angle-right"></i></span></a>
+      </div> -->
    </div>
 </section>

@@ -19,7 +19,7 @@
             <div class="ca-team-iner-img">
               <img class="w-100" [src]="member.image" [alt]="member.name">
             </div>
-<!--             <div class="ca-team-iner-social">
+            <!--             <div class="ca-team-iner-social">
               <ul>
                 <li><a href="{{member.social_links.email}}">
                     <div class="ca-location-icbox-img"><span><img src="assets/img/icon/ca-envelop3.3.svg" alt=""></span>
@@ -44,8 +44,9 @@
                 <p>
                   <span><img src="assets/img/icon/ca-envelop3.3.svg" alt=""> {{member.social_links.email}}</span>
                 </p>
-                <p>
+                <p *ngIf="member.social_links.phone">
                   <span>
+
                     <img src="assets/img/icon/ca-ph3.2.svg" alt=""> {{member.social_links.phone}}</span>
                 </p>
 

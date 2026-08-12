@@ -6,7 +6,15 @@ import { TranslatePipe } from '@ngx-translate/core';
   selector: 'app-working1',
   imports: [RouterLink, TranslatePipe],
   templateUrl: './working1.component.html',
-  styles: ``
+  styles: `.ca-work-ic-box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ca-work-ic-box-content ul {
+    flex: 1;
+}`
 })
 export class Working1Component {
   workingProcess = [

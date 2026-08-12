@@ -508,7 +508,7 @@
       "description": "Each team member contributes technical knowledge and a service-oriented mindset to offer you top-tier analytical solutions.",
       "roles": {
         "labManager": "Laboratory Manager",
-        "deputyLabManager": "Deputy Laboratory Manager",
+        "deputyLabManager": "Laboratory Supervisor",
         "commercialLab": "Laboratory Sales Representative"
       }
     },
