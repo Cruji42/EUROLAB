@@ -5426,38 +5426,50 @@ iframe.ca-map {
 }
 
 /* uniform certification cards: equal image height + equal card height regardless of text length */
-.ca-blog-box-3 {
+.ca-blg-box-3 {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
-.ca-blog-box-3 .ca-team-img {
+.ca-blg-box-3 .ca-team-img {
     height: 240px;
 }
-.ca-blog-box-3 .ca-team-img img {
+.ca-blg-box-3 .ca-team-img img {
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
-.ca-blog-box-3 .ca-blog-box-content-3 {
+.ca-blg-box-3 .ca-blog-box-content-3 {
     display: flex;
     flex-direction: column;
     flex: 1;
 }
-.ca-blog-box-3 .ca-blog-title-3 {
+.ca-blg-box-3 .ca-blog-title-3 {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
 }
-.ca-blog-box-3 .ca-blog-box-content-3 > p {
+.ca-blg-box-3 .ca-blog-box-content-3 > p {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
 }
-.ca-blog-box-3 .blog-3-rearmore {
+.ca-blg-box-3 .blog-3-rearmore {
     margin-top: auto;
+}
+
+/* certification cards use logo-style images: show them whole, not cropped */
+.ca-blg-box-3.ca-cert-box .ca-team-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #fff;
+}
+.ca-blg-box-3.ca-cert-box .ca-team-img img {
+    object-fit: contain;
 }
 
 

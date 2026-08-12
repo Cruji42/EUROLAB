@@ -1,5 +1,5 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { ApplicationConfig, inject, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter, Router } from '@angular/router';
 import { provideHttpClient, withInterceptors, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { routes } from './app.routes';
@@ -17,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([
         (req, next) => {
+          const router = inject(Router);
           // Get the token from localStorage
           const token = localStorage.getItem('auth_token');
           
@@ -47,7 +48,7 @@ export const appConfig: ApplicationConfig = {
                 // Token expired or invalid
                 localStorage.removeItem('auth_token');
                 // Redirect to login page
-                window.location.href = '/login';
+                router.navigateByUrl('/login');
               }
               return throwError(() => error);
             })
@@ -60,7 +61,7 @@ export const appConfig: ApplicationConfig = {
     BrowserModule,
     provideAnimations(),
     provideTranslateService({
-      loader: provideTranslateHttpLoader({ prefix: '/assets/i18n/', suffix: '.json' }),
+      loader: provideTranslateHttpLoader({ prefix: 'assets/i18n/', suffix: '.json' }),
       fallbackLang: 'es',
       lang: 'es'
     })
