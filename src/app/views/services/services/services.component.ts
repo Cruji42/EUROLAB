@@ -51,12 +51,13 @@ export class ServicesComponent implements OnInit {
   }
 
   loadServices(): void {
+    console
     this.servicesService.getServices().subscribe({
       next: (data) => {
         this.services = data.map((svc, index) => ({
           id: svc.id,
           slug: svc.slug,
-          image: FALLBACK_IMAGES[index % FALLBACK_IMAGES.length],
+          image: svc.card_icon_url ?? FALLBACK_IMAGES[index % FALLBACK_IMAGES.length],
           title: svc.name,
           icon: svc.card_icon_url ?? DEFAULT_ICON,
           description: svc.card_hover_text ?? '',
