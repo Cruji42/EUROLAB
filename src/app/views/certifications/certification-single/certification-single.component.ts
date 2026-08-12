@@ -5,6 +5,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { BreadcrumbComponent } from '../../../components/breadcrumb/breadcrumb.component';
 import { CertificationsService } from '../../../services/certifications.service';
 import { CertificationDetail } from '../../../models/certification.model';
+import { resolveAssetUrl } from '../../../core/utils/asset-url';
 
 @Component({
   selector: 'app-certification-single',
@@ -33,5 +34,13 @@ export class CertificationSingleComponent implements OnInit {
       next: (data) => { this.cert = data; this.isLoading = false; },
       error: () => { this.errorMessage = 'views.certificationSingle.loadError'; this.isLoading = false; }
     });
+  }
+
+  get certificateDownloadUrl(): string | null {
+    return resolveAssetUrl(this.cert?.certificate_file_url);
+  }
+
+  get coverImageUrl(): string | null {
+    return resolveAssetUrl(this.cert?.cover_image_url);
   }
 }

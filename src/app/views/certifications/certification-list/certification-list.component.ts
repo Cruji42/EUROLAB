@@ -5,6 +5,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { BreadcrumbComponent } from '../../../components/breadcrumb/breadcrumb.component';
 import { CertificationsService } from '../../../services/certifications.service';
 import { CertificationCard } from '../../../models/certification.model';
+import { resolveAssetUrl } from '../../../core/utils/asset-url';
 
 @Component({
   selector: 'app-certification-list',
@@ -76,5 +77,9 @@ export class CertificationListComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  coverImageUrl(cert: CertificationCard): string {
+    return resolveAssetUrl(cert.cover_image_url) || 'assets/img/blog/ca-blog-1.1.png';
   }
 }

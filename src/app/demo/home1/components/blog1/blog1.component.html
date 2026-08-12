@@ -20,7 +20,7 @@
             <div class="ca-team-box ca-blog-box-3 cream-bg-3 br-7 fix p-relative z-index-1">
               <div class="ca-team-img">
                 <a [routerLink]="['/certificaciones', cert.slug]">
-                  <img class="w-100" [src]="cert.cover_image_url || 'assets/img/blog/ca-blog-1.1.png'" alt="{{ cert.title }}">
+                  <img class="w-100" [src]="coverImageUrl(cert)" alt="{{ cert.title }}">
                 </a>
               </div>
               <div class="ca-blog-date-3">

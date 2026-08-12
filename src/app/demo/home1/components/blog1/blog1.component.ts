@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CertificationsService } from '../../../../services/certifications.service';
 import { CertificationCard } from '../../../../models/certification.model';
+import { resolveAssetUrl } from '../../../../core/utils/asset-url';
 
 @Component({
   selector: 'app-blog1',
@@ -39,18 +40,27 @@ export class Blog1Component implements OnInit {
     }
   ];
 
+  private usingFallback = false;
+
   constructor(private certService: CertificationsService) {}
 
   ngOnInit(): void {
     this.certService.getCertifications({ limit: 3, destacadas: true }).subscribe({
       next: (data) => {
+        this.usingFallback = !data?.length;
         this.certifications = data?.length ? data : this.fallback;
         this.isLoading = false;
       },
       error: () => {
+        this.usingFallback = true;
         this.certifications = this.fallback;
         this.isLoading = false;
       }
     });
+  }
+
+  coverImageUrl(cert: CertificationCard): string {
+    if (this.usingFallback) return cert.cover_image_url || 'assets/img/blog/ca-blog-1.1.png';
+    return resolveAssetUrl(cert.cover_image_url) || 'assets/img/blog/ca-blog-1.1.png';
   }
 }

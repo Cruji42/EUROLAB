@@ -11,9 +11,9 @@
         <div class="col-xl-8 col-lg-10">
 
           <!-- Imagen portada -->
-          @if (cert.cover_image_url) {
+          @if (coverImageUrl) {
             <div class="ca-blog-details-img mb-40">
-              <img class="w-100 br-7" [src]="cert.cover_image_url" alt="{{ cert.title }}">
+              <img class="w-100 br-7" [src]="coverImageUrl" alt="{{ cert.title }}">
             </div>
           }
 
@@ -67,11 +67,11 @@
           }
 
           <!-- Constancia de certificación -->
-          @if (cert.certificate_file_url) {
+          @if (certificateDownloadUrl) {
             <div class="ca-cert-download mb-40 p-4 br-7" style="background:#f8f9fa; border: 1px solid #dee2e6;">
               <h5 class="fnw-600 mb-10"><i class="fa-solid fa-certificate me-2 theme-color-3"></i>{{ 'views.certificationSingle.certificateBox.title' | translate }}</h5>
               <p class="mb-15">{{ 'views.certificationSingle.certificateBox.description' | translate }}</p>
-              <a [href]="cert.certificate_file_url" target="_blank" rel="noopener" class="ca-sec-primary-3">
+              <a [href]="certificateDownloadUrl" target="_blank" rel="noopener" class="ca-sec-primary-3">
                 <i class="fa-solid fa-file-pdf me-2"></i>{{ 'views.certificationSingle.certificateBox.downloadButton' | translate }}
               </a>
             </div>
