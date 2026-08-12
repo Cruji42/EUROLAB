@@ -2,10 +2,11 @@ import { Component, ElementRef, HostListener } from '@angular/core';
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from "./footer/footer.component";
+import { ChatbotComponent } from '../components/chatbot/chatbot.component';
 
 @Component({
   selector: 'app-layout',
-  imports: [NavbarComponent, RouterOutlet, FooterComponent],
+  imports: [NavbarComponent, RouterOutlet, FooterComponent, ChatbotComponent],
   templateUrl: './layout.component.html',
   styles: ``
 })

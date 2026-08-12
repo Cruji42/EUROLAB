@@ -29,7 +29,7 @@
         <h5 class="mb-0">{{ 'admin.news.form.basicInfo' | translate }}</h5>
       </div>
       <div class="card-body" [formGroup]="translations">
-        <ng-container [formGroupName]="activeLang">
+        <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
           <div class="row mb-3">
             <div class="col-md-6">
               <label for="title" class="form-label">{{ 'admin.news.form.titleLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
@@ -59,6 +59,32 @@
             <div class="invalid-feedback" *ngIf="tc('excerpt')?.errors?.['maxlength'] && tc('excerpt')?.touched">
               {{ 'admin.news.form.excerptMaxLength' | translate }}
             </div>
+            <small class="form-text text-muted">{{ 'admin.news.form.excerptHint' | translate }}</small>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="title_en" class="form-label">{{ 'admin.news.form.titleLabel' | translate }}</label>
+              <input
+                type="text"
+                id="title_en"
+                class="form-control"
+                formControlName="title"
+                [ngClass]="{'is-invalid': tc('title')?.invalid && tc('title')?.touched}"
+              >
+            </div>
+
+            <div class="col-md-6">
+              <label for="breadcrumb_en" class="form-label">{{ 'admin.news.form.breadcrumbLabel' | translate }}</label>
+              <input type="text" id="breadcrumb_en" class="form-control" formControlName="breadcrumb">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="excerpt_en" class="form-label">{{ 'admin.news.form.excerptLabel' | translate }}</label>
+            <textarea id="excerpt_en" class="form-control" rows="2" formControlName="excerpt"
+              [ngClass]="{'is-invalid': tc('excerpt')?.invalid && tc('excerpt')?.touched}"></textarea>
             <small class="form-text text-muted">{{ 'admin.news.form.excerptHint' | translate }}</small>
           </div>
         </ng-container>
@@ -127,7 +153,17 @@
         <h5 class="mb-0">{{ 'admin.news.form.section1' | translate }}</h5>
       </div>
       <div class="card-body" [formGroup]="translations">
-        <ng-container [formGroupName]="activeLang">
+        <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
+            <input type="text" class="form-control" formControlName="section1_title">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraphLabel' | translate }}</label>
+            <textarea class="form-control" rows="4" formControlName="section1_paragraph"></textarea>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
           <div class="mb-3">
             <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
             <input type="text" class="form-control" formControlName="section1_title">
@@ -145,7 +181,21 @@
         <h5 class="mb-0">{{ 'admin.news.form.section2' | translate }}</h5>
       </div>
       <div class="card-body" [formGroup]="translations">
-        <ng-container [formGroupName]="activeLang">
+        <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
+            <input type="text" class="form-control" formControlName="section2_title">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraph1Label' | translate }}</label>
+            <textarea class="form-control" rows="3" formControlName="section2_paragraph1"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraph2Label' | translate }}</label>
+            <textarea class="form-control" rows="3" formControlName="section2_paragraph2"></textarea>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
           <div class="mb-3">
             <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
             <input type="text" class="form-control" formControlName="section2_title">
@@ -167,7 +217,21 @@
         <h5 class="mb-0">{{ 'admin.news.form.section3' | translate }}</h5>
       </div>
       <div class="card-body" [formGroup]="translations">
-        <ng-container [formGroupName]="activeLang">
+        <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
+            <input type="text" class="form-control" formControlName="section3_title">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraph1Label' | translate }}</label>
+            <textarea class="form-control" rows="3" formControlName="section3_paragraph1"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraph2Label' | translate }}</label>
+            <textarea class="form-control" rows="3" formControlName="section3_paragraph2"></textarea>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
           <div class="mb-3">
             <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
             <input type="text" class="form-control" formControlName="section3_title">
@@ -189,7 +253,21 @@
         <h5 class="mb-0">{{ 'admin.news.form.section4' | translate }}</h5>
       </div>
       <div class="card-body" [formGroup]="translations">
-        <ng-container [formGroupName]="activeLang">
+        <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
+            <input type="text" class="form-control" formControlName="section4_title">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraphLabel' | translate }}</label>
+            <textarea class="form-control" rows="3" formControlName="section4_paragraph"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.blockquoteLabel' | translate }}</label>
+            <textarea class="form-control" rows="2" formControlName="blockquote"></textarea>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
           <div class="mb-3">
             <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
             <input type="text" class="form-control" formControlName="section4_title">
@@ -218,10 +296,14 @@
         <div formArrayName="checks">
           <div *ngFor="let check of checks.controls; let i = index" [formGroupName]="i" class="row mb-3 align-items-center">
             <div class="col-md-9" [formGroup]="checkTranslations(i)">
-              <ng-container [formGroupName]="activeLang">
-                <label class="form-label">{{ 'admin.news.form.checkTextLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+              <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
+                <label class="form-label">{{ 'admin.news.form.checkTextLabel' | translate }} <span>*</span></label>
                 <input type="text" class="form-control" formControlName="label"
-                  [ngClass]="{'is-invalid': checkTranslations(i).get(activeLang + '.label')?.invalid && checkTranslations(i).get(activeLang + '.label')?.touched}">
+                  [ngClass]="{'is-invalid': checkTranslations(i).get('es.label')?.invalid && checkTranslations(i).get('es.label')?.touched}">
+              </ng-container>
+              <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
+                <label class="form-label">{{ 'admin.news.form.checkTextLabel' | translate }}</label>
+                <input type="text" class="form-control" formControlName="label">
               </ng-container>
             </div>
             <div class="col-md-2">
@@ -246,7 +328,17 @@
         <h5 class="mb-0">{{ 'admin.news.form.section5' | translate }}</h5>
       </div>
       <div class="card-body" [formGroup]="translations">
-        <ng-container [formGroupName]="activeLang">
+        <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
+            <input type="text" class="form-control" formControlName="section5_title">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">{{ 'admin.news.form.sectionParagraphLabel' | translate }}</label>
+            <textarea class="form-control" rows="3" formControlName="section5_paragraph"></textarea>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
           <div class="mb-3">
             <label class="form-label">{{ 'admin.news.form.sectionTitleLabel' | translate }}</label>
             <input type="text" class="form-control" formControlName="section5_title">
@@ -344,7 +436,7 @@
         <h5 class="mb-0">{{ 'admin.news.form.seo' | translate }}</h5>
       </div>
       <div class="card-body" [formGroup]="translations">
-        <ng-container [formGroupName]="activeLang">
+        <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
           <div class="row mb-3">
             <div class="col-md-6">
               <label for="meta_title" class="form-label">{{ 'admin.news.form.metaTitleLabel' | translate }}</label>
@@ -373,6 +465,33 @@
               <div class="invalid-feedback" *ngIf="tc('meta_description')?.errors?.['maxlength'] && tc('meta_description')?.touched">
                 {{ 'admin.news.form.metaDescriptionMaxLength' | translate }}
               </div>
+              <small class="form-text text-muted">{{ 'admin.news.form.metaDescriptionHint' | translate }}</small>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="meta_title_en" class="form-label">{{ 'admin.news.form.metaTitleLabel' | translate }}</label>
+              <input
+                type="text"
+                id="meta_title_en"
+                class="form-control"
+                formControlName="meta_title"
+                [ngClass]="{'is-invalid': tc('meta_title')?.invalid && tc('meta_title')?.touched}"
+              >
+              <small class="form-text text-muted">{{ 'admin.news.form.metaTitleHint' | translate }}</small>
+            </div>
+
+            <div class="col-md-6">
+              <label for="meta_description_en" class="form-label">{{ 'admin.news.form.metaDescriptionLabel' | translate }}</label>
+              <textarea
+                id="meta_description_en"
+                class="form-control"
+                rows="2"
+                formControlName="meta_description"
+                [ngClass]="{'is-invalid': tc('meta_description')?.invalid && tc('meta_description')?.touched}"
+              ></textarea>
               <small class="form-text text-muted">{{ 'admin.news.form.metaDescriptionHint' | translate }}</small>
             </div>
           </div>

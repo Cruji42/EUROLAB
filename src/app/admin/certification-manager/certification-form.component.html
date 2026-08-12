@@ -24,42 +24,63 @@
       <div class="card-body">
         <app-translation-tabs [active]="activeLang" (activeChange)="onLangChange($event)"></app-translation-tabs>
 
-        <ng-container [formGroup]="translations">
-          <ng-container [formGroupName]="activeLang">
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label class="form-label">{{ 'admin.certifications.form.titleLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
-                <input type="text" class="form-control" formControlName="title" (blur)="generateSlug()"
-                  [ngClass]="{'is-invalid': tc('title')?.invalid && tc('title')?.touched}">
-                <div class="invalid-feedback" *ngIf="tc('title')?.errors?.['required'] && tc('title')?.touched">{{ 'admin.certifications.form.titleRequired' | translate }}</div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">{{ 'admin.certifications.form.slugLabel' | translate }} *</label>
-                <input type="text" class="form-control" formControlName="slug"
-                  [ngClass]="{'is-invalid': fc('slug')?.invalid && fc('slug')?.touched}">
-                <div class="invalid-feedback" *ngIf="fc('slug')?.errors?.['required'] && fc('slug')?.touched">{{ 'admin.certifications.form.slugRequired' | translate }}</div>
-                <div class="invalid-feedback" *ngIf="fc('slug')?.errors?.['pattern'] && fc('slug')?.touched">{{ 'admin.certifications.form.slugPattern' | translate }}</div>
-                <small class="form-text text-muted">{{ 'admin.certifications.form.slugHint' | translate }}</small>
-              </div>
-            </div>
+        <div class="row mb-3">
+          <div class="col-md-6" [formGroup]="translations">
+            <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
+              <label class="form-label">{{ 'admin.certifications.form.titleLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+              <input type="text" class="form-control" formControlName="title" (blur)="generateSlug()"
+                [ngClass]="{'is-invalid': tc('title')?.invalid && tc('title')?.touched}">
+              <div class="invalid-feedback" *ngIf="tc('title')?.errors?.['required'] && tc('title')?.touched">{{ 'admin.certifications.form.titleRequired' | translate }}</div>
+            </ng-container>
+            <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
+              <label class="form-label">{{ 'admin.certifications.form.titleLabel' | translate }}</label>
+              <input type="text" class="form-control" formControlName="title"
+                [ngClass]="{'is-invalid': tc('title')?.invalid && tc('title')?.touched}">
+            </ng-container>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">{{ 'admin.certifications.form.slugLabel' | translate }} *</label>
+            <input type="text" class="form-control" formControlName="slug"
+              [ngClass]="{'is-invalid': fc('slug')?.invalid && fc('slug')?.touched}">
+            <div class="invalid-feedback" *ngIf="fc('slug')?.errors?.['required'] && fc('slug')?.touched">{{ 'admin.certifications.form.slugRequired' | translate }}</div>
+            <div class="invalid-feedback" *ngIf="fc('slug')?.errors?.['pattern'] && fc('slug')?.touched">{{ 'admin.certifications.form.slugPattern' | translate }}</div>
+            <small class="form-text text-muted">{{ 'admin.certifications.form.slugHint' | translate }}</small>
+          </div>
+        </div>
 
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label class="form-label">{{ 'admin.certifications.form.issuingBodyLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
-                <input type="text" class="form-control" formControlName="issuing_body"
-                  [ngClass]="{'is-invalid': tc('issuing_body')?.invalid && tc('issuing_body')?.touched}"
-                  [attr.placeholder]="'admin.certifications.form.issuingBodyPlaceholder' | translate">
-                <div class="invalid-feedback" *ngIf="tc('issuing_body')?.errors?.['required'] && tc('issuing_body')?.touched">{{ 'admin.certifications.form.issuingBodyRequired' | translate }}</div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">{{ 'admin.certifications.form.certTypeLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
-                <input type="text" class="form-control" formControlName="cert_type"
-                  [ngClass]="{'is-invalid': tc('cert_type')?.invalid && tc('cert_type')?.touched}"
-                  [attr.placeholder]="'admin.certifications.form.certTypePlaceholder' | translate">
-                <div class="invalid-feedback" *ngIf="tc('cert_type')?.errors?.['required'] && tc('cert_type')?.touched">{{ 'admin.certifications.form.certTypeRequired' | translate }}</div>
-              </div>
+        <div class="row mb-3" [formGroup]="translations">
+          <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
+            <div class="col-md-6">
+              <label class="form-label">{{ 'admin.certifications.form.issuingBodyLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+              <input type="text" class="form-control" formControlName="issuing_body"
+                [ngClass]="{'is-invalid': tc('issuing_body')?.invalid && tc('issuing_body')?.touched}"
+                [attr.placeholder]="'admin.certifications.form.issuingBodyPlaceholder' | translate">
+              <div class="invalid-feedback" *ngIf="tc('issuing_body')?.errors?.['required'] && tc('issuing_body')?.touched">{{ 'admin.certifications.form.issuingBodyRequired' | translate }}</div>
             </div>
+            <div class="col-md-6">
+              <label class="form-label">{{ 'admin.certifications.form.certTypeLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+              <input type="text" class="form-control" formControlName="cert_type"
+                [ngClass]="{'is-invalid': tc('cert_type')?.invalid && tc('cert_type')?.touched}"
+                [attr.placeholder]="'admin.certifications.form.certTypePlaceholder' | translate">
+              <div class="invalid-feedback" *ngIf="tc('cert_type')?.errors?.['required'] && tc('cert_type')?.touched">{{ 'admin.certifications.form.certTypeRequired' | translate }}</div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
+            <div class="col-md-6">
+              <label class="form-label">{{ 'admin.certifications.form.issuingBodyLabel' | translate }}</label>
+              <input type="text" class="form-control" formControlName="issuing_body"
+                [attr.placeholder]="'admin.certifications.form.issuingBodyPlaceholder' | translate">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">{{ 'admin.certifications.form.certTypeLabel' | translate }}</label>
+              <input type="text" class="form-control" formControlName="cert_type"
+                [attr.placeholder]="'admin.certifications.form.certTypePlaceholder' | translate">
+            </div>
+          </ng-container>
+        </div>
 
+        <div [formGroup]="translations">
+          <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
             <div class="mb-3">
               <label class="form-label">{{ 'admin.certifications.form.excerptLabel' | translate }}</label>
               <textarea class="form-control" rows="2" formControlName="excerpt"
@@ -67,14 +88,25 @@
               <div class="invalid-feedback" *ngIf="tc('excerpt')?.errors?.['maxlength'] && tc('excerpt')?.touched">{{ 'admin.certifications.form.excerptMaxLength' | translate }}</div>
               <small class="form-text text-muted">{{ 'admin.certifications.form.excerptHint' | translate }}</small>
             </div>
-
             <div class="mb-3">
               <label class="form-label">{{ 'admin.certifications.form.descriptionLabel' | translate }}</label>
               <textarea class="form-control" rows="8" formControlName="description"></textarea>
               <small class="form-text text-muted">{{ 'admin.certifications.form.descriptionHint' | translate }}</small>
             </div>
           </ng-container>
-        </ng-container>
+          <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
+            <div class="mb-3">
+              <label class="form-label">{{ 'admin.certifications.form.excerptLabel' | translate }}</label>
+              <textarea class="form-control" rows="2" formControlName="excerpt"></textarea>
+              <small class="form-text text-muted">{{ 'admin.certifications.form.excerptHint' | translate }}</small>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ 'admin.certifications.form.descriptionLabel' | translate }}</label>
+              <textarea class="form-control" rows="8" formControlName="description"></textarea>
+              <small class="form-text text-muted">{{ 'admin.certifications.form.descriptionHint' | translate }}</small>
+            </div>
+          </ng-container>
+        </div>
       </div>
     </div>
 
@@ -130,7 +162,21 @@
     <div class="card mb-4">
       <div class="card-header"><h5 class="mb-0">{{ 'admin.certifications.form.seo' | translate }}</h5></div>
       <div class="card-body" [formGroup]="translations">
-        <ng-container [formGroupName]="activeLang">
+        <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">{{ 'admin.certifications.form.metaTitleLabel' | translate }}</label>
+              <input type="text" class="form-control" formControlName="meta_title">
+              <small class="form-text text-muted">{{ 'admin.certifications.form.metaTitleHint' | translate }}</small>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">{{ 'admin.certifications.form.metaDescriptionLabel' | translate }}</label>
+              <textarea class="form-control" rows="2" formControlName="meta_description"></textarea>
+              <small class="form-text text-muted">{{ 'admin.certifications.form.metaDescriptionHint' | translate }}</small>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
           <div class="row mb-3">
             <div class="col-md-6">
               <label class="form-label">{{ 'admin.certifications.form.metaTitleLabel' | translate }}</label>

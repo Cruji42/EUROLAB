@@ -117,7 +117,7 @@
         </div>
 
         <ng-container [formGroup]="translations">
-          <ng-container [formGroupName]="activeLang">
+          <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
 
             <!-- Subtitle -->
             <div class="col-12">
@@ -153,6 +153,46 @@
                      [attr.placeholder]="'admin.slider.form.btnPrimaryTextPlaceholder' | translate"
                      [class.is-invalid]="isTcInvalid('btn_primary_text')">
               <div class="invalid-feedback">{{ 'admin.common.required' | translate }}</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">{{ 'admin.slider.form.btnSecondaryTextLabel' | translate }}</label>
+              <input type="text" class="form-control" formControlName="btn_secondary_text"
+                     [attr.placeholder]="'admin.slider.form.btnSecondaryTextPlaceholder' | translate">
+            </div>
+
+          </ng-container>
+          <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
+
+            <!-- Subtitle -->
+            <div class="col-12">
+              <label class="form-label fw-semibold">{{ 'admin.slider.form.subtitleLabel' | translate }}</label>
+              <input type="text" class="form-control" formControlName="subtitle"
+                     [attr.placeholder]="'admin.slider.form.subtitlePlaceholder' | translate"
+                     [class.is-invalid]="isTcInvalid('subtitle')">
+            </div>
+
+            <!-- Title -->
+            <div class="col-12">
+              <label class="form-label fw-semibold">{{ 'admin.slider.form.titleLabel' | translate }}</label>
+              <input type="text" class="form-control" formControlName="title"
+                     [attr.placeholder]="'admin.slider.form.titlePlaceholder' | translate"
+                     [class.is-invalid]="isTcInvalid('title')">
+            </div>
+
+            <!-- Description -->
+            <div class="col-12">
+              <label class="form-label fw-semibold">{{ 'admin.slider.form.descriptionLabel' | translate }}</label>
+              <textarea class="form-control" formControlName="description" rows="3"
+                        [attr.placeholder]="'admin.slider.form.descriptionPlaceholder' | translate"
+                        [class.is-invalid]="isTcInvalid('description')"></textarea>
+            </div>
+
+            <!-- Buttons text (traducible) -->
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">{{ 'admin.slider.form.btnPrimaryTextLabel' | translate }}</label>
+              <input type="text" class="form-control" formControlName="btn_primary_text"
+                     [attr.placeholder]="'admin.slider.form.btnPrimaryTextPlaceholder' | translate"
+                     [class.is-invalid]="isTcInvalid('btn_primary_text')">
             </div>
             <div class="col-md-6">
               <label class="form-label fw-semibold">{{ 'admin.slider.form.btnSecondaryTextLabel' | translate }}</label>

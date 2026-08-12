@@ -3,11 +3,10 @@ import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/r
 import * as AOS from 'aos';
 import { TranslateService } from '@ngx-translate/core';
 import { TitleService } from '../../title.service';
-import { ChatbotComponent } from './components/chatbot/chatbot.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ChatbotComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
