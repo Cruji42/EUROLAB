@@ -43,6 +43,13 @@ export const ADMIN_ROUTES: Routes = [
           )
       },
       {
+        path: 'equipo',
+        loadChildren: () =>
+          import('./team-manager/team-manager.routes').then(
+            (m) => m.TEAM_MANAGER_ROUTES
+          )
+      },
+      {
         path: 'usuarios',
         loadChildren: () =>
           import('./users-manager/users-manager.routes').then(

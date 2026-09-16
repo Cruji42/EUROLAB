@@ -1,27 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { TeamService } from '../../../../services/team.service';
+import { TeamMemberCard } from '../../../../models/team-member.model';
+import { resolveAssetUrl } from '../../../../core/utils/asset-url';
 
 @Component({
   selector: 'app-about-team',
-  imports: [RouterLink, TranslatePipe, CommonModule],
+  imports: [RouterLink, TranslatePipe, CommonModule, SlickCarouselModule],
   templateUrl: './about-team.component.html',
   styles: [`
-  .ca-team-iner .row {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .ca-team-iner .row > [class*="col-"] {
-    display: flex;
-  }
-
   .ca-team-inner {
     width: 100%;
     display: flex;
     flex-direction: column;
     height: 100%;
+    margin: 0 12px;
   }
 
   .ca-team-iner-img {
@@ -46,67 +42,79 @@ import { TranslatePipe } from '@ngx-translate/core';
   }
 
   .ca-team-iner-content {
-    height: 190px;
+    min-height: 190px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
   }
 
   .ca-team-iner-heading {
     display: flex;
     flex-direction: column;
+    flex: 1;
+  }
+
+  .ca-team-iner-heading p {
+    margin-bottom: 8px;
+  }
+
+  ::ng-deep .ca-team-slider .slick-track {
+    display: flex;
+  }
+
+  ::ng-deep .ca-team-slider .slick-slide {
+    height: auto;
+  }
+
+  ::ng-deep .ca-team-slider .slick-slide > div {
     height: 100%;
   }
 
-  .ca-team-iner-heading p:last-of-type {
-    margin-top: auto;
+  ::ng-deep .ca-team-slider .slick-dots {
+    position: static;
+    margin-top: 20px;
   }
 `]
 })
-export class AboutTeamComponent {
+export class AboutTeamComponent implements OnInit {
   teamData = {
-    "title": "views.aboutTeam.title",
-    "subtitle": "views.aboutTeam.subtitle",
-    "description": "views.aboutTeam.description",
-    "team_members": [
-      {
-        "name": "MICP. Lucía Robles Garay",
-        "role": "views.aboutTeam.roles.labManager",
-        "image": "assets/img/team/ca-team-iner1.1.png",
-        "social_links": {
-          "email": "lrobles@gponutec.com",
-          // "phone": "#"
-        }
+    title: 'views.aboutTeam.title',
+    subtitle: 'views.aboutTeam.subtitle',
+    description: 'views.aboutTeam.description',
+  };
+
+  teamMembers: TeamMemberCard[] = [];
+  loading = true;
+
+  teamSlider = {
+    arrows: false,
+    dots: true,
+    infinite: false,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    responsive: [
+      { breakpoint: 992, settings: { slidesToShow: 2 } },
+      { breakpoint: 576, settings: { slidesToShow: 1 } },
+    ],
+  };
+
+  constructor(private teamService: TeamService) {}
+
+  ngOnInit(): void {
+    this.teamService.getTeamMembers().subscribe({
+      next: (members) => {
+        this.teamMembers = members;
+        this.loading = false;
       },
-      {
-        "name": "QFB. Mónica Arreguín",
-        "role": "views.aboutTeam.roles.deputyLabManager",
-        "image": "assets/img/team/ca-team-iner1.2.png",
-        "social_links": {
-          "email": "marreguin@gponutec.com",
-          // "phone": "#"
-        }
+      error: () => {
+        this.loading = false;
       },
-      {
-        "name": "Edmundo Hernández",
-        "role": "views.aboutTeam.roles.commercialLab",
-        "image": "assets/img/team/no-profile.png",
-        "social_links": {
-          "email": "ehernandez@gponutec.com",
-          "phone": "4421280968"
-        }
-      },
-      {
-        "name": "Ing. Alejandra Ibarra Díaz",
-        "role": "views.aboutTeam.roles.commercialLab",
-        "image": "assets/img/team/no-profile.png",
-        "social_links": {
-          "email": "aibarra@gponutec.com",
-          "phone": "4422742397"
-        }
-      }
-    ]
+    });
   }
 
+  memberImage(member: TeamMemberCard): string {
+    return resolveAssetUrl(member.image_url) || 'assets/img/team/no-profile.png';
+  }
 }

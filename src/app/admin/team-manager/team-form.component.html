@@ -1,0 +1,118 @@
+<div class="news-form-container">
+  <div class="header-actions">
+    <h2 class="section-title">
+      {{ (isEditMode ? 'admin.team.form.editTitle' : 'admin.team.form.newTitle') | translate }}
+    </h2>
+    <a routerLink="/admin/equipo" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left me-2"></i>{{ 'admin.common.back' | translate }}
+    </a>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner-border text-primary" role="status"><span class="visually-hidden">{{ 'admin.common.loading' | translate }}</span></div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <form [formGroup]="memberForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+
+    <!-- Información básica -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">{{ 'admin.team.form.basicInfo' | translate }}</h5>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">{{ 'admin.team.form.nameLabel' | translate }} *</label>
+            <input type="text" class="form-control" formControlName="name"
+              [ngClass]="{'is-invalid': fc('name')?.invalid && fc('name')?.touched}">
+            <div class="invalid-feedback" *ngIf="fc('name')?.errors?.['required'] && fc('name')?.touched">{{ 'admin.team.form.nameRequired' | translate }}</div>
+          </div>
+          <div class="col-md-6" [formGroup]="translations">
+            <app-translation-tabs [active]="activeLang" (activeChange)="onLangChange($event)"></app-translation-tabs>
+            <ng-container *ngIf="activeLang === 'es'" formGroupName="es">
+              <label class="form-label">{{ 'admin.team.form.roleLabel' | translate }} <span *ngIf="activeLang === 'es'">*</span></label>
+              <input type="text" class="form-control" formControlName="role"
+                [attr.placeholder]="'admin.team.form.rolePlaceholder' | translate"
+                [ngClass]="{'is-invalid': tc('role')?.invalid && tc('role')?.touched}">
+              <div class="invalid-feedback" *ngIf="tc('role')?.errors?.['required'] && tc('role')?.touched">{{ 'admin.team.form.roleRequired' | translate }}</div>
+            </ng-container>
+            <ng-container *ngIf="activeLang === 'en'" formGroupName="en">
+              <label class="form-label">{{ 'admin.team.form.roleLabel' | translate }}</label>
+              <input type="text" class="form-control" formControlName="role"
+                [attr.placeholder]="'admin.team.form.rolePlaceholder' | translate">
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">{{ 'admin.team.form.emailLabel' | translate }}</label>
+            <input type="email" class="form-control" formControlName="email"
+              [ngClass]="{'is-invalid': fc('email')?.invalid && fc('email')?.touched}">
+            <div class="invalid-feedback" *ngIf="fc('email')?.errors?.['email'] && fc('email')?.touched">{{ 'admin.team.form.emailInvalid' | translate }}</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">{{ 'admin.team.form.phoneLabel' | translate }}</label>
+            <input type="text" class="form-control" formControlName="phone">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fotografía -->
+    <div class="card mb-4">
+      <div class="card-header"><h5 class="mb-0">{{ 'admin.team.form.photo' | translate }}</h5></div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">{{ 'admin.team.form.photoLabel' | translate }}</label>
+            <div class="upload-area">
+              <label class="upload-label" [class.uploading]="uploadingPhoto">
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                       (change)="onPhotoSelected($event)" style="display:none">
+                <ng-container *ngIf="!uploadingPhoto">
+                  <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>
+                  <span>{{ (photoPreview ? 'admin.common.changeImage' : 'admin.common.selectImage') | translate }}</span>
+                </ng-container>
+                <ng-container *ngIf="uploadingPhoto">
+                  <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                  <span class="ms-2">{{ 'admin.common.uploading' | translate }}</span>
+                </ng-container>
+              </label>
+            </div>
+            <img *ngIf="photoPreview" [src]="photoPreview" class="img-preview mt-2">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visibilidad -->
+    <div class="card mb-4">
+      <div class="card-header"><h5 class="mb-0">{{ 'admin.team.form.visibility' | translate }}</h5></div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">{{ 'admin.team.form.sortOrderLabel' | translate }}</label>
+            <input type="number" class="form-control" formControlName="sort_order">
+            <small class="form-text text-muted">{{ 'admin.team.form.sortOrderHint' | translate }}</small>
+          </div>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="is_active" formControlName="is_active">
+          <label class="form-check-label" for="is_active">{{ 'admin.team.form.activeLabel' | translate }}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary me-2" routerLink="/admin/equipo">{{ 'admin.common.cancel' | translate }}</button>
+      <button type="submit" class="ca-sec-primary-3"
+        [disabled]="memberForm.invalid || submitting || uploadingPhoto">
+        <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        {{ (isEditMode ? 'admin.team.form.updateMember' : 'admin.team.form.createMember') | translate }}
+      </button>
+    </div>
+  </form>
+</div>

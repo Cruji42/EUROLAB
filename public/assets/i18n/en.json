@@ -136,7 +136,8 @@
         "services": "Services",
         "certifications": "Certifications",
         "news": "News",
-        "users": "Users"
+        "users": "Users",
+        "team": "Team"
       }
     },
     "dashboard": {
@@ -481,6 +482,52 @@
         "createFailed": "Error creating the user: {{message}}",
         "updateFailed": "Error updating the user: {{message}}",
         "deleteFailed": "Error deleting the user: {{message}}"
+      }
+    },
+    "team": {
+      "list": {
+        "title": "Team Management",
+        "newMember": "New Member",
+        "searchPlaceholder": "Search by name or role...",
+        "table": {
+          "name": "Name",
+          "role": "Role",
+          "order": "Order"
+        },
+        "active": "Active",
+        "inactive": "Inactive",
+        "empty": "No team members found"
+      },
+      "form": {
+        "newTitle": "New Member",
+        "editTitle": "Edit Member",
+        "basicInfo": "Basic Information",
+        "nameLabel": "Full Name",
+        "nameRequired": "Name is required",
+        "roleLabel": "Role / Position",
+        "roleRequired": "Role is required",
+        "rolePlaceholder": "E.g.: Laboratory Manager",
+        "emailLabel": "Email",
+        "emailInvalid": "Invalid email address",
+        "phoneLabel": "Phone",
+        "photo": "Photo",
+        "photoLabel": "Profile Picture",
+        "visibility": "Visibility",
+        "sortOrderLabel": "Order",
+        "sortOrderHint": "Determines the position in the site's carousel (lower first)",
+        "activeLabel": "Active (visible on site)",
+        "updateMember": "Update Member",
+        "createMember": "Create Member"
+      },
+      "delete": {
+        "confirm": "Are you sure you want to delete {{name}}?"
+      },
+      "errors": {
+        "loadFailed": "Error loading team member: {{message}}",
+        "createFailed": "Error creating: {{message}}",
+        "updateFailed": "Error updating: {{message}}",
+        "deleteFailed": "Error deleting: {{message}}",
+        "uploadImageFailed": "Error uploading image."
       }
     }
   },

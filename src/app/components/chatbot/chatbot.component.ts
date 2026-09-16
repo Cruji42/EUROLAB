@@ -399,7 +399,7 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
 
   private readonly GREETING_MESSAGE: ChatMessage = {
     role: 'bot',
-    text: '¡Hola! Bienvenido al asistente virtual de **Laboratorio Euronutec**. Soy Diana y estoy aquí para ayudarte con cualquier duda sobre nuestros servicios de análisis. ¿En qué te puedo orientar?',
+    text: '¡Hola! Bienvenido al asistente virtual de **Laboratorio Euronutec**. Soy EuroBot y estoy aquí para ayudarte con cualquier duda sobre nuestros servicios de análisis. ¿En qué te puedo orientar?',
     time: new Date(),
     suggestions: ['Servicios de análisis', 'Tiempos de entrega', 'Cómo enviar muestras', 'Hablar con un asesor']
   };

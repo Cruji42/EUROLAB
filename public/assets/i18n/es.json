@@ -394,7 +394,8 @@
         "services": "Servicios",
         "certifications": "Certificaciones",
         "news": "Noticias",
-        "users": "Usuarios"
+        "users": "Usuarios",
+        "team": "Equipo"
       }
     },
     "dashboard": {
@@ -739,6 +740,52 @@
         "createFailed": "Error al crear el usuario: {{message}}",
         "updateFailed": "Error al actualizar el usuario: {{message}}",
         "deleteFailed": "Error al eliminar el usuario: {{message}}"
+      }
+    },
+    "team": {
+      "list": {
+        "title": "Gestión de Equipo",
+        "newMember": "Nuevo Integrante",
+        "searchPlaceholder": "Buscar por nombre o rol...",
+        "table": {
+          "name": "Nombre",
+          "role": "Rol",
+          "order": "Orden"
+        },
+        "active": "Activo",
+        "inactive": "Inactivo",
+        "empty": "No se encontraron integrantes"
+      },
+      "form": {
+        "newTitle": "Nuevo Integrante",
+        "editTitle": "Editar Integrante",
+        "basicInfo": "Información Básica",
+        "nameLabel": "Nombre Completo",
+        "nameRequired": "El nombre es obligatorio",
+        "roleLabel": "Rol / Puesto",
+        "roleRequired": "El rol es obligatorio",
+        "rolePlaceholder": "Ej: Gerente de Laboratorio",
+        "emailLabel": "Correo Electrónico",
+        "emailInvalid": "Correo electrónico no válido",
+        "phoneLabel": "Teléfono",
+        "photo": "Fotografía",
+        "photoLabel": "Foto de Perfil",
+        "visibility": "Visibilidad",
+        "sortOrderLabel": "Orden",
+        "sortOrderHint": "Determina la posición en el carrusel del sitio (menor primero)",
+        "activeLabel": "Activo (visible en el sitio)",
+        "updateMember": "Actualizar Integrante",
+        "createMember": "Crear Integrante"
+      },
+      "delete": {
+        "confirm": "¿Está seguro que desea eliminar a {{name}}?"
+      },
+      "errors": {
+        "loadFailed": "Error al cargar el integrante: {{message}}",
+        "createFailed": "Error al crear: {{message}}",
+        "updateFailed": "Error al actualizar: {{message}}",
+        "deleteFailed": "Error al eliminar: {{message}}",
+        "uploadImageFailed": "Error al subir imagen."
       }
     }
   }

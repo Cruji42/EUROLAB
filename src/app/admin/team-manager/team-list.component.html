@@ -1,0 +1,75 @@
+<div class="news-list-container">
+  <div class="header-actions">
+    <h2 class="section-title">{{ 'admin.team.list.title' | translate }}</h2>
+    <a routerLink="nuevo" class="ca-sec-primary-3">
+      <i class="bi bi-plus-circle me-2"></i>
+      {{ 'admin.team.list.newMember' | translate }}
+    </a>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="filters mb-4">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-search"></i></span>
+              <input
+                type="text"
+                class="form-control"
+                [attr.placeholder]="'admin.team.list.searchPlaceholder' | translate"
+                [(ngModel)]="searchTerm"
+                (input)="search()"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="loading" class="loading-spinner">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">{{ 'admin.common.loading' | translate }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="!loading" class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th></th>
+              <th>{{ 'admin.team.list.table.name' | translate }}</th>
+              <th>{{ 'admin.team.list.table.role' | translate }}</th>
+              <th>{{ 'admin.team.list.table.order' | translate }}</th>
+              <th>{{ 'admin.common.status' | translate }}</th>
+              <th>{{ 'admin.common.actions' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let member of filtered">
+              <td><img [src]="photo(member)" class="member-thumb" alt=""></td>
+              <td>{{ member.name }}</td>
+              <td>{{ role(member) }}</td>
+              <td>{{ member.sort_order }}</td>
+              <td>
+                <span class="badge" [ngClass]="getStatusClass(member)">{{ getStatusText(member) }}</span>
+              </td>
+              <td>
+                <div class="action-buttons">
+                  <a [routerLink]="[member.id]" class="btn btn-sm btn-outline-primary me-2">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                  <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(member)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="filtered.length === 0">
+              <td colspan="6" class="text-center">{{ 'admin.team.list.empty' | translate }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

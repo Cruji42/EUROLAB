@@ -10,56 +10,40 @@
       </h2>
       <p class="pt-16">{{ teamData.description | translate }}</p>
     </div>
-    <div class="row">
 
-      @for (member of teamData.team_members; track $index) {
-      <div class="col-lg-3 col-md-6 mb-30">
+    @if (!loading && teamMembers.length) {
+    <ngx-slick-carousel [config]="teamSlider" class="ca-team-slider">
+      @for (member of teamMembers; track member.id) {
+      <div ngxSlickItem>
         <div class="ca-team-inner p-relative z-index-1 wow tpFadeInUp">
           <div class="ca-team-inner-content p-relative fix">
             <div class="ca-team-iner-img">
-              <img class="w-100" [src]="member.image" [alt]="member.name">
+              <img class="w-100" [src]="memberImage(member)" [alt]="member.name">
             </div>
-            <!--             <div class="ca-team-iner-social">
-              <ul>
-                <li><a href="{{member.social_links.email}}">
-                    <div class="ca-location-icbox-img"><span><img src="assets/img/icon/ca-envelop3.3.svg" alt=""></span>
-                    </div>
-                  </a></li>
-                <li><a href="javascript:void(0);"><span><i class="fa-brands fa-linkedin-in"></i></span></a></li>
-                <li><a href="javascript:void(0);"><span><i class="fa-brands fa-instagram"></i></span></a></li>
-                <li><a href="javascript:void(0);"><span><i class="fa-brands fa-facebook-f"></i></span></a></li>
-              </ul>
-            </div> -->
           </div>
           <div class="ca-iner-content-team">
             <div class="ca-team-iner-content br-7">
               <div class="ca-team-iner-heading">
                 <h5 class="ca-team-iner-title">
-                  <!-- <a routerLink="/team">{{ member.name }}</a> -->
                   {{member.name}}
                 </h5>
                 <br>
-                <h6>{{ member.role | translate }}</h6>
+                <h6>{{ member.role }}</h6>
                 <hr>
-                <p>
-                  <span><img src="assets/img/icon/ca-envelop3.3.svg" alt=""> {{member.social_links.email}}</span>
+                <p *ngIf="member.email">
+                  <span><img src="assets/img/icon/ca-envelop3.3.svg" alt=""> {{member.email}}</span>
                 </p>
-                <p *ngIf="member.social_links.phone">
+                <p *ngIf="member.phone">
                   <span>
-
-                    <img src="assets/img/icon/ca-ph3.2.svg" alt=""> {{member.social_links.phone}}</span>
+                    <img src="assets/img/icon/ca-ph3.2.svg" alt=""> {{member.phone}}</span>
                 </p>
-
-
               </div>
-              <!-- <div class="ca-team-iner-share">
-                  <a href="javascript:void(0);"><img src="assets/img/icon/ca-share.svg" alt="Share"></a>
-                </div> -->
             </div>
           </div>
         </div>
       </div>
       }
-    </div>
+    </ngx-slick-carousel>
+    }
   </div>
 </div>
