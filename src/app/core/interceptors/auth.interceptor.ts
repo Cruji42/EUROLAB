@@ -13,11 +13,13 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  private isLoggingOut = false;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const token = this.authService.getToken();
-    
+
     if (token) {
       request = request.clone({
         setHeaders: {
@@ -25,13 +27,21 @@ export class AuthInterceptor implements HttpInterceptor {
         }
       });
     }
-    
+
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          // Token expired or invalid
+        if (error.status === 401 && !this.isLoggingOut) {
+          this.isLoggingOut = true;
+
+          // logout() ya hace localStorage.removeItem + navigate(['/login']),
+          // así que no lo dupliques aquí llamando router.navigate otra vez.
           this.authService.logout();
-          this.router.navigate(['/login']);
+
+          // Se resetea después de un momento para permitir un logout
+          // legítimo posterior (ej. sesión expira de nuevo tras un nuevo login).
+          setTimeout(() => {
+            this.isLoggingOut = false;
+          }, 1000);
         }
         return throwError(() => error);
       })
