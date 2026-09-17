@@ -57,12 +57,14 @@ export const appConfig: ApplicationConfig = {
                 // tiempo disparen removeItem + navigate una y otra vez,
                 // que es lo que produce el parpadeo del menú y bloquea
                 // la navegación hasta hacer reload.
+                console.warn('Unauthorized request detected. Redirecting to login...');
                 if (!isRedirectingToLogin) {
                   isRedirectingToLogin = true;
 
                   // Token expired or invalid
                   localStorage.removeItem('auth_token');
                   // Redirect to login page
+                  console.log('Redirecting to /login');
                   router.navigateByUrl('/login');
 
                   // Se resetea tras un momento para permitir un futuro
