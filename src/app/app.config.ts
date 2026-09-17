@@ -11,6 +11,7 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
+import Swal from 'sweetalert2';
 
 // Bandera a nivel de módulo: se comparte entre todas las invocaciones del
 // interceptor funcional (todas corren en el mismo contexto de la app),
@@ -71,8 +72,14 @@ export const appConfig: ApplicationConfig = {
                   // no solo el localStorage, y así el guard/UI reflejen
                   // la sesión cerrada sin necesitar un reload.
                   console.log('Redirecting to /login');
-                  alert('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
-                  runInInjectionContext(envInjector, () => inject(AuthService).logout());
+                  Swal.fire({
+                    icon: 'warning',
+                    title: 'Sesión expirada',
+                    text: 'Tu sesión ha expirado. Por favor, inicia sesión de nuevo.',
+                    confirmButtonText: 'Aceptar'
+                  }).then(() => {
+                    runInInjectionContext(envInjector, () => inject(AuthService).logout());
+                  });
 
                   // Se resetea tras un momento para permitir un futuro
                   // logout legítimo (ej. una nueva sesión que también expire).
