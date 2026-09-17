@@ -65,7 +65,7 @@ export const appConfig: ApplicationConfig = {
                   localStorage.removeItem('auth_token');
                   // Redirect to login page
                   console.log('Redirecting to /login');
-                  router.navigateByUrl('/admin');
+                  router.navigate(['/login']);
 
                   // Se resetea tras un momento para permitir un futuro
                   // logout legítimo (ej. una nueva sesión que también expire).
