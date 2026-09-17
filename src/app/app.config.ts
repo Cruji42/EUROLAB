@@ -1,16 +1,16 @@
-import { ApplicationConfig, inject, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, Router } from '@angular/router';
-import { provideHttpClient, withInterceptors, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ApplicationConfig, EnvironmentInjector, inject, provideZoneChangeDetection, runInInjectionContext } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { langInterceptor } from './core/interceptors/lang.interceptor';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { AuthService } from './core/services/auth.service';
 
 // Bandera a nivel de módulo: se comparte entre todas las invocaciones del
 // interceptor funcional (todas corren en el mismo contexto de la app),
@@ -24,7 +24,12 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([
         (req, next) => {
-          const router = inject(Router);
+          // No se resuelve AuthService aquí: hacerlo en cada request crea un
+          // ciclo de inyección (AuthService -> Router -> ... -> interceptor
+          // -> AuthService) detectado por Angular como NG0200. Se resuelve
+          // de forma diferida, solo cuando realmente hace falta (401), con
+          // el injector de la app.
+          const envInjector = inject(EnvironmentInjector);
           // Get the token from localStorage
           const token = localStorage.getItem('auth_token');
 
@@ -61,11 +66,13 @@ export const appConfig: ApplicationConfig = {
                 if (!isRedirectingToLogin) {
                   isRedirectingToLogin = true;
 
-                  // Token expired or invalid
-                  localStorage.removeItem('auth_token');
-                  // Redirect to login page
+                  // Token expired or invalid: usar logout() para limpiar
+                  // también el estado de currentUser$ (BehaviorSubject),
+                  // no solo el localStorage, y así el guard/UI reflejen
+                  // la sesión cerrada sin necesitar un reload.
                   console.log('Redirecting to /login');
-                  router.navigate(['/login']);
+                  alert('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
+                  runInInjectionContext(envInjector, () => inject(AuthService).logout());
 
                   // Se resetea tras un momento para permitir un futuro
                   // logout legítimo (ej. una nueva sesión que también expire).
