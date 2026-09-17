@@ -4,6 +4,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ServicesService } from '../../services/services.service';
+import { ServiceCard } from '../../models/service.model';
 
 interface ChatAction {
   type: 'route' | 'download' | 'external' | 'whatsapp' | 'email';
@@ -25,6 +27,8 @@ interface Intent {
   responses: string[];
   suggestions?: string[];
   actions?: ChatAction[];
+  /** Palabras clave para resolver el servicio real (name/card_hover_text) y linkear a /service-single/<slug> */
+  serviceLookupKeywords?: string[];
 }
 
 // ── Acciones reutilizables ──────────────────────────────────────────────────
@@ -49,7 +53,7 @@ const ACTION_CATALOGO: ChatAction = {
 const ACTION_WHATSAPP: ChatAction = {
   type: 'whatsapp',
   label: 'Chatear por WhatsApp',
-  value: 'https://wa.me/524181098544'
+  value: 'https://wa.me/524461335884'
 };
 
 const ACTION_EMAIL: ChatAction = {
@@ -74,21 +78,22 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
   userInput = '';
   messages: ChatMessage[] = [];
   private shouldScroll = false;
+  private lastIntentName: string | null = null;
 
   private intents: Intent[] = [
     {
       name: 'greeting',
       keywords: ['hola', 'buenos', 'buen día', 'buenas', 'saludos', 'hey', 'hi', 'hello', 'qué tal', 'que tal', 'cómo están', 'como estan'],
       responses: [
-        '¡Hola! Con gusto te ayudo. ¿Qué necesitas saber sobre nuestros servicios de laboratorio?',
-        '¡Bienvenido a Euronutec! Soy tu asistente virtual. ¿En qué te puedo orientar hoy?',
-        'Hola, ¿cómo estás? Estoy aquí para ayudarte con cualquier duda sobre nuestro laboratorio.',
+        '¡Hola! Soy EuroBot, el asistente virtual de Euronutec. ¿Qué necesitas saber sobre nuestros servicios de laboratorio?',
+        '¡Bienvenido a Euronutec! Soy EuroBot, tu asistente virtual. ¿En qué te puedo orientar hoy?',
+        'Hola, soy EuroBot. Estoy aquí para ayudarte con cualquier duda sobre nuestro laboratorio.',
       ],
       suggestions: ['Ver servicios de análisis', 'Tiempos de entrega', 'Cómo enviar muestras', 'Hablar con un asesor']
     },
     {
       name: 'servicios_generales',
-      keywords: ['servicios', 'qué hacen', 'que hacen', 'qué ofrecen', 'que ofrecen', 'análisis', 'analisis', 'qué analizan', 'que analizan', 'catálogo', 'catalogo', 'oferta'],
+      keywords: ['servicios', 'qué hacen', 'que hacen', 'qué ofrecen', 'que ofrecen', 'qué analizan', 'que analizan', 'catálogo de servicios', 'catalogo de servicios', 'todos los análisis', 'todos los analisis', 'ver servicios', 'oferta de servicios', 'servicios de análisis', 'servicios de analisis', 'análisis disponibles', 'analisis disponibles'],
       responses: [
         'Realizamos una amplia gama de análisis para la industria agropecuaria y alimentaria:\n\n• **Bromatológicos** (humedad, grasa, proteína, fibras, cenizas)\n• **Microbiológicos** (patógenos, indicadores de higiene)\n• **NIRS** – resultados el mismo día o en 2 días hábiles\n• **Minerales y metales pesados**\n• **Etiqueta nutrimental** (NOM-051 / FDA)\n• **Vida de anaquel**\n• **Residuos** (micotoxinas, plaguicidas)\n\n¿Sobre cuál te gustaría más detalle?',
         'Nuestro laboratorio ofrece análisis bromatológicos, microbiológicos, NIRS, minerales, etiquetado nutrimental, vida de anaquel y mucho más. Todos bajo normas AOAC, ISO y NOM. ¿Hay algún análisis específico que te interese?'
@@ -100,19 +105,21 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       name: 'bromatologico',
       keywords: ['bromatológic', 'bromatologic', 'humedad', 'grasa', 'fibra', 'ceniza', 'proteína bruta', 'proximal', 'composición'],
       responses: [
-        'El análisis bromatológico tradicional incluye la determinación de: humedad, grasa, proteína (Kjeldahl o Dumas), fibra cruda o detergente (FDA/FDN), cenizas y extracto libre de nitrógeno. El tiempo de entrega es de **6 a 10 días hábiles**. ¿Necesitas alguno en particular o el panel completo?',
-        'Para los análisis bromatológicos trabajamos con métodos oficiales AOAC. Cubrimos desde el panel básico (humedad, grasa, proteína, fibra, cenizas) hasta análisis más específicos. ¿Sabes qué parámetros necesitas para tu producto?'
+        'El análisis bromatológico tradicional incluye la determinación de: humedad, grasa, proteína (Kjeldahl o Dumas), fibra cruda o detergente (FDA/FDN), cenizas y extracto libre de nitrógeno. El tiempo de entrega es de **6 a 10 días hábiles**.',
+        'Para los análisis bromatológicos trabajamos con métodos oficiales AOAC. Cubrimos desde el panel básico (humedad, grasa, proteína, fibra, cenizas) hasta análisis más específicos.'
       ],
-      suggestions: ['Tiempos de entrega', 'Envío de muestras', 'Solicitar cotización']
+      suggestions: ['Tiempos de entrega', 'Envío de muestras', 'Solicitar cotización'],
+      serviceLookupKeywords: ['bromatológico', 'bromatologico', 'proximal']
     },
     {
       name: 'nirs',
-      keywords: ['nirs', 'infrarrojo', 'análisis rápido', 'mismo día', 'onirslab', 'espectroscopía', 'espectroscopia'],
+      keywords: ['nirs', 'infrarrojo', 'análisis rápido', 'mismo día', 'espectroscopía', 'espectroscopia'],
       responses: [
         'El análisis por **NIRS** es nuestra tecnología de espectroscopía de infrarrojo cercano. Las ventajas principales son:\n\n• Resultados en **2 días hábiles** (a veces el mismo día)\n• No destruye la muestra\n• Alta reproducibilidad\n• Ideal para control de calidad de rutina\n\nTambién desarrollamos **curvas y ecuaciones personalizadas** para tu equipo NIRS a través de ONIRSLAB. ¿Te interesa calibrar tu propio equipo?',
         'Con NIRS obtienes resultados en tiempo récord — hasta el mismo día en algunos casos. Es perfecta para control interno en planta. ¿Qué tipo de muestras manejas? Así te puedo decir si aplica para tu proceso.'
       ],
-      suggestions: ['Ver análisis bromatológico', 'Equipos ONIRSLAB', 'Solicitar cotización']
+      suggestions: ['Ver análisis bromatológico', 'Equipos ONIRSLAB', 'Solicitar cotización'],
+      serviceLookupKeywords: ['nirs', 'infrarrojo']
     },
     {
       name: 'microbiologia',
@@ -122,7 +129,8 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
         'Para microbiología manejamos desde pruebas básicas hasta planes completos de monitoreo. Un buen plan considera: puntos críticos de control, frecuencia de muestreo basada en riesgo, límites de tolerancia NOM y validación de limpieza. ¿Necesitas asesoría para diseñar el tuyo?'
       ],
       suggestions: ['Plan microbiológico completo', 'Tiempos de entrega', 'Asesoría con especialista'],
-      actions: [ACTION_WHATSAPP, ACTION_EMAIL, ACTION_CONTACT_FORM]
+      actions: [ACTION_WHATSAPP, ACTION_EMAIL, ACTION_CONTACT_FORM],
+      serviceLookupKeywords: ['microbiológico', 'microbiologico', 'microbiología', 'microbiologia']
     },
     {
       name: 'vida_anaquel',
@@ -132,7 +140,8 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
         'Para determinar la vida útil de un producto necesitamos conocer su naturaleza, condiciones de almacenamiento y los parámetros críticos de deterioro. ¿De qué tipo de producto se trata?\n\nContáctanos directamente y un especialista te orienta:'
       ],
       suggestions: ['Hablar con especialista', 'Análisis microbiológicos'],
-      actions: [ACTION_WHATSAPP, ACTION_EMAIL, ACTION_CONTACT_FORM]
+      actions: [ACTION_WHATSAPP, ACTION_EMAIL, ACTION_CONTACT_FORM],
+      serviceLookupKeywords: ['vida de anaquel', 'vida útil', 'shelf life']
     },
     {
       name: 'proteina',
@@ -149,17 +158,19 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
         'Realizamos determinaciones de macro y microminerales, así como metales pesados (plomo, cadmio, mercurio, arsénico). El tiempo de entrega para minerales es de hasta **10 días hábiles**. ¿Buscas el perfil de minerales para etiquetado, control de calidad o cumplimiento de alguna norma?',
         'El panel de minerales puede incluir calcio, fósforo, sodio, potasio, magnesio, hierro, zinc, cobre, manganeso y metales pesados. ¿Cuál es el objetivo del análisis?'
       ],
-      suggestions: ['Etiqueta nutrimental', 'Tiempos de entrega', 'Solicitar cotización']
+      suggestions: ['Etiqueta nutrimental', 'Tiempos de entrega', 'Solicitar cotización'],
+      serviceLookupKeywords: ['minerales', 'metales pesados']
     },
     {
       name: 'etiqueta_nutrimental',
-      keywords: ['etiqueta', 'nutrimental', 'nom-051', 'nom 051', 'fda', 'declaración nutricional', 'tabla nutricional', 'información nutrimental', 'nutricion', 'nutrición', 'etiquetado'],
+      keywords: ['etiqueta', 'nutrimental', 'nom-051', 'nom 051', 'fda', 'declaración nutricional', 'tabla nutricional', 'información nutrimental', 'nutricion', 'nutrición', 'etiquetado', 'ver más información', 'ver mas informacion'],
       responses: [
-        'Para la etiqueta nutrimental realizamos el panel completo: energía, proteína, grasa total, grasa saturada, carbohidratos, azúcares, fibra y sodio. Trabajamos con los formatos requeridos por **NOM-051** (México) y **FDA** (exportación). ¿Necesitas cumplir con algún mercado en específico?',
-        'Desarrollamos el análisis fisicoquímico completo para generar tu declaración nutrimental conforme a NOM-051 o FDA. ¿Tu producto va al mercado mexicano, de exportación, o ambos?'
+        'Para la etiqueta nutrimental realizamos el panel completo: energía, proteína, grasa total, grasa saturada, carbohidratos, azúcares, fibra y sodio. Trabajamos con los formatos requeridos por **NOM-051** (México) y **FDA** (exportación).',
+        'Desarrollamos el análisis fisicoquímico completo para generar tu declaración nutrimental conforme a NOM-051 o FDA.'
       ],
-      suggestions: ['Ver análisis disponibles', 'Tiempos de entrega', 'Contactar asesor'],
-      actions: [ACTION_CONTACT_FORM]
+      suggestions: ['Ver más información', 'Tiempos de entrega', 'Contactar asesor'],
+      actions: [ACTION_CONTACT_FORM],
+      serviceLookupKeywords: ['etiqueta nutrimental', 'declaración nutrimental', 'nutrimental']
     },
     {
       name: 'tiempos_entrega',
@@ -184,15 +195,15 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       name: 'muestra_lista',
       keywords: ['ya tengo mi muestra', 'tengo mi muestra', 'muestra lista', 'ya la tengo lista', 'sí ya tengo', 'si ya tengo', 'está lista', 'esta lista', 'lista para enviar', 'muestra preparada', 'preparada', 'sí, ya tengo', 'si, ya tengo', 'ya tengo'],
       responses: [
-        '¡Perfecto! Para que tu muestra llegue en las mejores condiciones y podamos procesarla sin contratiempos, sigue estas indicaciones:\n\n1. **Identifícala** claramente (nombre del producto, lote, fecha)\n2. Usa **envases limpios y herméticos** adecuados para el tipo de muestra\n3. Mantén la **temperatura correcta** durante el envío: refrigerada (2–8 °C), congelada (–18 °C) o temperatura ambiente según el análisis\n4. Si es para análisis microbiológico, **bolsa estéril obligatoria**\n\nRegistra tu solicitud y da seguimiento a través de nuestro portal EUROLAB:',
-        '¡Excelente! Antes de enviar asegúrate de: identificar bien la muestra (nombre, lote, fecha), usar el envase adecuado, mantener la cadena de frío si aplica. Para microbiológicos es obligatoria la bolsa estéril. Registra tu solicitud en EUROLAB y nos coordinas el envío:'
+        '¡Perfecto! Para que tu muestra llegue en las mejores condiciones y podamos procesarla sin contratiempos, sigue estas indicaciones:\n\n1. **Identifícala** claramente (nombre del producto, lote, fecha)\n2. Usa **envases limpios y herméticos** adecuados para el tipo de muestra\n3. Mantén la **temperatura correcta** durante el envío: refrigerada (2–8 °C), congelada (–18 °C) o temperatura ambiente según el análisis\n4. Si es para análisis microbiológico, **bolsa estéril obligatoria**\n\n¿Quieres que te ayude a coordinar la recepción con un especialista?',
+        '¡Excelente! Antes de enviar asegúrate de: identificar bien la muestra (nombre, lote, fecha), usar el envase adecuado, mantener la cadena de frío si aplica. Para microbiológicos es obligatoria la bolsa estéril. ¿Coordinamos la recepción con un especialista?'
       ],
       suggestions: ['Ver tiempos de entrega', 'Seguimiento de mi muestra', 'Hablar con especialista'],
-      actions: [ACTION_EUROLAB, ACTION_CONTACT_FORM]
+      actions: [ACTION_CONTACT_FORM]
     },
     {
       name: 'estatus_seguimiento',
-      keywords: ['estatus', 'seguimiento', 'avance', 'folio', 'portal', 'eurolab online', 'mis resultados', 'cómo voy', 'estado de mi muestra', 'rastrear'],
+      keywords: ['estatus de mi muestra', 'estatus de muestra', 'estatus de mi analisis', 'estatus de mi análisis', 'seguimiento de mi muestra', 'seguimiento de muestra', 'seguimiento a mi muestra', 'avance de mi muestra', 'avance de muestra', 'avance de mi análisis', 'mi folio', 'eurolab online', 'ver mis resultados', 'descargar mis resultados', 'descargar mi reporte', 'cómo voy con', 'como voy con', 'estado de mi muestra', 'estado de muestra', 'rastrear mi muestra', 'rastrear muestra', 'consultar resultados', 'ver estatus', 'ver portal eurolab', 'portal eurolab'],
       responses: [
         'Puedes revisar el avance de tu muestra en **tiempo real** a través de nuestro portal **EUROLAB ONLINE**. Si ya tienes credenciales, ingresa con tu usuario. Si aún no tienes acceso, puedes solicitarlo con tu ejecutivo de cuenta. ¿Tienes tu folio a la mano?',
         'Todos los resultados están disponibles en nuestra plataforma EUROLAB ONLINE. Ahí puedes ver el estatus en tiempo real, descargar reportes en PDF e historial de análisis.'
@@ -206,8 +217,8 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       name: 'correcciones',
       keywords: ['corrección', 'correccion', 'error', 'equivocado', 'dato mal', 'nombre mal', 'lote incorrecto', 'aclaración', 'aclaracion', 'duda del resultado'],
       responses: [
-        'Para **correcciones de datos** (número de lote, nombre de muestra, etc.) puedes enviar un correo a **lramirez@gponutec.com** indicando el folio y la corrección.\n\nSi tienes una **aclaración técnica** sobre un resultado, nuestro jefe de área te contactará en menos de 24 horas. ¿Me puedes dejar tu nombre y correo para coordinar?',
-        'Claro, distingamos dos casos: si es un dato administrativo (lote, nombre), escribe a lramirez@gponutec.com. Si es una duda técnica sobre el resultado, lo más conveniente es que nuestro especialista te llame. ¿Cuál es tu caso?'
+        'Para **correcciones de datos** (número de lote, nombre de muestra, etc.) puedes enviar un correo a **lramirez@gponutec.com** indicando el folio y la corrección.\n\nSi tienes una **aclaración técnica** sobre un resultado, completa el formulario de contacto y nuestro jefe de área te contactará en menos de 24 horas.',
+        'Distingamos dos casos: si es un dato administrativo (lote, nombre), escribe a lramirez@gponutec.com. Si es una duda técnica sobre el resultado, completa el formulario y un especialista te contacta directamente.'
       ],
       suggestions: ['Repetición de análisis', 'Ver estatus'],
       actions: [ACTION_CONTACT_FORM]
@@ -225,11 +236,11 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       name: 'alta_cliente',
       keywords: ['alta', 'nuevo cliente', 'registrar', 'contratar', 'cómo me registro', 'como me registro', 'quiero ser cliente', 'laboratorio externo', 'proveedor', 'constancia fiscal', 'situación fiscal'],
       responses: [
-        'Para darte de alta como cliente y registrar tus solicitudes de análisis, todo el proceso se realiza a través de nuestro portal **EUROLAB**. Ahí podrás crear tu cuenta, cargar tus documentos y dar seguimiento a tus servicios.',
-        'El proceso de alta es muy sencillo a través de nuestro portal EUROLAB. Regístrate ahí y un ejecutivo te dará seguimiento.'
+        'El alta como cliente nuevo la gestiona directamente nuestro equipo. Contáctanos y con gusto te apoyamos con el proceso de registro y tus primeros análisis.',
+        'Para darte de alta como cliente, un ejecutivo de nuestro equipo te guía con el proceso y la documentación necesaria.'
       ],
       suggestions: ['Catálogo de precios', 'Ubicación del laboratorio'],
-      actions: [ACTION_EUROLAB, ACTION_CONTACT_FORM]
+      actions: [ACTION_WHATSAPP, ACTION_EMAIL, ACTION_CONTACT_FORM]
     },
     {
       name: 'catalogo_precios',
@@ -238,7 +249,7 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
         'Los precios varían según el tipo de análisis, volumen y condiciones de servicio. Para una **cotización personalizada**, déjanos tu información a través del formulario de contacto y un ejecutivo te responde en menos de 24 horas.',
         'No manejamos lista de precios pública porque cada cliente tiene necesidades distintas. Lo ideal es contactarnos para darte un precio justo según tu volumen y tipo de análisis.'
       ],
-      suggestions: ['Alta de cliente', 'Servicios disponibles'],
+      suggestions: ['Servicios disponibles', 'Hablar con un asesor'],
       actions: [ACTION_CATALOGO, ACTION_CONTACT_FORM]
     },
     {
@@ -248,7 +259,7 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
         'Estamos ubicados en **Querétaro, Querétaro**. Para la dirección exacta y datos de contacto completos, visita nuestro formulario de contacto.',
         'Nuestras instalaciones están en Querétaro. También recibimos muestras de todo el país mediante mensajería especializada. ¿Necesitas más información?'
       ],
-      suggestions: ['¿Cómo envío mi muestra?', 'Alta de cliente'],
+      suggestions: ['¿Cómo envío mi muestra?', 'Hablar con un asesor'],
       actions: [ACTION_CONTACT_FORM]
     },
     {
@@ -257,12 +268,12 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       responses: [
         'Sí, contamos con **acreditación ISO/IEC 17025** ante la EMA (Entidad Mexicana de Acreditación), lo que garantiza nuestra competencia técnica. También estamos **aprobados por SADER** como laboratorio de constatación y de control interno. ¿Necesitas la constancia de acreditación para algún trámite?',
       ],
-      suggestions: ['Ver servicios disponibles', 'Normas que utilizamos', 'Alta de cliente'],
+      suggestions: ['Ver servicios disponibles', 'Normas que utilizamos'],
       actions: [ACTION_CONTACT_FORM]
     },
     {
       name: 'tipo_muestras',
-      keywords: ['qué muestras', 'que muestras', 'tipo de muestra', 'qué aceptan', 'que aceptan', 'qué reciben', 'que reciben'],
+      keywords: ['qué muestras', 'que muestras', 'tipo de muestra', 'tipo de análisis', 'tipo de analisis', 'qué aceptan', 'que aceptan', 'qué reciben', 'que reciben'],
       responses: [
         'Recibimos una gran variedad de muestras:\n\n• **Alimentos balanceados** (para animales)\n• **Materias primas** (harinas, granos, subproductos)\n• **Agua** (potable, residual, de proceso)\n• **Alimentos para consumo humano**\n• **Suplementos y aditivos**\n\n¿Qué tipo de muestra tienes? Selecciona o escríbelo y te oriento sobre cómo prepararla y enviarla.',
       ],
@@ -273,27 +284,29 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       keywords: [
         'alimento balanceado', 'balanceado', 'pienso', 'alimento para animal',
         'materia prima', 'materia prima o granos', 'harina', 'grano', 'sorgo', 'maíz', 'maiz', 'soya', 'trigo', 'subproducto', 'salvado', 'pasta de soya',
-        'agua potable', 'agua residual', 'agua de proceso', 'agua de pozo', 'agua de grifo',
+        'agua potable', 'agua residual', 'agua de proceso', 'agua de pozo', 'agua de grifo', 'agua',
         'alimento consumo humano', 'alimento para consumo humano', 'producto alimenticio', 'alimento humano',
         'suplemento', 'suplementos o aditivos', 'aditivo', 'premezcla', 'vitamina', 'mineral premix',
-        'leche', 'carne', 'pescado', 'huevo', 'lácteo', 'lacteo', 'ingrediente', 'mi muestra es', 'tengo una muestra', 'quiero analizar', 'voy a enviar'
+        'leche', 'carne', 'pescado', 'huevo', 'lácteo', 'lacteo', 'ingrediente',
+        'fecales', 'heces', 'materia fecal', 'excremento', 'sangre', 'tejido', 'hisopado', 'hisopo', 'orina', 'suero', 'muestra biológica', 'muestra biologica', 'muestra veterinaria',
+        'mi muestra es', 'tengo una muestra', 'quiero analizar', 'voy a enviar'
       ],
       responses: [
-        '¡Perfecto! Para que tu muestra llegue en óptimas condiciones y podamos procesarla sin contratiempos:\n\n1. **Identifícala** claramente: nombre del producto, lote y fecha\n2. Usa **envases limpios y herméticos** adecuados al tipo de muestra\n3. Mantén la **temperatura correcta** durante el envío: refrigerada (2–8 °C), congelada (–18 °C) o temperatura ambiente según el análisis\n4. Si es microbiológico, **bolsa estéril obligatoria**\n\nRegistra tu solicitud a través de nuestro portal EUROLAB y contáctanos para coordinar la recepción:',
-        '¡Excelente, podemos trabajar con esa muestra! Para enviarla correctamente: identifícala bien (nombre, lote, fecha), usa el envase adecuado, conserva la cadena de frío si aplica. Para microbiológicos siempre en bolsa estéril.\n\nRegistra tu solicitud en nuestro portal EUROLAB:'
+        '¡Perfecto! Para que tu muestra llegue en óptimas condiciones y podamos procesarla sin contratiempos:\n\n1. **Identifícala** claramente: nombre del producto, lote y fecha\n2. Usa **envases limpios y herméticos** adecuados al tipo de muestra\n3. Mantén la **temperatura correcta** durante el envío: refrigerada (2–8 °C), congelada (–18 °C) o temperatura ambiente según el análisis\n4. Si es microbiológico, **bolsa estéril obligatoria**\n\n¿Te ayudo a coordinar la recepción con un especialista?',
+        '¡Excelente, podemos trabajar con esa muestra! Para enviarla correctamente: identifícala bien (nombre, lote, fecha), usa el envase adecuado, conserva la cadena de frío si aplica. Para microbiológicos siempre en bolsa estéril. ¿Coordinamos la recepción con un especialista?'
       ],
       suggestions: ['Ver tiempos de entrega', 'Servicio urgente', 'Hablar con especialista'],
-      actions: [ACTION_EUROLAB, ACTION_CONTACT_FORM]
+      actions: [ACTION_CONTACT_FORM]
     },
     {
       name: 'como_enviar',
-      keywords: ['cómo envío', 'como envio', 'enviar muestra', 'mandar muestra', 'empacar', 'empaque', 'refrigerar', 'congelar', 'paquetería', 'envío', 'envio', 'requisitos de muestra', 'cuánta muestra', 'cuanta muestra'],
+      keywords: ['cómo envío', 'como envio', 'enviar muestra', 'mandar muestra', 'empacar', 'empaque', 'refrigerar', 'congelar', 'paquetería', 'envío', 'envio', 'requisitos de muestra', 'cuánta muestra', 'cuanta muestra', 'orientación para enviar', 'orientacion para enviar', 'cómo enviar correctamente', 'como enviar correctamente'],
       responses: [
-        'Para enviar tus muestras correctamente:\n\n1. **Identifícalas** claramente (nombre, lote, fecha)\n2. **Envases limpios y adecuados** para cada tipo de muestra\n3. **Temperatura correcta:** refrigeradas (2-8°C), congeladas (-18°C) o temperatura ambiente según el análisis\n4. Para microbiológicos: **bolsa estéril** es obligatoria\n\nRegistra tu solicitud a través de nuestro portal EUROLAB. ¿Quieres que te enviemos información adicional por correo?',
-        'El cuidado en el envío es crucial para resultados confiables. Lo más importante: identificación clara, envase adecuado y temperatura correcta. Para microbiología siempre en bolsa estéril. Registra tu solicitud en el portal EUROLAB.'
+        'Para enviar tus muestras correctamente:\n\n1. **Identifícalas** claramente (nombre, lote, fecha)\n2. **Envases limpios y adecuados** para cada tipo de muestra\n3. **Temperatura correcta:** refrigeradas (2-8°C), congeladas (-18°C) o temperatura ambiente según el análisis\n4. Para microbiológicos: **bolsa estéril** es obligatoria\n\n¿Quieres que te enviemos información adicional por correo o te contacte un especialista?',
+        'El cuidado en el envío es crucial para resultados confiables. Lo más importante: identificación clara, envase adecuado y temperatura correcta. Para microbiología siempre en bolsa estéril. ¿Te contacto con un especialista para coordinar el envío?'
       ],
       suggestions: ['Tipo de análisis', 'Tiempos de entrega', 'Contactar asesor'],
-      actions: [ACTION_EUROLAB, ACTION_CONTACT_FORM]
+      actions: [ACTION_CONTACT_FORM]
     },
     {
       name: 'solicitar_formatos',
@@ -302,7 +315,7 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
         'Claro, el registro de solicitudes y la documentación se manejan a través de nuestro portal EUROLAB. También puedes descargar nuestro catálogo de servicios:',
         'Con gusto. Ingresa a nuestro portal EUROLAB para registrar tu solicitud, y aquí puedes descargar el catálogo de servicios:'
       ],
-      suggestions: ['Cómo enviar muestras', 'Alta de cliente', 'Contactar asesor'],
+      suggestions: ['Cómo enviar muestras', 'Contactar asesor'],
       actions: [ACTION_CATALOGO, ACTION_EUROLAB]
     },
     {
@@ -347,11 +360,11 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       responses: [
         'Todos los resultados e información de nuestros clientes se manejan bajo estrictos principios de **confidencialidad**. Solo personal autorizado tiene acceso a tus reportes, y bajo la norma ISO/IEC 17025 la confidencialidad es un requisito obligatorio. ¿Tienes alguna otra pregunta?',
       ],
-      suggestions: ['Acreditación', 'Alta de cliente']
+      suggestions: ['Acreditación', 'Servicios de análisis']
     },
     {
       name: 'equipos_tecnologia',
-      keywords: ['equipo', 'nirslab', 'onirslab', 'durabilímetro', 'durabilimetro', 'dura-test', 'insumos', 'venta de equipo', 'verificación', 'verificacion', 'tecnología', 'tecnologia', 'pellet'],
+      keywords: ['equipo', 'nirslab', 'onirslab', 'insumos', 'venta de equipo', 'verificación', 'verificacion', 'tecnología', 'tecnologia'],
       responses: [
         'Además de análisis de laboratorio, ofrecemos tecnología para tu empresa:\n\n• **ONIRSLAB** – desarrollo de curvas y ecuaciones para tus equipos NIRS\n• **Durabilímetro DURA-TEST** – para medir calidad de pellet\n• **Insumos para pruebas rápidas**\n• **Verificación y venta de equipo de laboratorio**\n\n¿Cuál de estas soluciones te interesa?',
       ],
@@ -359,8 +372,17 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       actions: [ACTION_CONTACT_FORM]
     },
     {
+      name: 'durabilimetro',
+      keywords: ['durabilímetro', 'durabilimetro', 'dura-test', 'pellet'],
+      responses: [
+        'El **Durabilímetro DURA-TEST** mide la resistencia física del pellet a la fricción y el manejo, un indicador clave de calidad en alimento balanceado. Te ayuda a controlar procesos de peletizado y reducir finos/mermas.',
+      ],
+      suggestions: ['Contactar ejecutivo', 'Ver otros equipos y tecnología'],
+      actions: [ACTION_CONTACT_FORM]
+    },
+    {
       name: 'asesor_comercial',
-      keywords: ['asesor', 'ejecutivo', 'vendedor', 'hablar con alguien', 'hablar con especialista', 'especialista', 'persona', 'humano', 'representante', 'comercial', 'llamar', 'llamada', 'whatsapp', 'dejar mis datos', 'dejar datos', 'asesoría con especialista', 'asesoria'],
+      keywords: ['asesor', 'ejecutivo', 'vendedor', 'hablar con alguien', 'hablar con especialista', 'especialista', 'persona', 'humano', 'representante', 'comercial', 'llamar', 'llamada', 'whatsapp', 'dejar mis datos', 'dejar datos', 'asesoría con especialista', 'asesoria', 'contactar soporte', 'contactar a soporte'],
       responses: [
         'Con gusto te comunico con uno de nuestros especialistas. Puedes contactarnos directamente por WhatsApp, enviarnos un correo o llenar el formulario y nosotros te llamamos:',
         'Claro, un especialista puede orientarte de forma personalizada. Elige la opción que te sea más cómoda:'
@@ -383,7 +405,7 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
         'Si una muestra llega en condiciones que no cumplen los requisitos, te notificamos de inmediato. Podemos rechazarla para que envíes una nueva, o procesarla bajo condiciones especiales previa autorización tuya. Siempre te consultamos antes.',
       ],
       suggestions: ['Cómo enviar correctamente', 'Contactar soporte', 'Tiempos de entrega'],
-      actions: [ACTION_EUROLAB]
+      actions: [ACTION_CONTACT_FORM]
     },
     {
       name: 'gracias',
@@ -404,10 +426,16 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     suggestions: ['Servicios de análisis', 'Tiempos de entrega', 'Cómo enviar muestras', 'Hablar con un asesor']
   };
 
-  constructor(private cdr: ChangeDetectorRef, private router: Router) {}
+  private serviceCatalog: ServiceCard[] = [];
+
+  constructor(private cdr: ChangeDetectorRef, private router: Router, private servicesService: ServicesService) {}
 
   ngOnInit() {
     this.messages.push({ ...this.GREETING_MESSAGE, time: new Date() });
+    this.servicesService.getServices().subscribe({
+      next: (services) => this.serviceCatalog = services,
+      error: () => this.serviceCatalog = []
+    });
   }
 
   ngAfterViewChecked() {
@@ -466,9 +494,23 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     return 'fa-solid fa-arrow-up-right-from-square';
   }
 
+  // Intents cuya última respuesta termina preguntando si se coordina con un especialista.
+  // Un "sí" suelto después de estos debe resolver a asesor_comercial, no a fallback.
+  private readonly CONFIRM_FOLLOWUP_INTENTS = new Set([
+    'muestra_lista', 'confirma_muestra', 'como_enviar', 'urgente', 'nirs', 'microbiologia', 'vida_anaquel'
+  ]);
+
+  private readonly AFFIRMATIVE_WORDS = ['sí', 'si', 'claro', 'va', 'dale', 'ok', 'okay', 'de acuerdo', 'por favor', 'obvio', 'adelante'];
+  private readonly NEGATIVE_WORDS = ['no gracias', 'no'];
+
   private getResponse(input: string): ChatMessage {
-    const normalized = input.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-    const intent = this.detectIntent(normalized);
+    const normalized = input.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+    const previousIntentName = this.lastIntentName;
+
+    const intent = this.resolveShortConfirmation(normalized, previousIntentName)
+      ?? this.detectIntent(normalized, previousIntentName);
+
+    this.lastIntentName = intent.name;
     const responses = intent.responses;
     const text = responses[Math.floor(Math.random() * responses.length)];
     return {
@@ -476,11 +518,75 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       text,
       time: new Date(),
       suggestions: intent.suggestions,
-      actions: intent.actions
+      actions: this.resolveActions(intent)
     };
   }
 
-  private detectIntent(input: string): Intent {
+  /** Detecta un "sí"/"no" corto y suelto que responde a la pregunta anterior del bot
+   *  ("¿coordinamos con un especialista?"), y lo resuelve según el contexto en vez
+   *  de dejar que caiga en el motor de keywords genérico (que lo mandaría a fallback). */
+  private resolveShortConfirmation(normalizedInput: string, previousIntentName: string | null): Intent | null {
+    if (!previousIntentName || !this.CONFIRM_FOLLOWUP_INTENTS.has(previousIntentName)) return null;
+
+    const isAffirmative = this.AFFIRMATIVE_WORDS.includes(normalizedInput);
+    const isNegative = this.NEGATIVE_WORDS.includes(normalizedInput);
+    if (!isAffirmative && !isNegative) return null;
+
+    if (isAffirmative) {
+      return this.intents.find(i => i.name === 'asesor_comercial') ?? null;
+    }
+
+    return {
+      name: 'confirmacion_negativa',
+      keywords: [],
+      responses: ['Entendido, sin problema. Si más adelante necesitas algo más, aquí estaré.'],
+      suggestions: ['Ver servicios', 'Tiempos de entrega', 'Hablar con un asesor']
+    };
+  }
+
+  /** Si el intent tiene serviceLookupKeywords, intenta resolver el servicio real desde el catálogo
+   *  (cargado vía API) y antepone un link dinámico a /service-single/<slug>. */
+  private resolveActions(intent: Intent): ChatAction[] | undefined {
+    if (!intent.serviceLookupKeywords || this.serviceCatalog.length === 0) {
+      return intent.actions;
+    }
+
+    const service = this.findService(intent.serviceLookupKeywords);
+    if (!service) return intent.actions;
+
+    const serviceAction: ChatAction = {
+      type: 'route',
+      label: 'Ver más información',
+      value: `/service-single/${service.slug}`
+    };
+    return [serviceAction, ...(intent.actions ?? [])];
+  }
+
+  private findService(lookupKeywords: string[]): ServiceCard | undefined {
+    const normalizedKeywords = lookupKeywords.map(kw =>
+      kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+    );
+
+    let bestMatch: ServiceCard | undefined;
+    let bestScore = 0;
+
+    for (const service of this.serviceCatalog) {
+      const haystack = `${service.name} ${service.card_hover_text ?? ''}`
+        .toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      let score = 0;
+      for (const kw of normalizedKeywords) {
+        if (haystack.includes(kw)) score += kw.length;
+      }
+      if (score > bestScore) {
+        bestScore = score;
+        bestMatch = service;
+      }
+    }
+
+    return bestMatch;
+  }
+
+  private detectIntent(input: string, previousIntentName: string | null): Intent {
     let bestMatch: Intent | null = null;
     let bestScore = 0;
 
@@ -488,7 +594,10 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       let score = 0;
       for (const kw of intent.keywords) {
         const normalizedKw = kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-        if (input.includes(normalizedKw)) score += normalizedKw.length;
+        // Se usa la keyword MÁS ESPECÍFICA (más larga) que matchea, no la suma de todas.
+        // Sumar favorecía intents genéricos con muchas keywords cortas coincidentes
+        // por encima de un intent con una sola keyword muy específica (ej. "nirs").
+        if (input.includes(normalizedKw)) score = Math.max(score, normalizedKw.length);
       }
       if (score > bestScore) {
         bestScore = score;
@@ -497,14 +606,29 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     }
 
     if (bestMatch && bestScore > 0) return bestMatch;
-    return this.getFallbackIntent();
+    return this.getFallbackIntent(previousIntentName);
   }
 
-  private getFallbackIntent(): Intent {
+  /** Cuando no se identifica el intent, si la pregunta anterior fue "¿qué tipo de muestra tienes?"
+   *  el texto libre suele ser el nombre de un producto/muestra fuera de catálogo (ej. "fecales").
+   *  En ese caso conviene ofrecer contacto directo con un especialista en vez del fallback genérico. */
+  private getFallbackIntent(previousIntentName: string | null): Intent {
+    if (previousIntentName === 'tipo_muestras') {
+      return {
+        name: 'fallback_tipo_muestra',
+        keywords: [],
+        responses: [
+          'No tengo ese tipo de muestra identificado en mis categorías, pero seguramente sí podemos procesarla. Cuéntale a un especialista qué muestra es y te confirma el análisis y los requisitos de envío.'
+        ],
+        suggestions: ['Hablar con especialista'],
+        actions: [ACTION_WHATSAPP, ACTION_EMAIL, ACTION_CONTACT_FORM]
+      };
+    }
+
     const fallbacks = [
-      'Hmm, no estoy segura de haber entendido bien tu pregunta. ¿Me podrías dar un poco más de contexto? También puedo orientarte en estos temas:',
-      'Quiero ayudarte bien. ¿Podrías reformular tu pregunta? Puedo informarte sobre análisis, tiempos de entrega, envío de muestras, precios y más.',
-      'No quiero darte información incorrecta. ¿Podrías ser más específico? O si prefieres, te conecto directamente con un asesor.'
+      'No logré identificar tu consulta con precisión. ¿Podrías dar un poco más de contexto? También puedo orientarte en estos temas:',
+      'Para darte una respuesta precisa, ¿podrías reformular tu pregunta? Puedo informarte sobre análisis, tiempos de entrega, envío de muestras, precios y más.',
+      'Para no darte información incorrecta, ¿podrías ser más específico? Si prefieres, te conecto directamente con un asesor.'
     ];
     return {
       name: 'fallback',
