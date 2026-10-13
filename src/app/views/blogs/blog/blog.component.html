@@ -15,7 +15,7 @@
                 <img class="w-100" [src]="item.cover_image_url || 'assets/img/blog/ca-blog-1.1.png'" alt="">
               </div>
               <div class="ca-blog-date-3 ca-blg-date-3">
-                <a href="javascript:void(0);" class="blg-date-3">{{ item.published_at | date:'longDate' }}</a>
+                <a href="javascript:void(0);" class="blg-date-3">{{ item.published_at | localizedDate:'longDate' }}</a>
               </div>
               <div class="ca-blog-box-content ca-blog-box-content-3">
                 <div class="ca-b-meta">

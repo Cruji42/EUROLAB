@@ -24,7 +24,14 @@ export class BlogSingleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const slug = this.route.snapshot.paramMap.get('slug');
+    // Subscribe to the slug so opening another news item from this page reloads it
+    this.route.paramMap.subscribe(params => this.loadPost(params.get('slug')));
+  }
+
+  private loadPost(slug: string | null): void {
+    this.post = null;
+    this.errorMessage = '';
+    this.isLoading = true;
 
     if (!slug) {
       this.errorMessage = 'views.blogSingle.notFound';

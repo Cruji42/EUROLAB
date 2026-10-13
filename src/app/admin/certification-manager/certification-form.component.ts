@@ -11,6 +11,7 @@ import {
   CertificationTranslation
 } from '../services/admin-certifications.service';
 import { TranslationLang, TranslationTabsComponent } from '../../shared/components/translation-tabs/translation-tabs.component';
+import { resolveAssetUrl } from '../../core/utils/asset-url';
 
 @Component({
   selector: 'app-certification-form',
@@ -126,7 +127,7 @@ export class CertificationFormComponent implements OnInit {
         en: cert.translations.en,
       },
     });
-    this.coverPreview = cert.cover_image_url || null;
+    this.coverPreview = resolveAssetUrl(cert.cover_image_url);
     if (cert.certificate_file_url) {
       this.fileUploaded = true;
       this.uploadedFileName = cert.certificate_file_url.split('/').pop() || 'archivo subido';
@@ -141,7 +142,7 @@ export class CertificationFormComponent implements OnInit {
     reader.readAsDataURL(file);
     this.uploadingCover = true;
     this.certService.uploadImage(file, 'certificaciones').subscribe({
-      next: (url) => { this.certForm.patchValue({ cover_image_url: url }); this.uploadingCover = false; },
+      next: (url) => { this.certForm.patchValue({ cover_image_url: url }); this.coverPreview = resolveAssetUrl(url); this.uploadingCover = false; },
       error: (err) => { this.uploadingCover = false; this.error = err?.error?.detail ?? this.translate.instant('admin.certifications.errors.uploadImageFailed'); }
     });
   }

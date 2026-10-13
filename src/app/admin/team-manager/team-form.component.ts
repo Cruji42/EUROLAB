@@ -123,7 +123,7 @@ export class TeamFormComponent implements OnInit {
     reader.readAsDataURL(file);
     this.uploadingPhoto = true;
     this.teamService.uploadImage(file, 'equipo').subscribe({
-      next: (url) => { this.memberForm.patchValue({ image_url: url }); this.uploadingPhoto = false; },
+      next: (url) => { this.memberForm.patchValue({ image_url: url }); this.photoPreview = resolveAssetUrl(url); this.uploadingPhoto = false; },
       error: (err) => { this.uploadingPhoto = false; this.error = err?.error?.detail ?? this.translate.instant('admin.team.errors.uploadImageFailed'); }
     });
   }

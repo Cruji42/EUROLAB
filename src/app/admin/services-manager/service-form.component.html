@@ -104,7 +104,7 @@
       <div class="card-body">
         <div class="upload-area">
           <label class="upload-label" [class.uploading]="uploadingHero">
-            <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+            <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif,image/svg+xml,image/heic,image/heif,.jpg,.jpeg,.png,.webp,.gif,.avif,.svg,.heic,.heif"
                    (change)="onHeroSelected($event)" style="display:none">
             <ng-container *ngIf="!uploadingHero">
               <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>
@@ -305,7 +305,7 @@
             <label class="form-label">{{ 'admin.services.form.cardIconLabel' | translate }}</label>
             <div class="upload-area">
               <label class="upload-label" [class.uploading]="uploadingIcon">
-                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif,image/svg+xml,image/heic,image/heif,.jpg,.jpeg,.png,.webp,.gif,.avif,.svg,.heic,.heif"
                        (change)="onIconSelected($event)" style="display:none">
                 <ng-container *ngIf="!uploadingIcon">
                   <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>

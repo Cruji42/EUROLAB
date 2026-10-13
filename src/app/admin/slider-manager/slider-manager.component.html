@@ -88,7 +88,7 @@
 
           <div class="upload-area" [class.is-invalid]="isInvalid('image_url')">
             <label class="upload-label" [class.uploading]="uploading">
-              <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+              <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif,image/svg+xml,image/heic,image/heif,.jpg,.jpeg,.png,.webp,.gif,.avif,.svg,.heic,.heif"
                      (change)="onFileSelected($event)" style="display:none">
               <ng-container *ngIf="!uploading">
                 <i class="bi bi-cloud-upload fs-3 d-block mb-1"></i>

@@ -70,7 +70,7 @@
             <label class="form-label">{{ 'admin.team.form.photoLabel' | translate }}</label>
             <div class="upload-area">
               <label class="upload-label" [class.uploading]="uploadingPhoto">
-                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif,image/svg+xml,image/heic,image/heif,.jpg,.jpeg,.png,.webp,.gif,.avif,.svg,.heic,.heif"
                        (change)="onPhotoSelected($event)" style="display:none">
                 <ng-container *ngIf="!uploadingPhoto">
                   <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>

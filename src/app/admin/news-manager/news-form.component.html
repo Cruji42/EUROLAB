@@ -109,7 +109,7 @@
             <label class="form-label">{{ 'admin.news.form.coverImageLabel' | translate }}</label>
             <div class="upload-area">
               <label class="upload-label" [class.uploading]="uploadingCover">
-                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif,image/svg+xml,image/heic,image/heif,.jpg,.jpeg,.png,.webp,.gif,.avif,.svg,.heic,.heif"
                        (change)="onCoverSelected($event)" style="display:none">
                 <ng-container *ngIf="!uploadingCover">
                   <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>
@@ -412,7 +412,7 @@
             <label class="form-label">{{ 'admin.news.form.authorImageLabel' | translate }}</label>
             <div class="upload-area">
               <label class="upload-label" [class.uploading]="uploadingAuthor">
-                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif"
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif,image/svg+xml,image/heic,image/heif,.jpg,.jpeg,.png,.webp,.gif,.avif,.svg,.heic,.heif"
                        (change)="onAuthorSelected($event)" style="display:none">
                 <ng-container *ngIf="!uploadingAuthor">
                   <i class="bi bi-cloud-upload fs-4 d-block mb-1"></i>

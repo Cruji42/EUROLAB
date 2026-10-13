@@ -148,7 +148,8 @@
       "loading": "Cargando noticia...",
       "notFound": "Noticia no encontrada.",
       "loadError": "No se pudo cargar la noticia.",
-      "defaultDetailTitle": "Detalle de noticia"
+      "defaultDetailTitle": "Detalle de noticia",
+      "moreTitle": "Más noticias"
     },
     "certificationList": {
       "breadcrumbTitle": "Certificaciones",
@@ -443,7 +444,7 @@
       "empty": "No hay slides. Crea el primero.",
       "form": {
         "imageLabel": "Imagen",
-        "imageHint": "JPG, PNG, WebP o GIF · máx 5 MB",
+        "imageHint": "JPG, PNG, WebP, GIF, AVIF, SVG o HEIC · máx 20 MB",
         "previewAlt": "Vista previa",
         "subtitleLabel": "Subtítulo / etiqueta",
         "subtitlePlaceholder": "Acreditado ante EMA · Aprobado por SADER",

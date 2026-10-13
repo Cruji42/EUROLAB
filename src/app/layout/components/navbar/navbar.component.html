@@ -22,7 +22,7 @@
             <!-- ca-btn -->
             <div class="ca-btn-header d-none d-lg-flex text-end align-items-center justify-content-end gap-2">
                <app-language-switcher />
-               <a [routerLink]="//{{buttonLink}}" [ngClass]="buttonClass">
+               <a [href]="buttonLink" target="_blank" rel="noopener" [ngClass]="buttonClass">
                   {{ buttonText }} <span>
                      @if(showMobileMenu){
                      <i class="fa-solid fa-arrow-right"></i>

@@ -183,7 +183,7 @@
       "empty": "No slides yet. Create the first one.",
       "form": {
         "imageLabel": "Image",
-        "imageHint": "JPG, PNG, WebP or GIF · max 5 MB",
+        "imageHint": "JPG, PNG, WebP, GIF, AVIF, SVG or HEIC · max 20 MB",
         "previewAlt": "Preview",
         "subtitleLabel": "Subtitle / tag",
         "subtitlePlaceholder": "Accredited by EMA · Approved by SADER",
@@ -624,7 +624,8 @@
       "loading": "Loading article...",
       "notFound": "Article not found.",
       "loadError": "Could not load the article.",
-      "defaultDetailTitle": "Article detail"
+      "defaultDetailTitle": "Article detail",
+      "moreTitle": "More news"
     },
     "certificationList": {
       "breadcrumbTitle": "Certifications",

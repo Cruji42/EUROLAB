@@ -5,6 +5,7 @@ import { NgbModal, NgbModalRef, NgbModalModule } from '@ng-bootstrap/ng-bootstra
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AdminSliderService, BannerSlideAdmin, BannerSlideCreate, BannerSlideTranslation } from '../services/admin-slider.service';
 import { TranslationLang, TranslationTabsComponent } from '../../shared/components/translation-tabs/translation-tabs.component';
+import { resolveAssetUrl } from '../../core/utils/asset-url';
 
 @Component({
   selector: 'app-slider-manager',
@@ -113,7 +114,7 @@ export class SliderManagerComponent implements OnInit {
     this.error = '';
     this.activeLang = 'es';
     this.imagePreview = slide.image_url
-      ? this.resolvePreviewUrl(slide.image_url)
+      ? resolveAssetUrl(slide.image_url)
       : null;
     this.slideForm.patchValue({
       sort_order: slide.sort_order,
@@ -143,6 +144,7 @@ export class SliderManagerComponent implements OnInit {
     this.sliderService.uploadImage(file).subscribe({
       next: (url) => {
         this.slideForm.patchValue({ image_url: url });
+        this.imagePreview = resolveAssetUrl(url);
         this.uploading = false;
       },
       error: (err) => {
@@ -152,11 +154,6 @@ export class SliderManagerComponent implements OnInit {
     });
   }
 
-  private resolvePreviewUrl(url: string): string {
-    if (url.startsWith('http') || url.startsWith('data:')) return url;
-    const apiBase = (window as any).__env?.apiBase ?? 'http://137.184.132.38:8009';
-    return `${apiBase}/${url}`;
-  }
 
   openDelete(slide: BannerSlideAdmin): void {
     this.slideToDelete = slide;

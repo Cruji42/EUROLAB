@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { BreadcrumbComponent } from "../../../components/breadcrumb/breadcrumb.component";
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NewsService } from '../../../services/news.service';
 import { NewsPostCard } from '../../../models/news.model';
+import { LocalizedDatePipe } from '../../../core/pipes/localized-date.pipe';
 
 @Component({
   selector: 'app-blog',
-  imports: [BreadcrumbComponent, RouterLink, DatePipe, TranslatePipe],
+  imports: [BreadcrumbComponent, RouterLink, TranslatePipe, LocalizedDatePipe],
   templateUrl: './blog.component.html',
   styles: [`
   .row {

@@ -14,6 +14,7 @@ import {
   NewsPostTranslation,
 } from '../services/admin-news.service';
 import { TranslationLang, TranslationTabsComponent } from '../../shared/components/translation-tabs/translation-tabs.component';
+import { resolveAssetUrl } from '../../core/utils/asset-url';
 
 @Component({
   selector: 'app-news-form',
@@ -178,8 +179,8 @@ export class NewsFormComponent implements OnInit {
       tag_ids: news.tags.map(t => t.id),
       related_post_ids: news.related_post_ids,
     });
-    this.coverPreview = news.cover_image_url || null;
-    this.authorPreview = news.author_image_url || null;
+    this.coverPreview = resolveAssetUrl(news.cover_image_url);
+    this.authorPreview = resolveAssetUrl(news.author_image_url);
 
     this.checks.clear();
     news.checks.forEach(check => this.addCheck(check));
@@ -257,7 +258,7 @@ export class NewsFormComponent implements OnInit {
     reader.readAsDataURL(file);
     this.uploadingCover = true;
     this.newsService.uploadImage(file, 'noticias').subscribe({
-      next: (url) => { this.newsForm.patchValue({ cover_image_url: url }); this.uploadingCover = false; },
+      next: (url) => { this.newsForm.patchValue({ cover_image_url: url }); this.coverPreview = resolveAssetUrl(url); this.uploadingCover = false; },
       error: (err) => { this.uploadingCover = false; this.error = err?.error?.detail ?? this.translate.instant('admin.news.errors.uploadCoverFailed'); }
     });
   }
@@ -270,7 +271,7 @@ export class NewsFormComponent implements OnInit {
     reader.readAsDataURL(file);
     this.uploadingAuthor = true;
     this.newsService.uploadImage(file, 'autores').subscribe({
-      next: (url) => { this.newsForm.patchValue({ author_image_url: url }); this.uploadingAuthor = false; },
+      next: (url) => { this.newsForm.patchValue({ author_image_url: url }); this.authorPreview = resolveAssetUrl(url); this.uploadingAuthor = false; },
       error: (err) => { this.uploadingAuthor = false; this.error = err?.error?.detail ?? this.translate.instant('admin.news.errors.uploadAuthorFailed'); }
     });
   }

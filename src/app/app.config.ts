@@ -1,5 +1,5 @@
 import { ApplicationConfig, EnvironmentInjector, inject, provideZoneChangeDetection, runInInjectionContext } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
@@ -12,6 +12,11 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
 import Swal from 'sweetalert2';
+import { registerLocaleData } from '@angular/common';
+import localeEsMx from '@angular/common/locales/es-MX';
+
+// Datos de locale para formatear fechas en español (LocalizedDatePipe)
+registerLocaleData(localeEsMx);
 
 // Bandera a nivel de módulo: se comparte entre todas las invocaciones del
 // interceptor funcional (todas corren en el mismo contexto de la app),
@@ -21,7 +26,7 @@ let isRedirectingToLogin = false;
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })),
     provideHttpClient(
       withInterceptors([
         (req, next) => {

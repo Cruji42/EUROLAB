@@ -30,12 +30,13 @@
                 <br>
                 <h6>{{ member.role }}</h6>
                 <hr>
-                <p *ngIf="member.email">
-                  <span><img src="assets/img/icon/ca-envelop3.3.svg" alt=""> {{member.email}}</span>
+                <p *ngIf="member.email" class="ca-team-contact">
+                  <img src="assets/img/icon/ca-envelop3.3.svg" alt="">
+                  <span>{{member.email}}</span>
                 </p>
-                <p *ngIf="member.phone">
-                  <span>
-                    <img src="assets/img/icon/ca-ph3.2.svg" alt=""> {{member.phone}}</span>
+                <p *ngIf="member.phone" class="ca-team-contact">
+                  <img src="assets/img/icon/ca-ph3.2.svg" alt="">
+                  <span>{{member.phone}}</span>
                 </p>
               </div>
             </div>

@@ -24,7 +24,20 @@ interface ServiceDisplay {
   selector: 'app-service1',
   imports: [RouterLink, CommonModule, TranslatePipe],
   templateUrl: './service1.component.html',
-  styles: ``,
+  styles: [`
+  .ca-expand-ic span {
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  .ca-expand-ic span img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+`],
 })
 export class Service1Component implements OnInit {
   activeIndex: number | null = null;

@@ -17,7 +17,6 @@ import { resolveAssetUrl } from '../../../../core/utils/asset-url';
     display: flex;
     flex-direction: column;
     height: 100%;
-    margin: 0 12px;
   }
 
   .ca-team-iner-img {
@@ -38,10 +37,13 @@ import { resolveAssetUrl } from '../../../../core/utils/asset-url';
   }
 
   .ca-iner-content-team {
-    flex-shrink: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .ca-team-iner-content {
+    flex: 1;
     min-height: 190px;
     box-sizing: border-box;
     display: flex;
@@ -58,16 +60,40 @@ import { resolveAssetUrl } from '../../../../core/utils/asset-url';
     margin-bottom: 8px;
   }
 
+  .ca-team-contact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ca-team-contact img {
+    display: inline-block;
+    flex-shrink: 0;
+    margin: 0;
+  }
+
+  .ca-team-contact span {
+    word-break: break-word;
+  }
+
   ::ng-deep .ca-team-slider .slick-track {
     display: flex;
   }
 
   ::ng-deep .ca-team-slider .slick-slide {
     height: auto;
+    padding: 0 12px;
+    box-sizing: border-box;
   }
 
-  ::ng-deep .ca-team-slider .slick-slide > div {
+  ::ng-deep .ca-team-slider .slick-slide > div,
+  ::ng-deep .ca-team-slider .slick-slide > div > div {
     height: 100%;
+  }
+
+  ::ng-deep .ca-team-slider .slick-list {
+    padding-bottom: 40px;
+    margin: 0 -12px;
   }
 
   ::ng-deep .ca-team-slider .slick-dots {

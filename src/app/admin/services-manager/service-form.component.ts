@@ -13,6 +13,7 @@ import {
   ServiceFAQAdmin,
 } from '../services/admin-services.service';
 import { TranslationLang, TranslationTabsComponent } from '../../shared/components/translation-tabs/translation-tabs.component';
+import { resolveAssetUrl } from '../../core/utils/asset-url';
 
 
 @Component({
@@ -122,8 +123,8 @@ export class ServiceFormComponent implements OnInit {
   }
 
   private patchFormValues(service: ServiceAdmin): void {
-    this.heroPreview = service.hero_image_url || null;
-    this.iconPreview = service.card_icon_url || null;
+    this.heroPreview = resolveAssetUrl(service.hero_image_url);
+    this.iconPreview = resolveAssetUrl(service.card_icon_url);
     this.serviceForm.patchValue({
       slug: service.slug,
       hero_image_url: service.hero_image_url,
@@ -209,7 +210,7 @@ export class ServiceFormComponent implements OnInit {
     reader.readAsDataURL(file);
     this.uploadingHero = true;
     this.servicesService.uploadImage(file, 'servicios').subscribe({
-      next: (url) => { this.serviceForm.patchValue({ hero_image_url: url }); this.uploadingHero = false; },
+      next: (url) => { this.serviceForm.patchValue({ hero_image_url: url }); this.heroPreview = resolveAssetUrl(url); this.uploadingHero = false; },
       error: (err) => { this.uploadingHero = false; this.error = err?.error?.detail ?? this.translate.instant('admin.services.errors.uploadHeroFailed'); }
     });
   }
@@ -222,7 +223,7 @@ export class ServiceFormComponent implements OnInit {
     reader.readAsDataURL(file);
     this.uploadingIcon = true;
     this.servicesService.uploadImage(file, 'servicios').subscribe({
-      next: (url) => { this.serviceForm.patchValue({ card_icon_url: url }); this.uploadingIcon = false; },
+      next: (url) => { this.serviceForm.patchValue({ card_icon_url: url }); this.iconPreview = resolveAssetUrl(url); this.uploadingIcon = false; },
       error: (err) => { this.uploadingIcon = false; this.error = err?.error?.detail ?? this.translate.instant('admin.services.errors.uploadIconFailed'); }
     });
   }
