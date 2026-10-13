@@ -184,7 +184,16 @@
         "lastNamePlaceholder": "Apellido",
         "companyPlaceholder": "Empresa (opcional)",
         "contactReasonPlaceholder": "Motivo de contacto",
-        "sendButton": "Enviar"
+        "sendButton": "Enviar",
+        "messagePlaceholder": "Mensaje",
+        "sendingButton": "Enviando...",
+        "okButton": "Aceptar",
+        "successTitle": "¡Mensaje enviado!",
+        "successText": "Gracias por contactarnos. Te responderemos a la brevedad.",
+        "errorTitle": "No se pudo enviar",
+        "errorText": "Ocurrió un error al enviar tu mensaje. Intenta de nuevo más tarde.",
+        "invalidTitle": "Datos incompletos",
+        "invalidText": "Completa nombre, apellido, un correo válido y tu mensaje."
       }
     },
     "services": {
@@ -236,7 +245,8 @@
     "blog1": {
       "subtitle": "Certificaciones",
       "title": "Nuestras aprobaciones y certificaciones",
-      "description": "Respaldados por organismos nacionales e internacionales que garantizan la calidad y confiabilidad de nuestros análisis."
+      "description": "Respaldados por organismos nacionales e internacionales que garantizan la calidad y confiabilidad de nuestros análisis.",
+      "viewMoreButton": "Ver más certificaciones"
     },
     "contact1": {
       "subtitle": "Contacto",

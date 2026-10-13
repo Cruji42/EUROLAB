@@ -64,25 +64,25 @@
             <h4 class="ca-title fnw-600 theme-black-3 pb-16">{{ 'views.contact.form.title' | translate }}</h4>
             <p class="pb-32">{{ 'views.contact.form.subtitle' | translate }}</p>
             <div class="ca-cmt-from">
-               <form action="#">
+               <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
                   <div class="row">
                      <div class="col-lg-6 mb-20">
-                        <input type="text" [placeholder]="'views.contact.form.firstNamePlaceholder' | translate">
+                        <input type="text" formControlName="first_name" [placeholder]="'views.contact.form.firstNamePlaceholder' | translate">
                      </div>
                      <div class="col-lg-6 mb-20">
-                        <input type="text" [placeholder]="'views.contact.form.lastNamePlaceholder' | translate">
+                        <input type="text" formControlName="last_name" [placeholder]="'views.contact.form.lastNamePlaceholder' | translate">
                      </div>
                      <div class="col-lg-6 mb-20">
-                        <input type="email" placeholder="Email">
+                        <input type="email" formControlName="email" placeholder="Email">
                      </div>
                      <div class="col-lg-6 mb-20">
-                        <input type="text" [placeholder]="'views.contact.form.companyPlaceholder' | translate">
+                        <input type="text" formControlName="company" [placeholder]="'views.contact.form.companyPlaceholder' | translate">
                      </div>
                      <div class="col-lg-12 mb-20">
-                        <input type="text" [placeholder]="'views.contact.form.contactReasonPlaceholder' | translate">
+                        <input type="text" formControlName="service_interest" [placeholder]="'views.contact.form.contactReasonPlaceholder' | translate">
                      </div>
                      <div class="col-lg-12 mb-20">
-                        <textarea name="message" id="message" placeholder="Message"></textarea>
+                        <textarea id="message" formControlName="message" [placeholder]="'views.contact.form.messagePlaceholder' | translate"></textarea>
                      </div>
                   </div>
                   <!-- <div class="ca-radion-btn">
@@ -90,7 +90,7 @@
                      <label for="saveinfo">Save the information's in this browser for next time use</label>
                   </div> -->
                   <div class="ca-blg-sen-btn text-start">
-                     <button type="submit" class="ca-btn-primary-3 theme-bg-3 text-white br-50"> {{ 'views.contact.form.sendButton' | translate }} <span><i
+                     <button type="submit" class="ca-btn-primary-3 theme-bg-3 text-white br-50" [disabled]="sending"> {{ (sending ? 'views.contact.form.sendingButton' : 'views.contact.form.sendButton') | translate }} <span><i
                               class="fa-solid fa-angle-right"></i></span></button>
                   </div>
                </form>

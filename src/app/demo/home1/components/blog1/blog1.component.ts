@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CertificationsService } from '../../../../services/certifications.service';
 import { CertificationCard } from '../../../../models/certification.model';
@@ -44,18 +46,22 @@ export class Blog1Component implements OnInit {
 
   constructor(private certService: CertificationsService) {}
 
+  private readonly minItems = 3;
+
   ngOnInit(): void {
-    this.certService.getCertifications({ limit: 3, destacadas: true }).subscribe({
-      next: (data) => {
-        this.usingFallback = !data?.length;
-        this.certifications = data?.length ? data : this.fallback;
-        this.isLoading = false;
-      },
-      error: () => {
-        this.usingFallback = true;
-        this.certifications = this.fallback;
-        this.isLoading = false;
+    // Prioriza las destacadas y completa con el resto hasta tener al menos 3
+    forkJoin({
+      featured: this.certService.getCertifications({ limit: this.minItems, destacadas: true }).pipe(catchError(() => of([]))),
+      all: this.certService.getCertifications({ limit: this.minItems * 2 }).pipe(catchError(() => of([])))
+    }).subscribe(({ featured, all }) => {
+      const merged = [...(featured ?? [])];
+      for (const cert of all ?? []) {
+        if (merged.length >= this.minItems) break;
+        if (!merged.some(c => c.id === cert.id)) merged.push(cert);
       }
+      this.usingFallback = !merged.length;
+      this.certifications = merged.length ? merged : this.fallback;
+      this.isLoading = false;
     });
   }
 
