@@ -291,11 +291,13 @@
     "about3": {
       "title": "Análisis NIRS rápidos, precisos y confiables.",
       "description": "Obtén resultados rápidos y multiparamétricos de materias primas y alimentos balanceados, sin el uso de reactivos y con mínima preparación de muestra. Desarrollamos y validamos modelos NIRS específicos para tus productos y condiciones de operación, para generar resultados confiables que faciliten el control de calidad y la toma oportuna de decisiones.",
-      "counters": {
-        "resultsInSeconds": "Resultados en segundos",
-        "samplePreparation": "Preparación de muestra",
-        "availablePackages": "Paquetes disponibles",
-        "specializedServices": "Servicios especializados"
+      "services": {
+        "title": "Servicios que ofrecemos",
+        "biasAdjustment": "Ajuste de Bias",
+        "methodValidation": "Validación de método NIRS",
+        "customCalibrations": "Desarrollo de calibraciones personalizadas",
+        "calibrationRental": "Renta de calibraciones",
+        "saderAdvisory": "Asesoría para aprobar la tecnología NIRS ante SADER como Laboratorio de Control Interno de Calidad"
       },
       "iconBoxes": {
         "specialists": {

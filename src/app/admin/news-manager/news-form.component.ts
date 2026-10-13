@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import {
   AdminNewsService,
@@ -18,7 +18,7 @@ import { TranslationLang, TranslationTabsComponent } from '../../shared/componen
 @Component({
   selector: 'app-news-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslatePipe, TranslationTabsComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslatePipe, TranslationTabsComponent, RouterLink],
   templateUrl: './news-form.component.html',
   styleUrls: ['./news-form.component.scss']
 })

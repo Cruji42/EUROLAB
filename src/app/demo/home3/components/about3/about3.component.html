@@ -12,39 +12,40 @@
              </div>
           </div>
        </div>
-       <div class="row align-items-center">
-          <div class="col-xl-3 col-md-6 mb-30">
-             <!-- counter area start -->
-             <div class="ca-counter-bg br-7 aos-init aos-animate" data-aos="fade-right" data-aos-duration="800">
-                <!-- single counter area -->
-                <div class="ca-counter-area text-center">
-                   <h3 class="ca-counter-title fnw-700 pb-16"><span class="counter">100</span>%</h3>
-                   <p>{{ 'home.about3.counters.resultsInSeconds' | translate }}</p>
-                </div>
-                <!-- single counter area -->
-                <div class="ca-counter-area text-center">
-                   <h3 class="ca-counter-title fnw-700 pb-16"><span class="counter">0</span></h3>
-                   <p>{{ 'home.about3.counters.samplePreparation' | translate }}</p>
-                </div>
-                <!-- single counter area -->
-                <div class="ca-counter-area text-center">
-                   <h3 class="ca-counter-title fnw-700 pb-16">+<span class="counter">12</span></h3>
-                   <p>{{ 'home.about3.counters.availablePackages' | translate }}</p>
-                </div>
-                <!-- single counter area -->
-                <div class="ca-counter-area text-center">
-                   <h3 class="ca-counter-title fnw-700 pb-16"><span class="counter">6</span></h3>
-                   <p>{{ 'home.about3.counters.specializedServices' | translate }}</p>
-                </div>
-             </div>
-             <!-- counter area end -->
-          </div>
+
+       <div class="row align-items-stretch">
+          <!-- services area start (antes: estadísticas) -->
           <div class="col-xl-4 col-md-6 mb-30">
-             <div class="ca-about-img aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
-                <img class="w-100 br-7" src="assets/img/service/Stand-Nireo.jpg" alt="">
+             <div class="nirs-services h-100 aos-init aos-animate" data-aos="fade-right" data-aos-duration="800">
+                <h4 class="nirs-services__title">{{ 'home.about3.services.title' | translate }}</h4>
+                <ul class="nirs-services__list">
+                   <li class="nirs-services__item">
+                      <span>{{ 'home.about3.services.biasAdjustment' | translate }}</span>
+                   </li>
+                   <li class="nirs-services__item">
+                      <span>{{ 'home.about3.services.methodValidation' | translate }}</span>
+                   </li>
+                   <li class="nirs-services__item">
+                      <span>{{ 'home.about3.services.customCalibrations' | translate }}</span>
+                   </li>
+                   <li class="nirs-services__item">
+                      <span>{{ 'home.about3.services.calibrationRental' | translate }}</span>
+                   </li>
+                   <li class="nirs-services__item">
+                      <span>{{ 'home.about3.services.saderAdvisory' | translate }}</span>
+                   </li>
+                </ul>
              </div>
           </div>
-          <div class="col-xl-5 mb-30 aos-init aos-animate" data-aos="fade-left" data-aos-duration="1200">
+          <!-- services area end -->
+
+          <div class="col-xl-4 col-md-6 mb-30 align-self-center">
+             <div class="ca-about-img aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
+                <img class="w-100 br-7" style="height: auto; display: block;" src="assets/img/service/Stand-Nireo.jpg" alt="">
+             </div>
+          </div>
+
+          <div class="col-xl-4 mb-30 d-flex flex-column justify-content-center aos-init aos-animate" data-aos="fade-left" data-aos-duration="1200">
              <!-- single-icon-box-start -->
              <div class="ca-about-icon-box d-flex align-items-center">
                 <div class="ca-about-icon">

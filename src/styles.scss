@@ -10,3 +10,120 @@
 @use "../public/assets/css/style.css";
 @use "../public/assets/css/responsive.css";
 // @use "../public/assets/css/aos.css";
+
+
+$nirs-navy: #1b2340;
+$nirs-accent: #1f5fd6; // cámbialo por el azul de tu marca
+
+.nirs-services {
+  background: #f8f4f0;
+  border-radius: 14px;
+  padding: 32px;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 0 22px;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: $nirs-navy;
+
+    // línea decorativa que se desvanece
+    &::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, rgba($nirs-accent, 0.4), transparent);
+    }
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    padding: 16px 18px;
+    background: #fff;
+    border: 1px solid rgba($nirs-navy, 0.08);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba($nirs-navy, 0.05);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: $nirs-navy;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+
+    // ícono: círculo azul con check blanco
+    &::before {
+      content: '';
+      flex: 0 0 28px;
+      width: 28px;
+      height: 28px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='14' fill='%231f5fd6'/%3E%3Cpath d='M8 14.5l4 4 8-9' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+        center / contain no-repeat;
+    }
+
+    &:hover {
+      transform: translateX(4px);
+      border-color: rgba($nirs-accent, 0.35);
+      box-shadow: 0 6px 16px rgba($nirs-navy, 0.1);
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .nirs-services {
+    padding: 24px 18px;
+
+    &__title {
+      font-size: 22px;
+    }
+
+    &__item {
+      padding: 14px;
+      font-size: 15px;
+    }
+  }
+}
+
+
+.ca-about-section .ca-about-icon-box {
+  gap: 18px;
+
+  .ca-about-icon {
+    flex: 0 0 80px !important;
+    width: 80px !important;
+    margin: 0 !important;
+  }
+
+  .ca-about-ic {
+    width: 80px !important;
+    height: 80px !important;
+    min-width: 80px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 50%;
+    background: #fdeee8 !important; // color del círculo, ajústalo si hace falta
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 60% !important;   // tamaño del dibujo dentro del círculo
+      height: 60% !important;
+      max-width: 60%;
+      object-fit: contain;
+    }
+  }
+}

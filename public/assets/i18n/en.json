@@ -767,13 +767,15 @@
     "about3": {
       "title": "Fast, accurate and reliable NIRS analysis.",
       "description": "Get fast, multiparameter results for raw materials and compound feeds, without the use of reagents and with minimal sample preparation. We develop and validate NIRS models tailored to your products and operating conditions, delivering reliable results that streamline quality control and support timely decision-making.",
-      "counters": {
-        "resultsInSeconds": "Results in seconds",
-        "samplePreparation": "Sample preparation",
-        "availablePackages": "Available packages",
-        "specializedServices": "Specialized services"
+      "services": {
+        "title": "Services We Offer",
+        "biasAdjustment": "Bias Adjustment",
+        "methodValidation": "NIRS Method Validation",
+        "customCalibrations": "Custom Calibration Development",
+        "calibrationRental": "Calibration Rental",
+        "saderAdvisory": "Advisory for Getting NIRS Technology Approved by SADER as an Internal Quality Control Laboratory"
       },
-       "iconBoxes": {
+      "iconBoxes": {
         "specialists": {
           "title": "NIRS Specialists for the Livestock Sector",
           "description": "We implement NIRS technology development tailored to your raw materials and feeds, with validated models and specialized technical support throughout the entire process."
