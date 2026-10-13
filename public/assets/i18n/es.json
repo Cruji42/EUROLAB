@@ -280,17 +280,17 @@
         },
         "microbiology": {
           "title": "Microbiología · Laboratorio Tipo 2",
-          "description": "<li>Somos el único laboratorio de alimentos de la región con instalaciones Tipo 2. </li><li>Detectamos Salmonella y Listeria monocytogenes por PCR en horas y validamos la efectividad real de tus sanitizantes.</li>"
+          "description": "<li>Respaldamos la seguridad alimentaria de nuestros clientes con infraestructura Tipo 2 y métodos analíticos de alta confiabilidad. Realizamos la detección de patógenos de importancia sanitaria como <b>Salmonella spp. y Listeria monocytogenes</b> mediante técnicas de biología molecular (PCR) </li><li>ofreciendo resultados rápidos y precisos. Complementamos nuestros servicios con la validación microbiológica de sanitizantes y programas de limpieza.</li>"
         },
         "indicators": {
           "title": "Indicadores Microbiológicos",
-          "description": "<li>Nuestro \"Semáforo Microbiológico\" evalúa factores de riesgo en tu producción: Mesófilos Aerobios, Levaduras, Coliformes Totales y Mohos.</li><li>Detecta a tiempo fallas de higiene y previene riesgos de crecimiento bacteriano antes de que impacten tu producto terminado.</li>"
+          "description": "<li>La prevención comienza con la medición. Nuestro <b>Semáforo Microbiológico</b> evalúa los principales microorganismos indicadores asociados al desempeño higiénico de tu proceso: Mesófilos Aerobios, Coliformes Totales, Levaduras y Mohos.</li><li>Esta información permite identificar tendencias, prevenir desviaciones y fortalecer los programas de inocuidad antes de que se generen riesgos para el producto final.</li>"
         }
       }
     },
     "about3": {
       "title": "Análisis NIRS rápidos, precisos y confiables.",
-      "description": "Realizamos análisis rápidos de materias primas y alimentos balanceados. Desarrollamos y validamos modelos específicos para sus materias primas y alimentos, asegurando resultados confiables y adaptados a su operación.",
+      "description": "Obtén resultados rápidos y multiparamétricos de materias primas y alimentos balanceados, sin el uso de reactivos y con mínima preparación de muestra. Desarrollamos y validamos modelos NIRS específicos para tus productos y condiciones de operación, para generar resultados confiables que faciliten el control de calidad y la toma oportuna de decisiones.",
       "counters": {
         "resultsInSeconds": "Resultados en segundos",
         "samplePreparation": "Preparación de muestra",
@@ -299,16 +299,16 @@
       },
       "iconBoxes": {
         "specialists": {
-          "title": "Especialistas en sector pecuario",
-          "description": "Tecnología NIRS de última generación con acompañamiento técnico personalizado para su operación."
+          "title": "Especialistas en NIRS para el sector pecuario",
+          "description": "Implementamos el desarrollo de la tecnología NIRS adaptada a sus materias primas y alimentos, con modelos validados y acompañamiento técnico especializado durante todo el proceso."
         },
         "fastResults": {
-          "title": "Resultados rápidos y confiables",
-          "description": "Optimizamos sus calibraciones existentes para mejorar precisión, repetibilidad y confiabilidad en cada análisis."
+          "title": "Calibraciones más precisas y confiables",
+          "description": "Potenciamos sus calibraciones NIRS existentes para mejorar la precisión, repetibilidad y confiabilidad de sus resultados, adaptándolas a las características reales de sus muestras y a las condiciones de su operación. Realizamos ajustes de Bias con métodos validados, robustez y desarrollo de calibraciones."
         },
         "analyze": {
           "title": "Analiza. Decide. Optimiza.",
-          "description": "Mayor control y rentabilidad para su operación. Solicite una demostración del equipo Nireo o una asesoría personalizada."
+          "description": "Obtén información rápida y confiable sobre tus materias primas y alimentos para tomar decisiones oportunas, mejorar el control de calidad y optimizar el uso de recursos. Más control sobre tu operación, mayor eficiencia y mejores resultados."
         }
       }
     }

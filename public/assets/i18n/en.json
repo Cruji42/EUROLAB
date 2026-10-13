@@ -756,35 +756,35 @@
         },
         "microbiology": {
           "title": "Microbiology · Type 2 Laboratory",
-          "description": "<li>We are the only food laboratory in the region with Type 2 facilities. </li><li>We detect Salmonella and Listeria monocytogenes by PCR within hours and validate the real effectiveness of your sanitizers.</li>"
+          "description": "<li>We support our clients' food safety with Type 2 infrastructure and highly reliable analytical methods. We detect pathogens of public health importance such as <b>Salmonella spp. and Listeria monocytogenes</b> using molecular biology techniques (PCR) </li><li>delivering fast and accurate results. We complement our services with the microbiological validation of sanitizers and cleaning programs.</li>"
         },
         "indicators": {
           "title": "Microbiological Indicators",
-          "description": "<li>Our \"Microbiological Traffic Light\" assesses risk factors in your production: Aerobic Mesophiles, Yeasts, Total Coliforms and Molds.</li><li>Detects hygiene failures early and prevents bacterial growth risks before they impact your finished product.</li>"
+          "description": "<li>Prevention starts with measurement. Our <b>Microbiological Indicator System</b> evaluates the main microorganisms associated with the hygienic performance of your process: Aerobic Mesophiles, Total Coliforms, Yeasts and Molds.</li><li>This information makes it possible to identify trends, prevent deviations and strengthen food safety programs before risks to the final product arise.</li>"
         }
       }
     },
     "about3": {
       "title": "Fast, accurate and reliable NIRS analysis.",
-      "description": "We perform fast analyses of raw materials and balanced feed. We develop and validate specific models for your raw materials and feed, ensuring reliable results tailored to your operation.",
+      "description": "Get fast, multiparameter results for raw materials and compound feeds, without the use of reagents and with minimal sample preparation. We develop and validate NIRS models tailored to your products and operating conditions, delivering reliable results that streamline quality control and support timely decision-making.",
       "counters": {
         "resultsInSeconds": "Results in seconds",
         "samplePreparation": "Sample preparation",
         "availablePackages": "Available packages",
         "specializedServices": "Specialized services"
       },
-      "iconBoxes": {
+       "iconBoxes": {
         "specialists": {
-          "title": "Specialists in the livestock sector",
-          "description": "Latest-generation NIRS technology with personalized technical support for your operation."
+          "title": "NIRS Specialists for the Livestock Sector",
+          "description": "We implement NIRS technology development tailored to your raw materials and feeds, with validated models and specialized technical support throughout the entire process."
         },
         "fastResults": {
-          "title": "Fast and reliable results",
-          "description": "We optimize your existing calibrations to improve precision, repeatability and reliability in every analysis."
+          "title": "More Accurate and Reliable Calibrations",
+          "description": "We enhance your existing NIRS calibrations to improve the accuracy, repeatability, and reliability of your results, adapting them to the real characteristics of your samples and the conditions of your operation. We perform bias adjustments using validated methods, robustness testing, and calibration development."
         },
         "analyze": {
           "title": "Analyze. Decide. Optimize.",
-          "description": "Greater control and profitability for your operation. Request a demonstration of the Nireo equipment or personalized advice."
+          "description": "Get fast, reliable information about your raw materials and feeds to make timely decisions, improve quality control, and optimize resource use. More control over your operation, greater efficiency, and better results."
         }
       }
     }

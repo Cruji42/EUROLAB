@@ -37,7 +37,7 @@
                       <div class="accordion" ngbAccordion id="accordionExample" [closeOthers]="true">
                          <!-- single accordion item -->
                           @for (item of service.faqs; track $index) {
-                         <div class="ca-accordion-item ca-accordion-item-2 mb-24" ngbAccordionItem [collapsed]="false">
+                         <div class="ca-accordion-item ca-accordion-item-2 mb-24" ngbAccordionItem [collapsed]="true">
                             <h2 class="ca-accordion-header" [id]="'headingTwo-' + $index" ngbAccordionHeader>
                                <button class="accordion-button" ngbAccordionButton type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseTwo-' + $index" [attr.aria-controls]="'collapseTwo-' + $index">
                                {{item.question}}
