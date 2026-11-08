@@ -42,6 +42,12 @@
           <span>{{ 'admin.layout.sidebar.team' | translate }}</span>
         </a>
       </li>
+      <li>
+        <a routerLink="/admin/notificaciones" routerLinkActive="active">
+          <i class="bi bi-envelope"></i>
+          <span>{{ 'admin.layout.sidebar.notifications' | translate }}</span>
+        </a>
+      </li>
       <li *ngIf="authService.isAdmin()">
         <a routerLink="/admin/usuarios" routerLinkActive="active">
           <i class="bi bi-people"></i>

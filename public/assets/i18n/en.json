@@ -137,7 +137,8 @@
         "certifications": "Certifications",
         "news": "News",
         "users": "Users",
-        "team": "Team"
+        "team": "Team",
+        "notifications": "Notifications"
       }
     },
     "dashboard": {
@@ -528,6 +529,34 @@
         "updateFailed": "Error updating: {{message}}",
         "deleteFailed": "Error deleting: {{message}}",
         "uploadImageFailed": "Error uploading image."
+      }
+    },
+    "notifications": {
+      "title": "Notification recipients",
+      "subtitle": "Contact form messages are sent to every active address on this list.",
+      "noActiveWarning": "There are no active recipients. Contact messages will be sent to the system's default address.",
+      "form": {
+        "emailLabel": "Email",
+        "emailPlaceholder": "name@gponutec.com",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Enter a valid email address",
+        "nameLabel": "Name (optional)",
+        "namePlaceholder": "e.g. Sample reception",
+        "add": "Add"
+      },
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "noName": "No name",
+        "empty": "No recipients yet"
+      },
+      "delete": {
+        "confirm": "Are you sure you want to remove {{email}} from the recipient list?"
+      },
+      "errors": {
+        "duplicate": "That email is already on the list.",
+        "createFailed": "Could not add the recipient.",
+        "deleteFailed": "Could not delete the recipient: {{message}}"
       }
     }
   },

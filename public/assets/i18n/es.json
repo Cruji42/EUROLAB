@@ -408,7 +408,8 @@
         "certifications": "Certificaciones",
         "news": "Noticias",
         "users": "Usuarios",
-        "team": "Equipo"
+        "team": "Equipo",
+        "notifications": "Notificaciones"
       }
     },
     "dashboard": {
@@ -799,6 +800,34 @@
         "updateFailed": "Error al actualizar: {{message}}",
         "deleteFailed": "Error al eliminar: {{message}}",
         "uploadImageFailed": "Error al subir imagen."
+      }
+    },
+    "notifications": {
+      "title": "Destinatarios de notificaciones",
+      "subtitle": "Los mensajes del formulario de contacto se envían a todos los correos activos de esta lista.",
+      "noActiveWarning": "No hay destinatarios activos. Los mensajes de contacto se enviarán al correo predeterminado del sistema.",
+      "form": {
+        "emailLabel": "Correo electrónico",
+        "emailPlaceholder": "nombre@gponutec.com",
+        "emailRequired": "El correo electrónico es obligatorio",
+        "emailInvalid": "Ingrese un correo electrónico válido",
+        "nameLabel": "Nombre (opcional)",
+        "namePlaceholder": "Ej. Recepción de muestras",
+        "add": "Agregar"
+      },
+      "table": {
+        "name": "Nombre",
+        "email": "Correo",
+        "noName": "Sin nombre",
+        "empty": "Aún no hay destinatarios"
+      },
+      "delete": {
+        "confirm": "¿Seguro que deseas quitar {{email}} de la lista de destinatarios?"
+      },
+      "errors": {
+        "duplicate": "Ese correo ya está en la lista.",
+        "createFailed": "No se pudo agregar el destinatario.",
+        "deleteFailed": "No se pudo eliminar el destinatario: {{message}}"
       }
     }
   }

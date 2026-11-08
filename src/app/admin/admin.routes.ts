@@ -50,6 +50,13 @@ export const ADMIN_ROUTES: Routes = [
           )
       },
       {
+        path: 'notificaciones',
+        loadComponent: () =>
+          import('./notifications-manager/recipients.component').then(
+            (m) => m.RecipientsComponent
+          )
+      },
+      {
         path: 'usuarios',
         loadChildren: () =>
           import('./users-manager/users-manager.routes').then(

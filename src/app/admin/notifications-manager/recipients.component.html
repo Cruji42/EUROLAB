@@ -1,0 +1,110 @@
+<div class="recipients-container">
+  <div class="header-actions">
+    <div>
+      <h2 class="section-title">{{ 'admin.notifications.title' | translate }}</h2>
+      <p class="section-subtitle">{{ 'admin.notifications.subtitle' | translate }}</p>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="addRecipient()" class="add-form">
+        <div class="field">
+          <label class="form-label" for="recipient-email">{{ 'admin.notifications.form.emailLabel' | translate }}</label>
+          <input
+            id="recipient-email"
+            type="email"
+            class="form-control"
+            formControlName="email"
+            [class.is-invalid]="form.controls.email.invalid && form.controls.email.touched"
+            [attr.placeholder]="'admin.notifications.form.emailPlaceholder' | translate"
+          >
+          <div class="invalid-feedback" *ngIf="form.controls.email.errors?.['required']">
+            {{ 'admin.notifications.form.emailRequired' | translate }}
+          </div>
+          <div class="invalid-feedback" *ngIf="form.controls.email.errors?.['email']">
+            {{ 'admin.notifications.form.emailInvalid' | translate }}
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="form-label" for="recipient-name">{{ 'admin.notifications.form.nameLabel' | translate }}</label>
+          <input
+            id="recipient-name"
+            type="text"
+            class="form-control"
+            formControlName="name"
+            [attr.placeholder]="'admin.notifications.form.namePlaceholder' | translate"
+          >
+        </div>
+
+        <button type="submit" class="ca-sec-primary-3" [disabled]="saving">
+          <span *ngIf="saving" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          <i *ngIf="!saving" class="bi bi-plus-circle me-2"></i>
+          {{ 'admin.notifications.form.add' | translate }}
+        </button>
+      </form>
+
+      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+        {{ error }}
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div *ngIf="loading" class="loading-spinner">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">{{ 'admin.common.loading' | translate }}</span>
+        </div>
+      </div>
+
+      <ng-container *ngIf="!loading">
+        <div *ngIf="activeCount === 0" class="alert alert-warning">
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          {{ 'admin.notifications.noActiveWarning' | translate }}
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>{{ 'admin.notifications.table.name' | translate }}</th>
+                <th>{{ 'admin.notifications.table.email' | translate }}</th>
+                <th>{{ 'admin.common.status' | translate }}</th>
+                <th>{{ 'admin.common.actions' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let recipient of recipients">
+                <td>{{ recipient.name || ('admin.notifications.table.noName' | translate) }}</td>
+                <td>{{ recipient.email }}</td>
+                <td>
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [checked]="recipient.is_active"
+                      (change)="toggleStatus(recipient)"
+                    >
+                    <label class="form-check-label">
+                      {{ (recipient.is_active ? 'admin.common.active' : 'admin.common.inactive') | translate }}
+                    </label>
+                  </div>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(recipient)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="recipients.length === 0">
+                <td colspan="4" class="text-center">{{ 'admin.notifications.table.empty' | translate }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

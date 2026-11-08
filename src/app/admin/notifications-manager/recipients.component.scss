@@ -1,0 +1,64 @@
+.recipients-container {
+  padding: 20px 0;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  margin: 0;
+  font-weight: 600;
+  color: #343a40;
+}
+
+.section-subtitle {
+  margin: 4px 0 0;
+  color: #6c757d;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.card {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+  .card-body {
+    padding: 20px;
+  }
+}
+
+.add-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px;
+
+  .field {
+    flex: 1 1 240px;
+  }
+
+  button {
+    margin-top: 32px;
+  }
+}
+
+.table {
+  th {
+    font-weight: 600;
+    color: #495057;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+}
