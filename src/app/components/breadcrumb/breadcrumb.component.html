@@ -8,10 +8,10 @@
     <div class="container">
         <div class="ca-breadcrumb-content text-center">
             @if(title && !subTitle){
-            <h2 class="ca-breadcrumb-title fnw-600">{{ title }}</h2>
+            <h1 class="ca-breadcrumb-title fnw-600">{{ title }}</h1>
             }
             @if(title && subTitle){
-            <h2 class="ca-breadcrumb-title fnw-600" >{{ subTitle }}</h2>
+            <h1 class="ca-breadcrumb-title fnw-600">{{ subTitle }}</h1>
             }
             <div class="it-breadcum-link">
               <a [routerLink]="['/']">Inicio</a>

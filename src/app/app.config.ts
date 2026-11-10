@@ -37,7 +37,7 @@ export const appConfig: ApplicationConfig = {
           // el injector de la app.
           const envInjector = inject(EnvironmentInjector);
           // Get the token from localStorage
-          const token = localStorage.getItem('auth_token');
+          const token = typeof localStorage !== 'undefined' ? localStorage.getItem('auth_token') : null;
 
           // Log the request for debugging
           console.log('Making request to:', req.url);

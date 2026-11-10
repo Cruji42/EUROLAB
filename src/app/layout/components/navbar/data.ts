@@ -10,7 +10,7 @@ export interface MenuItem {
 export const menu: MenuItem[] = [
     {
       title: 'nav.home',
-      link: '/index',
+      link: '/',
       // icon: 'fa-solid fa-angle-down',
       // subMenu: [
       //   { title: 'Inicio', link: '/index' }

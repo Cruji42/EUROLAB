@@ -60,7 +60,9 @@ export class SeoService {
     // con el título/descripción genéricos de la ruta.
     if (data.title) {
       this.titleKey = null;
-      this.setTitle(`${data.title} | Laboratorio EURONUTEC`);
+      // Algunos títulos de la API ya traen la marca: no duplicarla
+      const hasBrand = /laboratorio euronutec/i.test(data.title);
+      this.setTitle(hasBrand ? data.title : `${data.title} | Laboratorio EURONUTEC`);
     }
     if (data.description) {
       this.descriptionKey = null;

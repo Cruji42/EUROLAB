@@ -38,6 +38,8 @@ export class AuthService {
   }
 
   private loadStoredUser(): void {
+    // Durante el prerender (build) no existe localStorage
+    if (typeof localStorage === 'undefined') return;
     const token = localStorage.getItem(this.tokenKey);
     if (token) {
       try {
@@ -104,7 +106,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+    return typeof localStorage !== 'undefined' ? localStorage.getItem(this.tokenKey) : null;
   }
 
   isLoggedIn(): boolean {

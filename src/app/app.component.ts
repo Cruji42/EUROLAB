@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, HostListener, inject, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import * as AOS from 'aos';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,11 +17,14 @@ export class AppComponent implements OnInit, AfterViewInit {
   showButton = true;
   private seo = inject(SeoService);
   private translate = inject(TranslateService);
+  // Durante el prerender (build) no hay window/localStorage/DOM real
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   @ViewChild('preloader') preloader!: ElementRef;
   @ViewChild('ctnPreloader') ctnPreloader!: ElementRef;
 
   constructor(private router: Router) {
+    if (!this.isBrowser) return;
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.showPreloader();
@@ -36,17 +40,17 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.seo.init();
     this.initLanguage();
 
-    AOS.init();
+    if (this.isBrowser) AOS.init();
   }
 
   private initLanguage(): void {
     this.translate.addLangs(['es', 'en']);
-    const saved = localStorage.getItem('lang');
+    const saved = this.isBrowser ? localStorage.getItem('lang') : null;
     this.translate.use(saved === 'en' ? 'en' : 'es');
   }
 
   ngAfterViewInit() {
-    AOS.refresh();
+    if (this.isBrowser) AOS.refresh();
   }
 
   showPreloader() {

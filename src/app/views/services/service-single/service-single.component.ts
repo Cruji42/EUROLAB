@@ -67,6 +67,7 @@ export class ServiceSingleComponent implements OnInit {
   }
 
   private scrollToTop(): void {
+    if (typeof window === 'undefined') return; // prerender
     window.scrollTo({
       top: 0,
       behavior: 'smooth'

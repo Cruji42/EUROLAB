@@ -7,8 +7,8 @@ import { AdminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
     {
-        path: '',
-        redirectTo: 'index',
+        path: 'index',
+        redirectTo: '',
         pathMatch: 'full',
     },
     {

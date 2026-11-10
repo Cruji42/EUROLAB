@@ -1,5 +1,5 @@
 <ngx-slick-carousel class="ca-slider-active-3" [config]="sliderConfig">
-  <div *ngFor="let slide of slides" ngxSlickItem class="ca-slider-3 cream-bg-3 p-relative z-index-1 fix">
+  <div *ngFor="let slide of slides; let first = first" ngxSlickItem class="ca-slider-3 cream-bg-3 p-relative z-index-1 fix">
 
     <div class="ca-slider-3-shape d-none d-lg-block">
       <img src="assets/img/shape/ca-shape3.3.png" alt="">
@@ -25,7 +25,12 @@
         <div class="col-lg-6 col-md-10">
           <div class="ca-hero-content-3">
             <h6 class="ca-section-subtitle subtitle-bg-6 p-relative theme-color-3 br-50">{{ slide.subtitle }}</h6>
-            <h1 class="ca-slider-heading theme-black-3 fnw-600 pt-20 pb-20">{{ slide.title }}</h1>
+            <!-- Un solo h1 por página: solo la primera slide; el resto h2 con el mismo estilo -->
+            @if (first) {
+              <h1 class="ca-slider-heading theme-black-3 fnw-600 pt-20 pb-20">{{ slide.title }}</h1>
+            } @else {
+              <h2 class="ca-slider-heading theme-black-3 fnw-600 pt-20 pb-20">{{ slide.title }}</h2>
+            }
             <p class="pt-16 pb-32">{{ slide.description }}</p>
             <div class="hero3-btn">
               <a [routerLink]="slide.btn_primary_link" class="ca-btn-primary-3 theme-bg-3 text-white br-50">

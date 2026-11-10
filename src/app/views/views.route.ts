@@ -140,7 +140,8 @@ export const VIEWS_ROUTES: Route[] = [
         data: { title: 'routes.titles.certification' },
     },
     {
-        path:'index',
+        path:'',
+        pathMatch:'full',
         component:Home1Component,
         data: { title: 'routes.titles.home', description: 'routes.descriptions.home' }
     },
