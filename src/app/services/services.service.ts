@@ -12,8 +12,9 @@ export class ServicesService {
 
   constructor(private http: HttpClient) {}
 
-  getServices(): Observable<ServiceCard[]> {
-    return this.http.get<ServiceCard[]>(this.apiUrl);
+  /** `lang` opcional: si se omite, el langInterceptor usa el idioma del sitio. */
+  getServices(lang?: string): Observable<ServiceCard[]> {
+    return this.http.get<ServiceCard[]>(this.apiUrl, lang ? { params: { lang } } : {});
   }
 
   getAdminServices(): Observable<ServiceDetail[]> {
@@ -21,8 +22,8 @@ export class ServicesService {
     return this.http.get<ServiceDetail[]>(`${this.apiUrl}/admin/all`);
   }
 
-  getServiceBySlug(slug: string): Observable<ServiceDetail> {
-    return this.http.get<ServiceDetail>(`${this.apiUrl}/${slug}`);
+  getServiceBySlug(slug: string, lang?: string): Observable<ServiceDetail> {
+    return this.http.get<ServiceDetail>(`${this.apiUrl}/${slug}`, lang ? { params: { lang } } : {});
   }
 
   getServiceById(id: number): Observable<ServiceDetail> {

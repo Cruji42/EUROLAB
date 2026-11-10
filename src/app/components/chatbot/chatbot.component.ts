@@ -4,8 +4,9 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { firstValueFrom, timeout } from 'rxjs';
 import { ServicesService } from '../../services/services.service';
-import { ServiceCard } from '../../models/service.model';
+import { ServiceCard, ServiceDetail, ServiceFAQ } from '../../models/service.model';
 
 interface ChatAction {
   type: 'route' | 'download' | 'external' | 'whatsapp' | 'email';
@@ -27,9 +28,24 @@ interface Intent {
   responses: string[];
   suggestions?: string[];
   actions?: ChatAction[];
-  /** Palabras clave para resolver el servicio real (name/card_hover_text) y linkear a /service-single/<slug> */
+  /** Palabras clave para resolver el servicio real (name/card_hover_text) y linkear a /service-single/<slug>.
+   *  Se evalúan EN ORDEN: la primera que encuentre un servicio gana. */
   serviceLookupKeywords?: string[];
+  /** Intent generado dinámicamente desde la BD: la respuesta se arma con los datos del servicio. */
+  serviceSlug?: string;
 }
+
+/** Palabras demasiado genéricas para identificar un servicio por sí solas. */
+const SERVICE_TOKEN_STOPWORDS = new Set([
+  'analisis', 'tecnologia', 'servicio', 'servicios', 'paquete', 'para', 'evaluacion',
+  'alimentos', 'alimento', 'muestras', 'muestra', 'control', 'calidad', 'estudio', 'estudios'
+]);
+
+const normalizeText = (s: string): string =>
+  s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+
+const stripHtml = (s: string): string =>
+  s.replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
 
 // ── Acciones reutilizables ──────────────────────────────────────────────────
 const ACTION_CONTACT_FORM: ChatAction = {
@@ -426,15 +442,60 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     suggestions: ['Servicios de análisis', 'Tiempos de entrega', 'Cómo enviar muestras', 'Hablar con un asesor']
   };
 
+  /** El bot solo conversa en español: los servicios se piden siempre en ese idioma
+   *  para no mezclar nombres en inglés dentro de respuestas en español. */
+  private readonly BOT_LANG = 'es';
   private serviceCatalog: ServiceCard[] = [];
+  /** Intents generados a partir de los servicios activos de la BD (uno por servicio). */
+  private serviceIntents: Intent[] = [];
+  /** Caché del detalle de cada servicio (checks + FAQs), cargado bajo demanda. */
+  private serviceDetails = new Map<string, ServiceDetail | null>();
+  /** FAQs de los servicios ya consultados, indexadas por pregunta normalizada. */
+  private faqIndex = new Map<string, { faq: ServiceFAQ; service: ServiceCard }>();
 
   constructor(private cdr: ChangeDetectorRef, private router: Router, private servicesService: ServicesService) {}
 
   ngOnInit() {
     this.messages.push({ ...this.GREETING_MESSAGE, time: new Date() });
-    this.servicesService.getServices().subscribe({
-      next: (services) => this.serviceCatalog = services,
-      error: () => this.serviceCatalog = []
+    this.servicesService.getServices(this.BOT_LANG).subscribe({
+      next: (services) => {
+        this.serviceCatalog = [...services].sort((a, b) => a.sort_order - b.sort_order);
+        this.serviceIntents = this.buildServiceIntents(this.serviceCatalog);
+      },
+      error: () => {
+        this.serviceCatalog = [];
+        this.serviceIntents = [];
+      }
+    });
+  }
+
+  /** Genera un intent por servicio. Keywords: nombre completo, slug como frase y
+   *  palabras distintivas del nombre (las que se repiten entre servicios se descartan
+   *  por ambiguas, ej. "nirs" en NIREO y Tecnología NIRS). */
+  private buildServiceIntents(services: ServiceCard[]): Intent[] {
+    const tokensBySlug = new Map<string, string[]>();
+    const tokenCount = new Map<string, number>();
+
+    for (const s of services) {
+      const tokens = Array.from(new Set(
+        normalizeText(s.name).split(/[^a-z0-9]+/)
+          .filter(t => t.length >= 4 && !SERVICE_TOKEN_STOPWORDS.has(t))
+      ));
+      tokensBySlug.set(s.slug, tokens);
+      tokens.forEach(t => tokenCount.set(t, (tokenCount.get(t) ?? 0) + 1));
+    }
+
+    return services.map(s => {
+      const keywords = new Set<string>([normalizeText(s.name), s.slug.replace(/-/g, ' ')]);
+      (tokensBySlug.get(s.slug) ?? [])
+        .filter(t => tokenCount.get(t) === 1)
+        .forEach(t => keywords.add(t));
+      return {
+        name: `service:${s.slug}`,
+        keywords: Array.from(keywords),
+        responses: [],
+        serviceSlug: s.slug
+      };
     });
   }
 
@@ -467,13 +528,18 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     this.isTyping = true;
 
     const delay = 800 + Math.random() * 700;
-    setTimeout(() => {
-      this.isTyping = false;
-      const response = this.getResponse(msg);
-      this.messages.push(response);
-      this.shouldScroll = true;
-      this.cdr.detectChanges();
-    }, delay);
+    const startedAt = Date.now();
+    this.getResponse(msg)
+      .catch(() => this.toMessage(this.getFallbackIntent(null)))
+      .then(response => {
+        const remaining = Math.max(0, delay - (Date.now() - startedAt));
+        setTimeout(() => {
+          this.isTyping = false;
+          this.messages.push(response);
+          this.shouldScroll = true;
+          this.cdr.detectChanges();
+        }, remaining);
+      });
   }
 
   onKeydown(event: KeyboardEvent) {
@@ -503,14 +569,36 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
   private readonly AFFIRMATIVE_WORDS = ['sí', 'si', 'claro', 'va', 'dale', 'ok', 'okay', 'de acuerdo', 'por favor', 'obvio', 'adelante'];
   private readonly NEGATIVE_WORDS = ['no gracias', 'no'];
 
-  private getResponse(input: string): ChatMessage {
-    const normalized = input.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+  private async getResponse(input: string): Promise<ChatMessage> {
+    const normalized = normalizeText(input);
     const previousIntentName = this.lastIntentName;
 
+    // 1) Pregunta frecuente de un servicio (normalmente viene de un chip).
+    const faqHit = this.faqIndex.get(normalized);
+    if (faqHit) {
+      this.lastIntentName = `faq:${faqHit.service.slug}`;
+      return this.buildFaqMessage(faqHit.faq, faqHit.service);
+    }
+
+    // 2) "sí"/"no" que responde a la pregunta anterior; 3) detección por keywords.
     const intent = this.resolveShortConfirmation(normalized, previousIntentName)
       ?? this.detectIntent(normalized, previousIntentName);
 
     this.lastIntentName = intent.name;
+
+    if (intent.serviceSlug) {
+      const service = this.serviceCatalog.find(s => s.slug === intent.serviceSlug);
+      if (service) return this.buildServiceMessage(service);
+    }
+
+    if (intent.name === 'servicios_generales' && this.serviceCatalog.length > 0) {
+      return this.buildCatalogMessage(intent);
+    }
+
+    return this.toMessage(intent);
+  }
+
+  private toMessage(intent: Intent): ChatMessage {
     const responses = intent.responses;
     const text = responses[Math.floor(Math.random() * responses.length)];
     return {
@@ -522,11 +610,95 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     };
   }
 
+  // ── Flujos alimentados por la BD ──────────────────────────────────────────
+
+  /** Lista de servicios activos tal como están en la BD; cada chip abre el flujo del servicio. */
+  private buildCatalogMessage(intent: Intent): ChatMessage {
+    const list = this.serviceCatalog.map(s => `• **${s.name}**`).join('\n');
+    return {
+      role: 'bot',
+      text: `Estos son los servicios que ofrecemos actualmente:\n\n${list}\n\n¿Sobre cuál te gustaría más detalle?`,
+      time: new Date(),
+      suggestions: this.serviceCatalog.map(s => s.name),
+      actions: intent.actions
+    };
+  }
+
+  private async buildServiceMessage(service: ServiceCard): Promise<ChatMessage> {
+    const detail = await this.loadServiceDetail(service.slug);
+
+    const summarySource = service.card_hover_text?.trim() || detail?.body_p1 || '';
+    let summary = stripHtml(summarySource);
+    if (summary.length > 400) summary = summary.slice(0, 397).trimEnd() + '…';
+
+    let text = `**${service.name}**`;
+    if (summary) text += `\n\n${summary}`;
+
+    const checks = (detail?.checks ?? [])
+      .slice().sort((a, b) => a.sort_order - b.sort_order)
+      .map(c => c.label?.trim()).filter(Boolean).slice(0, 8);
+    if (checks.length) text += `\n\n**Incluye:**\n${checks.map(c => `• ${c}`).join('\n')}`;
+
+    text += '\n\n¿Te gustaría que un especialista te prepare una cotización?';
+
+    const faqs = (detail?.faqs ?? []).slice().sort((a, b) => a.sort_order - b.sort_order);
+    faqs.forEach(faq => {
+      if (faq.question?.trim() && faq.answer?.trim()) {
+        this.faqIndex.set(normalizeText(faq.question), { faq, service });
+      }
+    });
+
+    return {
+      role: 'bot',
+      text,
+      time: new Date(),
+      suggestions: [
+        ...faqs.filter(f => f.question?.trim() && f.answer?.trim()).slice(0, 3).map(f => f.question.trim()),
+        'Tiempos de entrega',
+        'Solicitar cotización'
+      ],
+      actions: [
+        { type: 'route', label: 'Ver más información', value: `/service-single/${service.slug}` },
+        ACTION_WHATSAPP,
+        ACTION_CONTACT_FORM
+      ]
+    };
+  }
+
+  private buildFaqMessage(faq: ServiceFAQ, service: ServiceCard): ChatMessage {
+    const others = Array.from(this.faqIndex.values())
+      .filter(v => v.service.slug === service.slug && v.faq.id !== faq.id)
+      .slice(0, 2)
+      .map(v => v.faq.question.trim());
+    return {
+      role: 'bot',
+      text: stripHtml(faq.answer),
+      time: new Date(),
+      suggestions: [...others, 'Solicitar cotización', 'Hablar con un asesor'],
+      actions: [{ type: 'route', label: `Ver ${service.name}`, value: `/service-single/${service.slug}` }]
+    };
+  }
+
+  /** Detalle (checks + FAQs) bajo demanda, con caché. Si falla o tarda, se responde solo con la tarjeta. */
+  private async loadServiceDetail(slug: string): Promise<ServiceDetail | null> {
+    if (this.serviceDetails.has(slug)) return this.serviceDetails.get(slug) ?? null;
+    try {
+      const detail = await firstValueFrom(this.servicesService.getServiceBySlug(slug, this.BOT_LANG).pipe(timeout(4000)));
+      this.serviceDetails.set(slug, detail);
+      return detail;
+    } catch {
+      return null; // no se cachea el error para reintentar en la siguiente consulta
+    }
+  }
+
   /** Detecta un "sí"/"no" corto y suelto que responde a la pregunta anterior del bot
    *  ("¿coordinamos con un especialista?"), y lo resuelve según el contexto en vez
    *  de dejar que caiga en el motor de keywords genérico (que lo mandaría a fallback). */
   private resolveShortConfirmation(normalizedInput: string, previousIntentName: string | null): Intent | null {
-    if (!previousIntentName || !this.CONFIRM_FOLLOWUP_INTENTS.has(previousIntentName)) return null;
+    const expectsConfirmation = !!previousIntentName && (
+      this.CONFIRM_FOLLOWUP_INTENTS.has(previousIntentName) || previousIntentName.startsWith('service:')
+    );
+    if (!expectsConfirmation) return null;
 
     const isAffirmative = this.AFFIRMATIVE_WORDS.includes(normalizedInput);
     const isNegative = this.NEGATIVE_WORDS.includes(normalizedInput);
@@ -562,42 +734,58 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     return [serviceAction, ...(intent.actions ?? [])];
   }
 
+  /** Las keywords se evalúan en orden (la primera que encuentre servicio gana).
+   *  Para cada keyword: slug exacto > slug/nombre contiene > descripción contiene;
+   *  en empate gana el nombre más corto (el más específico). */
   private findService(lookupKeywords: string[]): ServiceCard | undefined {
-    const normalizedKeywords = lookupKeywords.map(kw =>
-      kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
-    );
+    for (const rawKw of lookupKeywords) {
+      const kw = normalizeText(rawKw);
+      const kwSlug = kw.replace(/\s+/g, '-');
 
-    let bestMatch: ServiceCard | undefined;
-    let bestScore = 0;
+      let bestMatch: ServiceCard | undefined;
+      let bestScore = 0;
 
-    for (const service of this.serviceCatalog) {
-      const haystack = `${service.name} ${service.card_hover_text ?? ''}`
-        .toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-      let score = 0;
-      for (const kw of normalizedKeywords) {
-        if (haystack.includes(kw)) score += kw.length;
+      for (const service of this.serviceCatalog) {
+        const name = normalizeText(service.name);
+        const hover = normalizeText(service.card_hover_text ?? '');
+        let score = 0;
+        if (service.slug === kwSlug) score = 3;
+        else if (service.slug.includes(kwSlug) || name.includes(kw)) score = 2;
+        else if (hover.includes(kw)) score = 1;
+
+        if (score > bestScore || (score > 0 && score === bestScore && bestMatch && service.name.length < bestMatch.name.length)) {
+          bestScore = score;
+          bestMatch = service;
+        }
       }
-      if (score > bestScore) {
-        bestScore = score;
-        bestMatch = service;
-      }
+
+      if (bestMatch) return bestMatch;
     }
+    return undefined;
+  }
 
-    return bestMatch;
+  /** Keywords cortas (≤4 letras: "nom", "iso", "alta", "hi", "df") se comparan como palabra
+   *  completa para evitar falsos positivos ("nombre", "falta", "hidalgo"). */
+  private matchesKeyword(input: string, normalizedKw: string): boolean {
+    if (normalizedKw.length > 4) return input.includes(normalizedKw);
+    const escaped = normalizedKw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp(`(^|[^a-z0-9])${escaped}($|[^a-z0-9])`).test(input);
   }
 
   private detectIntent(input: string, previousIntentName: string | null): Intent {
     let bestMatch: Intent | null = null;
     let bestScore = 0;
 
-    for (const intent of this.intents) {
+    // Los intents curados van primero: en empate (">" estricto) conservan prioridad
+    // sobre los generados desde la BD.
+    for (const intent of [...this.intents, ...this.serviceIntents]) {
       let score = 0;
       for (const kw of intent.keywords) {
-        const normalizedKw = kw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+        const normalizedKw = normalizeText(kw);
         // Se usa la keyword MÁS ESPECÍFICA (más larga) que matchea, no la suma de todas.
         // Sumar favorecía intents genéricos con muchas keywords cortas coincidentes
         // por encima de un intent con una sola keyword muy específica (ej. "nirs").
-        if (input.includes(normalizedKw)) score = Math.max(score, normalizedKw.length);
+        if (this.matchesKeyword(input, normalizedKw)) score = Math.max(score, normalizedKw.length);
       }
       if (score > bestScore) {
         bestScore = score;
@@ -646,8 +834,10 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     } catch {}
   }
 
+  /** Se escapa el HTML primero: el texto del usuario y el contenido de la BD se renderizan con innerHTML. */
   formatText(text: string): string {
     return text
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\n/g, '<br>');
   }
