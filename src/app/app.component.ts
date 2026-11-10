@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, inject, OnInit, Ren
 import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import * as AOS from 'aos';
 import { TranslateService } from '@ngx-translate/core';
-import { TitleService } from '../../title.service';
+import { SeoService } from './core/services/seo.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   title = 'laboratorio-euronutec';
   isLoading = false;
   showButton = true;
-  private titleService = inject(TitleService);
+  private seo = inject(SeoService);
   private translate = inject(TranslateService);
 
   @ViewChild('preloader') preloader!: ElementRef;
@@ -33,8 +33,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.seo.init();
     this.initLanguage();
-    this.titleService.init()
 
     AOS.init();
   }

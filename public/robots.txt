@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /index-02
+Disallow: /index-03
+Disallow: /index-04
+
+Sitemap: https://laboratorioeuronutec.com/sitemap.xml

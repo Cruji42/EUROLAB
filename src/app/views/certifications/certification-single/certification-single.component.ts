@@ -6,6 +6,7 @@ import { BreadcrumbComponent } from '../../../components/breadcrumb/breadcrumb.c
 import { CertificationsService } from '../../../services/certifications.service';
 import { CertificationDetail } from '../../../models/certification.model';
 import { resolveAssetUrl } from '../../../core/utils/asset-url';
+import { SeoService } from '../../../core/services/seo.service';
 
 @Component({
   selector: 'app-certification-single',
@@ -20,7 +21,8 @@ export class CertificationSingleComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly certService: CertificationsService
+    private readonly certService: CertificationsService,
+    private readonly seo: SeoService
   ) {}
 
   ngOnInit(): void {
@@ -31,8 +33,20 @@ export class CertificationSingleComponent implements OnInit {
       return;
     }
     this.certService.getCertificationBySlug(slug).subscribe({
-      next: (data) => { this.cert = data; this.isLoading = false; },
-      error: () => { this.errorMessage = 'views.certificationSingle.loadError'; this.isLoading = false; }
+      next: (data) => {
+        this.cert = data;
+        this.isLoading = false;
+        this.seo.setPage({
+          title: data.meta_title || data.title,
+          description: data.meta_description || data.excerpt || data.description,
+          image: resolveAssetUrl(data.cover_image_url),
+        });
+      },
+      error: () => {
+        this.errorMessage = 'views.certificationSingle.loadError';
+        this.isLoading = false;
+        this.seo.setPage({ noindex: true });
+      }
     });
   }
 

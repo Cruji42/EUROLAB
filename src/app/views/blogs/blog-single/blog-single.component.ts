@@ -6,6 +6,8 @@ import { BlogSingleSidebarComponent } from "./components/blog-single-sidebar/blo
 import { BlogSingleMOreComponent } from "./components/blog-single-more/blog-single-more.component";
 import { NewsService } from '../../../services/news.service';
 import { NewsPostDetail } from '../../../models/news.model';
+import { SeoService } from '../../../core/services/seo.service';
+import { resolveAssetUrl } from '../../../core/utils/asset-url';
 
 @Component({
   selector: 'app-blog-single',
@@ -20,7 +22,8 @@ export class BlogSingleComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly newsService: NewsService
+    private readonly newsService: NewsService,
+    private readonly seo: SeoService
   ) {}
 
   ngOnInit(): void {
@@ -43,10 +46,17 @@ export class BlogSingleComponent implements OnInit {
       next: (data) => {
         this.post = data;
         this.isLoading = false;
+        this.seo.setPage({
+          title: data.meta_title || data.title,
+          description: data.meta_description || data.excerpt || data.content,
+          image: resolveAssetUrl(data.cover_image_url),
+          type: 'article',
+        });
       },
       error: () => {
         this.errorMessage = 'views.blogSingle.loadError';
         this.isLoading = false;
+        this.seo.setPage({ noindex: true });
       }
     });
   }

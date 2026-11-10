@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ServicesService } from '../../../services/services.service';
 import { ServiceDetail } from '../../../models/service.model';
+import { SeoService } from '../../../core/services/seo.service';
+import { resolveAssetUrl } from '../../../core/utils/asset-url';
 
 @Component({
   selector: 'app-service-single',
@@ -21,7 +23,8 @@ export class ServiceSingleComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private servicesService: ServicesService
+    private servicesService: ServicesService,
+    private seo: SeoService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +49,11 @@ export class ServiceSingleComponent implements OnInit {
       next: (data: ServiceDetail) => {
         this.service = data;
         this.isLoading = false;
+        this.seo.setPage({
+          title: data.meta_title || data.name,
+          description: data.meta_description || data.body_p1,
+          image: resolveAssetUrl(data.hero_image_url),
+        });
         // Scroll to top when service is loaded
         this.scrollToTop();
       },
@@ -53,6 +61,7 @@ export class ServiceSingleComponent implements OnInit {
         console.error('Error fetching service:', err);
         this.hasError = true;
         this.isLoading = false;
+        this.seo.setPage({ noindex: true });
       },
     });
   }

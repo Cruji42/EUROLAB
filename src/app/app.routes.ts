@@ -22,7 +22,7 @@ export const routes: Routes = [
         loadChildren: () =>
             import('./admin/admin.routes').then((m) => m.ADMIN_ROUTES),
         canActivate: [AdminGuard],
-        data: { title: 'routes.titles.admin' }
+        data: { title: 'routes.titles.admin', noindex: true }
     },
     {
         path: '',
@@ -32,16 +32,16 @@ export const routes: Routes = [
     {
         path:'index-02',
         component:Home2Component,
-        data:{title:'routes.titles.index02'}
+        data:{title:'routes.titles.index02', noindex: true}
     },
     {
         path:'index-03',
         component:Home3Component,
-        data:{title:'routes.titles.index03'}
+        data:{title:'routes.titles.index03', noindex: true}
     },
     {
         path:'index-04',
         component:Home4Component,
-        data:{title:'routes.titles.index04'}
+        data:{title:'routes.titles.index04', noindex: true}
     },
 ];

@@ -14,6 +14,7 @@ const FALLBACK_IMAGES = [
 const DEFAULT_ICON = 'assets/img/icon/ca-expand-ic3.1.svg';
 
 interface ServiceDisplay {
+  slug: string;
   image: string;
   title: string;
   icon: string;
@@ -51,6 +52,7 @@ export class Service1Component implements OnInit {
     this.servicesService.getServices().subscribe({
       next: (data) => {
         this.services = data.map((svc, index) => ({
+          slug: svc.slug,
           image: svc.card_icon_url ?? FALLBACK_IMAGES[index % FALLBACK_IMAGES.length],
           title: svc.name,
           icon: svc.card_icon_url ?? DEFAULT_ICON,

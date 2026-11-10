@@ -26,27 +26,27 @@ export const VIEWS_ROUTES: Route[] = [
     {
         path: 'about',
         component: AboutComponent,
-        data: { title: 'routes.titles.about' },
+        data: { title: 'routes.titles.about', description: 'routes.descriptions.about' },
     },
     {
         path: 'service',
         component: ServicesComponent,
-        data: { title: 'routes.titles.service' },
+        data: { title: 'routes.titles.service', description: 'routes.descriptions.service' },
     },
     {
         path: 'service-left',
         component: ServiceLeftComponent,
-        data: { title: 'routes.titles.serviceLeft' },
+        data: { title: 'routes.titles.serviceLeft', noindex: true },
     },
     {
         path: 'service-right',
         component: ServiceRightComponent,
-        data: { title: 'routes.titles.serviceRight' },
+        data: { title: 'routes.titles.serviceRight', noindex: true },
     },
     {
         path: 'service-single',
         component: ServiceSingleComponent,
-        data: { title: 'routes.titles.serviceSingle' },
+        data: { title: 'routes.titles.serviceSingle', noindex: true },
     },
     {
         path: 'service-single/:slug',
@@ -56,52 +56,52 @@ export const VIEWS_ROUTES: Route[] = [
     {
         path: 'team',
         component: TeamComponent,
-        data: { title: 'routes.titles.team' },
+        data: { title: 'routes.titles.team', description: 'routes.descriptions.team' },
     },
     {
         path: 'testimonial',
         component: TestimonialComponent,
-        data: { title: 'routes.titles.testimonial' },
+        data: { title: 'routes.titles.testimonial', noindex: true },
     },
     {
         path: 'faq',
         component: FaqComponent,
-        data: { title: 'routes.titles.faq' },
+        data: { title: 'routes.titles.faq', description: 'routes.descriptions.faq' },
     },
     {
         path: 'pricing',
         component: PricingPlanComponent,
-        data: { title: 'routes.titles.pricing' },
+        data: { title: 'routes.titles.pricing', noindex: true },
     },
     {
         path: 'contact',
         component: ContactComponent,
-        data: { title: 'routes.titles.contact' },
+        data: { title: 'routes.titles.contact', description: 'routes.descriptions.contact' },
     },
     {
         path: '404',
         component: Error404Component,
-        data: { title: 'routes.titles.notFound' },
+        data: { title: 'routes.titles.notFound', noindex: true },
     },
     {
         path: 'blog',
         component: BlogComponent,
-        data: { title: 'routes.titles.blog' },
+        data: { title: 'routes.titles.blog', description: 'routes.descriptions.blog' },
     },
     {
         path: 'blog-left',
         component: BlogLeftComponent,
-        data: { title: 'routes.titles.blogLeft' },
+        data: { title: 'routes.titles.blogLeft', noindex: true },
     },
     {
         path: 'blog-right',
         component: BlogRightComponent,
-        data: { title: 'routes.titles.blogRight' },
+        data: { title: 'routes.titles.blogRight', noindex: true },
     },
     {
         path: 'blog-single',
         component: BlogSingleComponent,
-        data: { title: 'routes.titles.blogSingle' },
+        data: { title: 'routes.titles.blogSingle', noindex: true },
     },
     {
         path: 'blog-single/:slug',
@@ -111,28 +111,28 @@ export const VIEWS_ROUTES: Route[] = [
     {
         path: 'projects',
         component: ProjectComponent,
-        data: { title: 'routes.titles.projects' },
+        data: { title: 'routes.titles.projects', noindex: true },
     },
     {
         path: 'project-left',
         component: ProjectLeftComponent,
-        data: { title: 'routes.titles.projectLeft' },
+        data: { title: 'routes.titles.projectLeft', noindex: true },
     },
     {
         path: 'project-right',
         component: ProjectRightComponent,
-        data: { title: 'routes.titles.projectRight' },
+        data: { title: 'routes.titles.projectRight', noindex: true },
     },
 
     {
         path: 'project-single',
         component: ProjectSingleComponent,
-        data: { title: 'routes.titles.projectSingle' },
+        data: { title: 'routes.titles.projectSingle', noindex: true },
     },
     {
         path: 'certificaciones',
         component: CertificationListComponent,
-        data: { title: 'routes.titles.certifications' },
+        data: { title: 'routes.titles.certifications', description: 'routes.descriptions.certifications' },
     },
     {
         path: 'certificaciones/:slug',
@@ -142,6 +142,6 @@ export const VIEWS_ROUTES: Route[] = [
     {
         path:'index',
         component:Home1Component,
-        data:{title:'routes.titles.home'}
+        data: { title: 'routes.titles.home', description: 'routes.descriptions.home' }
     },
 ]
