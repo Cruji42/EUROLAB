@@ -1,4 +1,4 @@
-<app-breadcrumb [title]="cert?.title || ('views.certificationSingle.defaultTitle' | translate)"/>
+<app-breadcrumb [breadRouter]="'/certificaciones'" [title]="'views.certificationList.breadcrumbTitle' | translate" [subTitle]="cert?.title || ('views.certificationSingle.defaultTitle' | translate)"/>
 
 <div class="ca-blog-details pt-100 pb-100">
   <div class="container">

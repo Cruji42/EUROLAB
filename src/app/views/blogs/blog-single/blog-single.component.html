@@ -1,4 +1,4 @@
-<app-breadcrumb [title]="'views.blog.breadcrumbTitle' | translate" [subTitle]="post?.title || ('views.blogSingle.defaultDetailTitle' | translate)"/>
+<app-breadcrumb [breadRouter]="'/blog'" [title]="'views.blog.breadcrumbTitle' | translate" [subTitle]="post?.title || ('views.blogSingle.defaultDetailTitle' | translate)"/>
 
 @if (isLoading) {
   <div class="container py-5">
